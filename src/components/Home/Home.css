@@ -29,11 +29,60 @@
     }
 
 
-.container-one:hover{
-    .icon-left{
-        display: unset;
-    }
-    .icon-right{
-        display: unset;
-    }
+@media (min-width:1000px){
+    .container-one:hover .icon-left{
+            display: unset;
+        }
+
+        .container-one:hover .icon-right{
+            display: unset;
+        }
+    
+}
+.product-one{
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+    
+}
+.product-one::before{
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-image: url(../../assets/1.jpg);
+    background-position: center;
+    background-size: cover;
+    transform: translate(100%);
+    transition: all 1s ease-in-out;
+    z-index: -1;
+
+}
+.product-one:hover::before{
+    transform: translate(0);
+    z-index: 1;
+   
+}
+.product-one::after{
+    content: "";
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-image: url(../../assets/7.jpg);
+    background-position: center;
+    background-size: cover;
+    transform: translate(0);
+    transition: all 1s ease-in-out;
+    z-index: -1;
+
+}
+.product-one:hover::after{
+    transform: translate(-100%);
+    z-index: 1;
+   
 }
