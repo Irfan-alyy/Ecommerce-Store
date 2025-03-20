@@ -28,6 +28,10 @@ function App() {
           element:<Home/>
         },
         {
+          path:"/Ecommerce-Store",
+          element: <Home/>
+        },
+        {
           path: "/login",
           element: <Login/>
 
