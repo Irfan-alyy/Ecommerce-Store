@@ -11,6 +11,8 @@ import Cart from './components/Cart/CArt'
 import Product from './components/Product/Product'
 import About from './components/About/About'
 import Contact from './components/Contact/Contact'
+import Error404 from './components/error/error404'
+import Login from './components/Login/Login'
 
 
 
@@ -24,6 +26,11 @@ function App() {
         {
           path: "/",
           element:<Home/>
+        },
+        {
+          path: "/login",
+          element: <Login/>
+
         },
         {
           path: "/catagory",
@@ -44,6 +51,10 @@ function App() {
         {
           path: "/contact",
           element: <Contact/>
+        },
+        {
+          path: "*",
+          element: <Error404/>
         }
       ]
     }

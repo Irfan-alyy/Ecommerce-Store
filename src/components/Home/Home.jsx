@@ -267,7 +267,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <QuickView />
+      {/* <QuickView /> */}
     </>
   );
 };

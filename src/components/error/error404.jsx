@@ -1,9 +1,13 @@
 import React from "react";
 import { FaSearch } from "react-icons/fa";
+import { NavLink } from "react-router";
 function Error404(props) {
+ 
+
+  
   return (
     <>
-      <div className="container w-full flex flex-col justify-center items-center md:w-full">
+      <div className=" w-full flex flex-col justify-center items-center md:w-full">
         <div className="wrap w-7/12  text-center flex flex-col justify-center items-center">
           <h1 className="text-[300px] font-extrabold leading-80 text-[#A749FF]">
             404
@@ -26,9 +30,9 @@ function Error404(props) {
               <FaSearch className="m-auto" />
             </button>
           </label>
-          <button className="mt-10 mb-20 py-5 px-2 text-medium bg-[#A749FF] text-white hover:bg-black hover:text-white transition ease-linear duration-300">
+          <NavLink to="/" className="mt-10 mb-20 py-5 px-2 text-medium bg-[#A749FF] text-white hover:bg-black hover:text-white transition ease-linear duration-300">
                 Back to home page
-              </button>
+              </NavLink>
         </div>
       </div>
     </>
