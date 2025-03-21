@@ -1,0 +1,11 @@
+.mobileIcons{
+    .active{
+        border-bottom: 1px solid;
+    }
+
+}
+.navbarLeft{
+    .active{
+        border-bottom: 1px solid;
+    }
+}

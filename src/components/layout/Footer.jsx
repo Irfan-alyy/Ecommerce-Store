@@ -4,7 +4,7 @@ import logo from "../../assets/logo.png"
 const Footer = () => {
   return (
     <div className="Footer bg-[rgb(246,246,248)]">
-      <div className="px-10  sm:px-20 md:px-30 lg:px-40 py-30 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 sm:gap-5 md:gap-10 lg:gap-15">
+      <div className="px-5  sm:px-15 md:px-30 lg:px-40 py-30 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 sm:gap-5 md:gap-10 lg:gap-15">
         <div className=" flex flex-col my-auto gap-1 min-w-50">
            <img src={logo} alt="Logo" className="w-30 pb-3" />
           <p className="flex items-center gap-1"><FaRegCopyright/> 2025 Flone.</p>

@@ -3,7 +3,7 @@ import { ImCross } from "react-icons/im";
 
 function Cart(props) {
     return (
-        <div className=' w-12/12 px-4 sm:px-10 md:px-30 lg:px-25 xl:px-40'>
+        <div className=' w-12/12 px-4 sm:px-10 py-10 sm:py:20 md:py:30 md:px-30 lg:px-25 xl:px-40'>
             <h3 className='text-[20px] font-medium'>Your Cart Items</h3>
 
             <div className="Wrapper w-full flex flex-wrap justify-between border border-[#8E8E8E] p-4">

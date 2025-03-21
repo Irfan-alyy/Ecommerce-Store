@@ -91,14 +91,14 @@ const Home = () => {
                 onClick={slideBack}
               />
               <div className="flex flex-col justify-center  w-fit gap-3">
-                <h5 className="text-lg font-semibold leading-4  ">
+                <h5 className="text-md sm:text-lg font-semibold leading-4  ">
                   New Arrival
                 </h5>
-                <h1 className="text-4xl font-semibold leading-15 tracking-wide">
+                <h1 className="text-2xl md:text-4xl lg:text-5xl font-semibold leading-10 md:leading-15 tracking-wide">
                   New Design <br />
                   Bluetooth Speaker1
                 </h1>
-                <button className="shop-btn px-15 py-4 bg-transparent border-1  w-fit">
+                <button className="shop-btn md:px-15 md:py-4 px-8 py-3 bg-transparent border-1  w-fit">
                   SHOP NOW
                 </button>
               </div>
@@ -174,7 +174,7 @@ const Home = () => {
           )}
         </div>
       </section>
-      <section className="px-10 sm:px-18  md:px-25 lg:px-40">
+      <section className="px-10 sm:px-18  md:px-25 lg:px-40 overfllow-hidden">
         <div className="flex flex-col lg:flex-row gap-8 items-center mt-[-180px] pb-20">
           <div className="flex flex-col items-center justify-end pb-10 gap-2 w-[375px] h-[350px] relative overflow-hidden">
             <div className="absolute overflow-hidden">
@@ -230,8 +230,8 @@ const Home = () => {
           </p>
         </div>
       </section>
-      <section className="px-20">
-        <div className="flex">
+      <section className="px-10 md:px-20 overflow-hidden">
+        <div className="flex items-center justify-center">
           <div className="mb-[35px]  flex flex-col w-[-260px] relative hover:not-target:.cart-flex transform transition-all ease-in">
             <span className="z-10 text-pink-400 text-s font-semibold absolute top-5 right-5">
               -10%
