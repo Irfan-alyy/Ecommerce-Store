@@ -43,7 +43,6 @@ const Login = () => {
     console.log(Object.keys(loginData));
     if (user && password && !fullName) {
       toast.info("🟢 Logging in...", { position: "top-right" });
-      console.log("login");
     }
     else if (fullName && username && email && password && confirmPassword) {
       console.log("register");
@@ -80,9 +79,9 @@ const Login = () => {
 
 
   return (
-    <div className=" flex flex-col items-center justify-center w-screen py-30">
+    <div className=" flex flex-col items-center justify-center w-screen py-20">
       <div className="loginBox flex justify-center items-center mb-10">
-        <button onClick={showLoginSection} className="text-2xl mr-3 font-bold">
+        <button onClick={showLoginSection} className="cursor-pointer text-2xl mr-3 font-bold">
           Login
         </button>
         <span>
@@ -90,7 +89,7 @@ const Login = () => {
         </span>
         <button
           onClick={showRegisterSection}
-          className="text-2xl ml-3 font-bold"
+          className="cursor-pointer text-2xl ml-3 font-bold"
         >
           Register
         </button>
@@ -100,6 +99,7 @@ const Login = () => {
         <div className="formDiv flex justify-center items-center w-10/12 md:w-2/3 lg:w-1/2 lg:p-24 shadow-[0_0px_3px_rgba(0,0,0,0.25)]">
           <form onSubmit={handleSubmit} className="w-full">
             <input
+              required
               onChange={formDataHandle}
               name="user"
               type="text"
@@ -107,6 +107,7 @@ const Login = () => {
               className="mb-7 w-full leading-10 pl-3 border border-[#bdbdbd] focus:outline-none"
             />
             <input
+              required
               name="password"
               onChange={formDataHandle}
               type="password"
@@ -128,14 +129,14 @@ const Login = () => {
               <span className="w-full">
                 <button
                   type="submit"
-                  className="py-2 px-7 text-sm font-medium text-[#333333] bg-[#F2F2F2] hover:bg-[#A749FF] hover:text-white transition ease-linear duration-300"
+                  className="cursor-pointer py-2 px-7 text-sm font-medium text-[#333333] bg-[#F2F2F2] hover:bg-[#A749FF] hover:text-white transition ease-linear duration-300"
                 >
                   LOGIN
                 </button>
               </span>
               <button
                 onClick={showForgotSection}
-                className="w-50 py-2 text-sm text-gray-950 hover:text-[#A749FF] transition ease-linear duration-300"
+                className="cursor-pointer w-50 py-2 text-sm text-gray-950 hover:text-[#A749FF] transition ease-linear duration-300"
               >
                 Forget Password?
               </button>
@@ -148,6 +149,7 @@ const Login = () => {
         <div className="formDiv flex justify-center items-center w-10/12 md:w-2/3 lg:w-1/2 lg:p-24 shadow-[0_0px_3px_rgba(0,0,0,0.25)] ">
           <form onSubmit={handleSubmit} className="w-full">
             <input
+              required
               type="text"
               maxLength="20"
               minLength="3"
@@ -159,6 +161,7 @@ const Login = () => {
             <input
               onChange={formDataHandle}
               minLength="6"
+              required
               maxLength="20"
               name="username"
               type="text"
@@ -169,6 +172,7 @@ const Login = () => {
               onChange={formDataHandle}
               maxLength="30"
               name="email"
+              required
               type="email"
               placeholder="email"
               className="mb-7 w-full leading-10 pl-3 border border-[#bdbdbd] focus:outline-none"
@@ -177,6 +181,7 @@ const Login = () => {
               onChange={formDataHandle}
               maxLength="15"
               minLength="6"
+              required
               name="password"
               type="password"
               placeholder="Password"
@@ -186,6 +191,7 @@ const Login = () => {
               onChange={formDataHandle}
               maxLength="15"
               minLength="6"
+              required
               name="confirmPassword"
               type="password"
               placeholder="Confirm Password"
@@ -211,6 +217,7 @@ const Login = () => {
               onChange={formDataHandle}
               name="email"
               type="email"
+              required
               placeholder="email"
               className="mb-7 w-full leading-10 pl-3 border border-[#bdbdbd] focus:outline-none"
             />
@@ -220,6 +227,7 @@ const Login = () => {
               minLength="6"
               name="password"
               type="password"
+              required
               placeholder="Password"
               className="mb-7 w-full leading-10 pl-3 border border-[#bdbdbd] focus:outline-none"
             />
@@ -227,6 +235,7 @@ const Login = () => {
               onChange={formDataHandle}
               maxLength="15"
               minLength="6"
+              required
               name="confirmPassword"
               type="password"
               placeholder="confirm password"

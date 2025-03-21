@@ -78,7 +78,7 @@ const Header = () => {
             ref={searchBtnRef}
             onClick={handleClick}
           />
-          <NavLink to="/user" className="py-1">
+          <NavLink to="/login" className="py-1">
             <FaRegCircleUser className="w-5 h-5" />
           </NavLink>
           <NavLink to="/cart">
@@ -153,6 +153,9 @@ const Header = () => {
             </li>
             <li className=" py-3 active:bg-[rgb(139,157,174)] rounded">
               <NavLink to="/catagory">Catagories</NavLink>
+            </li>
+            <li className=" py-3 active:bg-[rgb(139,157,174)] rounded">
+              <NavLink to="/login">Account</NavLink>
             </li>
             <li className=" py-3 active:bg-[rgb(139,157,174)] rounded">
               <NavLink to="/about">About</NavLink>
