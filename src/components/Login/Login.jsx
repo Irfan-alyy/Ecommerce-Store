@@ -81,7 +81,7 @@ const Login = () => {
   return (
     <div className=" flex flex-col items-center justify-center w-screen py-20">
       <div className="loginBox flex justify-center items-center mb-10">
-        <button onClick={showLoginSection} className="cursor-pointer text-2xl mr-3 font-bold">
+        <button onClick={showLoginSection} className={`${showLogin? "text-[rgb(167,73,255)]": ""} cursor-pointer text-2xl mr-3 font-bold`}>
           Login
         </button>
         <span>
@@ -89,14 +89,14 @@ const Login = () => {
         </span>
         <button
           onClick={showRegisterSection}
-          className="cursor-pointer text-2xl ml-3 font-bold"
+          className={`${showRegister? "text-[rgb(167,73,255)]": ""} cursor-pointer text-2xl ml-3 font-bold`}
         >
           Register
         </button>
       </div>
 
       {showLogin && (
-        <div className="formDiv flex justify-center items-center w-10/12 md:w-2/3 lg:w-1/2 lg:p-24 shadow-[0_0px_3px_rgba(0,0,0,0.25)]">
+        <div className="py-10 px-4 formDiv flex justify-center items-center w-10/12 md:w-2/3 lg:w-1/2 lg:p-24 shadow-[0_0px_3px_rgba(0,0,0,0.25)]">
           <form onSubmit={handleSubmit} className="w-full">
             <input
               required
@@ -104,7 +104,7 @@ const Login = () => {
               name="user"
               type="text"
               placeholder="Username or Email"
-              className="mb-7 w-full leading-10 pl-3 border border-[#bdbdbd] focus:outline-none"
+              className="mb-7 w-full leading-10 px-3 border border-[#bdbdbd] focus:outline-none"
             />
             <input
               required
@@ -112,14 +112,14 @@ const Login = () => {
               onChange={formDataHandle}
               type="password"
               placeholder="Password"
-              className="mb-7 w-full leading-10 pl-3 border border-[#bdbdbd] focus:outline-none"
+              className="mb-7 w-full leading-10 px-3 border border-[#bdbdbd] focus:outline-none"
             />
             {/* <input
               type="password"
               placeholder="Confirm Password"
               className="mb-7 w-full leading-10 pl-3 border border-[#bdbdbd] focus:outline-none"
             /> */}
-            <span className="flex justify-between w-full pt-2 pb-5">
+            <span className="flex justify-between w-full pt-2">
               {/* <span>
                 <input type="checkbox" name="#" id="chk" />
                 <label htmlFor="chk" className="ml-1 text-[#242424]">
@@ -146,7 +146,7 @@ const Login = () => {
       )}
 
       {showRegister && (
-        <div className="formDiv flex justify-center items-center w-10/12 md:w-2/3 lg:w-1/2 lg:p-24 shadow-[0_0px_3px_rgba(0,0,0,0.25)] ">
+        <div className="py-10 px-4 formDiv flex justify-center items-center w-10/12 md:w-2/3 lg:w-1/2 lg:p-24 shadow-[0_0px_3px_rgba(0,0,0,0.25)] ">
           <form onSubmit={handleSubmit} className="w-full">
             <input
               required
@@ -156,7 +156,7 @@ const Login = () => {
               name="fullName"
               onChange={formDataHandle}
               placeholder="Full Name"
-              className="mb-7 w-full leading-10 pl-3 border border-[#bdbdbd] focus:outline-none"
+              className="mb-7 w-full leading-10 px-3 border border-[#bdbdbd] focus:outline-none"
             />
             <input
               onChange={formDataHandle}
@@ -166,7 +166,7 @@ const Login = () => {
               name="username"
               type="text"
               placeholder="Username"
-              className="mb-7 w-full leading-10 pl-3 border border-[#bdbdbd] focus:outline-none"
+              className="mb-7 w-full leading-10 px-3 border border-[#bdbdbd] focus:outline-none"
             />
             <input
               onChange={formDataHandle}
@@ -174,8 +174,8 @@ const Login = () => {
               name="email"
               required
               type="email"
-              placeholder="email"
-              className="mb-7 w-full leading-10 pl-3 border border-[#bdbdbd] focus:outline-none"
+              placeholder="Email"
+              className="mb-7 w-full leading-10 px-3 border border-[#bdbdbd] focus:outline-none"
             />
             <input
               onChange={formDataHandle}
@@ -185,7 +185,7 @@ const Login = () => {
               name="password"
               type="password"
               placeholder="Password"
-              className="mb-7 w-full leading-10 pl-3 border border-[#bdbdbd] focus:outline-none"
+              className="mb-7 w-full leading-10 px-3 border border-[#bdbdbd] focus:outline-none"
             />
             <input
               onChange={formDataHandle}
@@ -195,7 +195,7 @@ const Login = () => {
               name="confirmPassword"
               type="password"
               placeholder="Confirm Password"
-              className="mb-7 w-full leading-10 pl-3 border border-[#bdbdbd] focus:outline-none"
+              className="mb-7 w-full leading-10 px-3 border border-[#bdbdbd] focus:outline-none"
             />
             <span className="w-full">
               <button
@@ -211,15 +211,15 @@ const Login = () => {
 
       {/* <h3 className="font-medium text-2xl hidden">Reset Password</h3> */}
       {showForgot && (
-        <div className="formDiv flex justify-center items-center w-10/12 md:w-2/3 lg:w-1/2 lg:p-24 shadow-[0_0px_3px_rgba(0,0,0,0.25)]">
+        <div className="py-10 px-4 formDiv flex justify-center items-center w-10/12 md:w-2/3 lg:w-1/2 lg:p-24 shadow-[0_0px_3px_rgba(0,0,0,0.25)]">
           <form onSubmit={handleSubmit} className="w-full">
             <input
               onChange={formDataHandle}
               name="email"
               type="email"
               required
-              placeholder="email"
-              className="mb-7 w-full leading-10 pl-3 border border-[#bdbdbd] focus:outline-none"
+              placeholder="Email"
+              className="mb-7 w-full leading-10 px-3 border border-[#bdbdbd] focus:outline-none"
             />
             <input
               onChange={formDataHandle}
@@ -229,7 +229,7 @@ const Login = () => {
               type="password"
               required
               placeholder="Password"
-              className="mb-7 w-full leading-10 pl-3 border border-[#bdbdbd] focus:outline-none"
+              className="mb-7 w-full leading-10 px-3 border border-[#bdbdbd] focus:outline-none"
             />
             <input
               onChange={formDataHandle}
@@ -238,8 +238,8 @@ const Login = () => {
               required
               name="confirmPassword"
               type="password"
-              placeholder="confirm password"
-              className="mb-7 w-full leading-10 pl-3 border border-[#bdbdbd] focus:outline-none"
+              placeholder="Confirm password"
+              className="mb-7 w-full leading-10 px-3 border border-[#bdbdbd] focus:outline-none"
             />
             <span className="w-full">
               <button
