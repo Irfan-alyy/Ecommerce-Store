@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import FadeInFromBottom from "../ui/animations/FadeInFromBottom";
 const Login = () => {
   const [showLogin, setShowLogin] = useState(true);
   const [showRegister, setShowRegister] = useState(false);
@@ -79,7 +80,7 @@ const Login = () => {
 
 
   return (
-    <div className=" flex flex-col items-center justify-center w-screen py-20">
+    <div className=" flex flex-col items-center justify-center py-20">
       <div className="loginBox flex justify-center items-center mb-10">
         <button onClick={showLoginSection} className={`${showLogin? "text-[rgb(167,73,255)]": ""} cursor-pointer text-2xl mr-3 font-bold`}>
           Login
@@ -96,7 +97,9 @@ const Login = () => {
       </div>
 
       {showLogin && (
+        
         <div className="py-10 px-4 formDiv flex justify-center items-center w-10/12 md:w-2/3 lg:w-1/2 lg:p-24 shadow-[0_0px_3px_rgba(0,0,0,0.25)]">
+                      
           <form onSubmit={handleSubmit} className="w-full">
             <input
               required
@@ -143,6 +146,7 @@ const Login = () => {
             </span>
           </form>
         </div>
+       
       )}
 
       {showRegister && (

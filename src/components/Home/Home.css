@@ -28,15 +28,16 @@
     
     }
 
+    .container-one:hover .icon-left{
+        display: unset;
+    }
+
+    .container-one:hover .icon-right{
+        display: unset;
+    }
 
 @media (min-width:1000px){
-    .container-one:hover .icon-left{
-            display: unset;
-        }
-
-        .container-one:hover .icon-right{
-            display: unset;
-        }
+    
     
 }
 .product-one{

@@ -14,13 +14,13 @@ import { useRef } from "react";
 import "./Home.css";
 import { useState } from "react";
 import QuickView from "./QuickView";
+import FadeInFromBottom from "../ui/animations/FadeInFromBottom";
 const Home = () => {
   const [visibleContainer, setVisibleContainer] = useState({
     one: true,
     two: false,
     three: false,
   });
-
 
   const refContainer1 = useRef();
   const refContainer2 = useRef();
@@ -72,10 +72,7 @@ const Home = () => {
       });
     }
   };
-  const quickView=(product)=>{
-
-
-  }
+  const quickView = (product) => {};
 
   return (
     <>
@@ -84,29 +81,36 @@ const Home = () => {
           {visibleContainer.one && (
             <div
               ref={refContainer1}
-              className="px-10 sm:px-18  md:px-25 lg:px-40 container-one grid grid-cols-1 md:grid-cols-2 pt-10 pb-20 md:py-20 lg:py-30 gap-10 w-full justify-between"
+              className="px-10 sm:px-18 relative  md:px-25 lg:px-40 container-one grid grid-cols-1 md:grid-cols-2 pt-10 pb-20 md:py-20 lg:py-30 gap-10 w-full justify-between"
             >
               <IoIosArrowBack
-                className="icon-left absolute  left-25 top-110 text-5xl text-violet-400  hover:text-violet-700  hidden cursor-pointer"
+                className="icon-left absolute left-[5%] top-[40%] lg:left-[7%] text-5xl text-violet-400  hover:text-violet-700  hidden cursor-pointer"
                 onClick={slideBack}
               />
+
               <div className="flex flex-col justify-center  w-fit gap-3">
                 <h5 className="text-md sm:text-lg font-semibold leading-4  ">
                   New Arrival
                 </h5>
-                <h1 className="text-2xl md:text-4xl lg:text-5xl font-semibold leading-10 md:leading-15 tracking-wide">
-                  New Design <br />
-                  Bluetooth Speaker1
-                </h1>
-                <button className="shop-btn md:px-15 md:py-4 px-8 py-3 bg-transparent border-1  w-fit">
-                  SHOP NOW
-                </button>
+                <FadeInFromBottom duration={1} delay={0} yOffset={50}>
+                  <div className="flex flex-col gap-3">
+                    <h1 className="text-2xl md:text-4xl lg:text-5xl font-semibold leading-10 md:leading-15 tracking-wide">
+                      New Design <br />
+                      Bluetooth Speaker1
+                    </h1>
+                    <button className="shop-btn md:px-15 md:py-4 px-8 py-3 bg-transparent border-1  w-fit">
+                      SHOP NOW
+                    </button>
+                  </div>
+                </FadeInFromBottom>
               </div>
               <div>
-                <img src={slideOne} className="bg-transparent m-auto" />
+                <FadeInFromBottom duration={1} delay={0.8} yOffset={100}>
+                  <img src={slideOne} className="bg-transparent m-auto" />
+                </FadeInFromBottom>
               </div>
               <IoIosArrowForward
-                className="icon-right absolute right-30 top-110 text-5xl text-violet-400  hover:text-violet-700  hidden cursor-pointer"
+                className="icon-right absolute right-[10%] top-[40%] text-5xl text-violet-400  hover:text-violet-700  hidden cursor-pointer"
                 onClick={slideForward}
               />
             </div>
@@ -115,59 +119,70 @@ const Home = () => {
           {visibleContainer.two && (
             <div
               ref={refContainer2}
-              className="px-10 sm:px-18  md:px-25 lg:px-40 container-one grid grid-cols-1 md:grid-cols-2 pt-10 pb-20 md:py-20 lg:py-30 w-full justify-between"
+              className=" relative px-10 sm:px-18  md:px-25 lg:px-40 container-one grid grid-cols-1 md:grid-cols-2 pt-10 pb-20 md:py-20 lg:py-30 w-full justify-between"
             >
               <IoIosArrowBack
-                className="icon-left absolute  left-25 top-110 text-5xl  hover:text-violet-700 text-violet-400 hidden cursor-pointer"
+                className="icon-left absolute  left-[5%] top-[40%] lg:left-[7%] text-5xl  hover:text-violet-700 text-violet-400 hidden cursor-pointer"
                 onClick={slideBack}
               />
               <div className="flex flex-col justify-center  w-fit gap-3">
                 <h5 className="text-lg font-semibold leading-4  ">
                   Smart Products
                 </h5>
-                <h1 className="text-5xl font-semibold leading-15 tracking-wide">
-                  Summer offer
-                  <br />
-                  2024 Collection
-                </h1>
-                <button className="shop-btn px-15 py-4 bg-transparent border-1  w-fit">
-                  SHOP NOW
-                </button>
+                <FadeInFromBottom delay={0.8} yOffset={50} duration={1}>
+                  <div className="flex flex-col gap-3">
+                    <h1 className="text-2xl md:text-4xl lg:text-5xl font-semibold leading-15 tracking-wide">
+                      Summer offer<br />
+                      2024 Collection
+                    </h1>
+                    <button className="shop-btn px-15 py-4 bg-transparent border-1  w-fit">
+                      SHOP NOW
+                    </button>
+                  </div>
+                </FadeInFromBottom>
               </div>
               <div className="w-full ">
-                <img src={slideTwo} className="bg-transparent m-auto" />
+                <FadeInFromBottom duration={1} delay={0.8} yOffset={100}>
+                  <img src={slideTwo} className="bg-transparent m-auto" />
+                </FadeInFromBottom>
               </div>
 
               <IoIosArrowForward
-                className="icon-right absolute right-30 top-110 text-5xl :text-violet-400  hover:text-violet-700  hidden cursor-pointer"
+                className="icon-right absolute right-[10%]  top-[40%] text-5xl :text-violet-400   hover:text-violet-700 text-violet-400 hidden cursor-pointer"
                 onClick={slideForward}
               />
             </div>
           )}
 
           {visibleContainer.three && (
-            <div className="px-10 sm:px-18  md:px-25 lg:px-40 container-one grid grid-cols-1 md:grid-cols-2 pt-10 pb-20 md:py-20 lg:py-30  w-full justify-between">
+            <div className="px-10  relative sm:px-18  md:px-25 lg:px-40 container-one grid grid-cols-1 md:grid-cols-2 pt-10 pb-20 md:py-20 lg:py-30  w-full justify-between">
               <IoIosArrowBack
-                className="icon-left absolute  left-25 top-110 text-5xl text-violet-400 hover:text-violet-700  hidden cursor-pointer"
+                className="icon-left absolute left-[5%] top-[40%] lg:left-[7%] text-5xl text-violet-400 hover:text-violet-700  hidden cursor-pointer"
                 onClick={slideBack}
               />
               <div className="flex flex-col justify-center  w-fit gap-3">
                 <h5 className="text-lg font-semibold leading-4  ">
                   New Arrival
                 </h5>
-                <h1 className="text-5xl font-semibold leading-15 tracking-wide">
-                  New Design <br />
-                  Bluetooth Speaker3
-                </h1>
-                <button className="shop-btn px-15 py-4 bg-transparent border-1  w-fit">
-                  SHOP NOW
-                </button>
+                <FadeInFromBottom duration={1} delay={0} yOffset={50}>
+                  <div className="flex flex-col gap-3">
+                    <h1 className="text-2xl md:text-4xl lg:text-5xl font-semibold leading-15 tracking-wide">
+                      New Design <br />
+                      Bluetooth Speaker3
+                    </h1>
+                    <button className="shop-btn px-15 py-4 bg-transparent border-1  w-fit">
+                      SHOP NOW
+                    </button>
+                  </div>
+                </FadeInFromBottom>
               </div>
               <div>
-                <img src={slideOne} className=" bg-transparent m-auto" />
+                <FadeInFromBottom duration={1} delay={0.8} yOffset={100}>
+                  <img src={slideOne} className="bg-transparent m-auto" />
+                </FadeInFromBottom>
               </div>
               <IoIosArrowForward
-                className="icon-right absolute right-30 top-110 text-5xl text-violet-400 hover:text-violet-700 hidden cursor-pointer"
+                className="icon-right absolute right-[10%] top-[40%] text-5xl text-violet-400 hover:text-violet-700 hidden cursor-pointer"
                 onClick={slideForward}
               />
             </div>
@@ -253,9 +268,11 @@ const Home = () => {
             </div>
             <div className="flex justify-between mt-[20px] gap-1">
               <div>
-                <h1 className="hover:text-gray-600 cursor-pointer ">Lorem Ispum Speaker</h1>
+                <h1 className="hover:text-gray-600 cursor-pointer ">
+                  Lorem Ispum Speaker
+                </h1>
                 <p>
-                  <span>$10</span>  - 
+                  <span>$10</span> -
                   <strike className="text-[rgb(127,127,127)]">$15</strike>
                 </p>
               </div>
