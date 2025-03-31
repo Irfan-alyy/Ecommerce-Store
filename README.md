@@ -20,7 +20,7 @@ This is a fully responsive **E-commerce Store** built using **React.js**, inspir
 ```
 /src
 │── components/       # Reusable UI components (Header, Footer, etc.),  Different pages (Home, Product, Cart, Checkout, etc.)    
-│── features/redux            # Redux store, slices, and persistor setup
+│── Features/redux            # Redux store, slices, and persistor setup
 │── assets/           # Images and static assets
 │── App.jsx            # Main application file
 │── main.jsx          # Entry point of the app
@@ -65,7 +65,7 @@ const handleAddToCart = (item) => {
 
 ### Remove an item from the cart:
 ```js
-import { removeItem } from "../redux/cartSlice";
+import { removeItem } from "../Feature/redux/cartSlice";
 
 dispatch(removeItem(productId));
 ```
