@@ -59,7 +59,7 @@ import { addItem } from "../redux/cartSlice";
 const dispatch = useDispatch();
 
 const handleAddToCart = (item) => {
-  dispatch(increment(item));
+  dispatch(addToCart(item));
 };
 ```
 

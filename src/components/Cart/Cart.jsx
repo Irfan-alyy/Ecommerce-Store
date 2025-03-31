@@ -2,45 +2,47 @@ import { color } from "framer-motion";
 import React from "react";
 import { ImCross } from "react-icons/im";
 import { useDispatch , useSelector} from "react-redux";
-import { clearCart, decrement, handleDecrement, handleIncrement } from "../../Feature/Redux/cartSlice";
+import {removeItem, handleDecrement, handleIncrement } from "../../Feature/Redux/cartSlice";
 import { NavLink } from "react-router";
 
 function Cart(props) {
     const dispatch=useDispatch()
-  const items = [
-    {
-        image: "https://vgl.ucdavis.edu/sites/g/files/dgvnsk15116/files/styles/sf_landscape_4x3/public/images/marketing_highlight/Sample-Collection-Box-Cat-640px.jpg?h=52d3fcb6&itok=4r75E_w2",
-        title:"lorem lipsum jacket",
-        color: " white",
-        size: "x",
-        price: 12.5,
-        offPrice: 11.5,
-        quantity:1
-
-    },
-    {
-        image: "https://vgl.ucdavis.edu/sites/g/files/dgvnsk15116/files/styles/sf_landscape_4x3/public/images/marketing_highlight/Sample-Collection-Box-Cat-640px.jpg?h=52d3fcb6&itok=4r75E_w2",
-        title:"lorem lipsum jacket",
-        color: " white",
-        size: "x",
-        price: 12.5,
-        offPrice: 11.5,
-        quantity:1
-
-    },
-    {
-        image: "https://vgl.ucdavis.edu/sites/g/files/dgvnsk15116/files/styles/sf_landscape_4x3/public/images/marketing_highlight/Sample-Collection-Box-Cat-640px.jpg?h=52d3fcb6&itok=4r75E_w2",
-        title:"lorem lipsum jacket",
-        color: " white",
-        size: "x",
-        price: 12.5,
-        offPrice: 11.5,
-        quantity:1
-
-    }
-];
+    // const items=useSelector(state=>state.reducer.items)
+    const items= [
+        {
+            image: "https://vgl.ucdavis.edu/sites/g/files/dgvnsk15116/files/styles/sf_landscape_4x3/public/images/marketing_highlight/Sample-Collection-Box-Cat-640px.jpg?h=52d3fcb6&itok=4r75E_w2",
+            title:"lorem lipsum jacket",
+            color: " white",
+            size: "x",
+            price: 12.5,
+            offPrice: 11.5,
+            quantity:1
+    
+        },
+        {
+            image: "https://vgl.ucdavis.edu/sites/g/files/dgvnsk15116/files/styles/sf_landscape_4x3/public/images/marketing_highlight/Sample-Collection-Box-Cat-640px.jpg?h=52d3fcb6&itok=4r75E_w2",
+            title:"lorem lipsum jacket",
+            color: " white",
+            size: "x",
+            price: 12.5,
+            offPrice: 11.5,
+            quantity:1
+    
+        },
+        {
+            image: "https://vgl.ucdavis.edu/sites/g/files/dgvnsk15116/files/styles/sf_landscape_4x3/public/images/marketing_highlight/Sample-Collection-Box-Cat-640px.jpg?h=52d3fcb6&itok=4r75E_w2",
+            title:"lorem lipsum jacket",
+            color: " white",
+            size: "x",
+            price: 12.5,
+            offPrice: 11.5,
+            quantity:1
+    
+        }
+    ]
+  
 const handleRemove = (item) => {
-    dispatch(decrement(item));
+    dispatch(removeItem(item));
   };
   const handlePlus = (index) => {
     dispatch(handleIncrement(index));
@@ -58,7 +60,7 @@ const handleRemove = (item) => {
       <h3 className="text-[20px] font-medium">Your Cart Items</h3>
 
       {items.map((elem, ind) => (
-        <div className="Wrapper w-full grid grid-cols-2 sm:flex sm:flex-wrap justify-between border-collapse border mb-1 border-[#8E8E8E]  p-4">
+        <div key={ind} className="Wrapper w-full grid grid-cols-2 sm:flex sm:flex-wrap justify-between border-collapse border mb-1 border-[#8E8E8E]  p-4">
           <div className="image w-auto h-auto flex flex-col">
             <div className="data w-24 h-32 flex justify-center items-center">
               <img

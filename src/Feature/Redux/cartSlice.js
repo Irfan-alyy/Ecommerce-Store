@@ -2,14 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
 const initialState = {
-  items: [],
+  items:[]
 };
 
 export const counterSlice = createSlice({
   name: "counter",
   initialState,
   reducers: {
-    increment: (state, action) => {
+    addToCart: (state, action) => {
       let include = false;
       state.items.forEach((element, index) => {
         if (element.id === action.payload.id) {
@@ -27,7 +27,7 @@ export const counterSlice = createSlice({
         state.items.push(action.payload);
       }
     },
-    decrement: (state, action) => {
+    removeItem: (state, action) => {
       state.items = state.items.filter((elem) => elem.id != action.payload.id);
       if (state.items.length === 0) state.totalPrice = 0;
     },
@@ -51,7 +51,7 @@ export const counterSlice = createSlice({
   },
 });
 
-export const { increment, decrement, handleIncrement, handleDecrement, clearCart } =
+export const { addToCart, removeItem, handleIncrement, handleDecrement, clearCart } =
   counterSlice.actions;
 
 export default counterSlice.reducer;
