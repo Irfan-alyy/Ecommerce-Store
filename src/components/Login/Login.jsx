@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import FadeInFromBottom from "../ui/animations/FadeInFromBottom";
+import FadeInFromBottom from "../../ui/animations/FadeInFromBottom";
 const Login = () => {
   const [showLogin, setShowLogin] = useState(true);
   const [showRegister, setShowRegister] = useState(false);

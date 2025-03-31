@@ -6,6 +6,7 @@ import { CiMenuBurger } from "react-icons/ci";
 import { NavLink } from "react-router";
 import logo from "../../assets/logo.png";
 import { useRef } from "react";
+import Badge from '@mui/material/Badge';
 const Header = () => {
   const searchRef = useRef();
   const searchBtnRef = useRef();
@@ -62,7 +63,9 @@ const Header = () => {
             className="sm:hidden"
             onClick={() => setMenuVisible(false)}
           >
-            <CiShoppingCart className={`w-7 h-7 `} />
+           <Badge badgeContent={2}>
+            <CiShoppingCart className="w-7 h-7" />
+          </Badge>
           </NavLink>
 
           <CiMenuBurger
@@ -82,7 +85,9 @@ const Header = () => {
             <FaRegCircleUser className="w-5 h-5" />
           </NavLink>
           <NavLink to="/cart">
+          <Badge badgeContent={2}>
             <CiShoppingCart className="w-7 h-7" />
+          </Badge>
           </NavLink>
         </div>
       </div>

@@ -14,7 +14,7 @@ import { useRef } from "react";
 import "./Home.css";
 import { useState } from "react";
 import QuickView from "./QuickView";
-import FadeInFromBottom from "../ui/animations/FadeInFromBottom";
+import FadeInFromBottom from "../../ui/animations/FadeInFromBottom";
 const Home = () => {
   const [visibleContainer, setVisibleContainer] = useState({
     one: true,
