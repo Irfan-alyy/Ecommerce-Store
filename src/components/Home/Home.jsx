@@ -77,7 +77,7 @@ const Home = () => {
   return (
     <>
       <section className=" bg-[rgb(218,237,255)]">
-        <div className="flex overflow-hidden items-center justify-center  pb-50 ">
+        <div className="flex overflow-hidden items-center justify-center pb-30 sm:pb-50 ">
           {visibleContainer.one && (
             <div
               ref={refContainer1}
@@ -190,8 +190,8 @@ const Home = () => {
         </div>
       </section>
       <section className="px-10 sm:px-18  md:px-25 lg:px-40 overfllow-hidden">
-        <div className="flex flex-col lg:flex-row gap-8 items-center mt-[-180px] pb-20">
-          <div className="flex flex-col items-center justify-end pb-10 gap-2 w-[375px] h-[350px] relative overflow-hidden">
+        <div className="flex flex-col lg:flex-row gap-8 items-center mt-[-100px] sm:mt-[-180px] pb-20">
+          <div className="flex flex-col items-center justify-end pb-10 gap-2 w-75 sm:w-[375px] h-80 sm:h-[350px] relative overflow-hidden">
             <div className="absolute overflow-hidden">
               <img
                 src={product1}
@@ -204,7 +204,7 @@ const Home = () => {
               <h2 className="text-xl font-semibold ">Bluetooth Speaker</h2>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-end pb-10 gap-2 w-[375px] h-[350px] relative overflow-hidden">
+          <div className="flex flex-col items-center justify-end pb-10 gap-2 w-75 sm:w-[375px] h-80 sm:h-[350px] relative overflow-hidden">
             <div className="absolute overflow-hidden">
               <img
                 src={product2}
@@ -217,7 +217,7 @@ const Home = () => {
               <h2 className="text-xl font-semibold">Bluetooth Speaker</h2>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-end pb-10 gap-2 w-[375px] h-[350px] relative overflow-hidden">
+          <div className="flex flex-col items-center justify-end pb-10 gap-2 w-75 sm:w-[375px] h-80 sm:h-[350px] relative overflow-hidden">
             <div className="absolute overflow-hidden">
               <img
                 src={product3}
