@@ -13,6 +13,7 @@ import About from './components/About/About'
 import Contact from './components/Contact/Contact'
 import Error404 from './components/error/error404'
 import Login from './components/Login/Login'
+import Dashboard from './components/Dashboard/Dashbord'
 
 
 
@@ -55,6 +56,10 @@ function App() {
         {
           path: "/contact",
           element: <Contact/>
+        },
+        {
+          path: "/admin",
+          element: <Dashboard/>
         },
         {
           path: "*",
