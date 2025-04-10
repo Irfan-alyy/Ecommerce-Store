@@ -5,7 +5,6 @@ import product1 from "../../assets/product1.jpg";
 import product2 from "../../assets/product2.jpg";
 import img1 from "../../assets/1.jpg";
 import { FaEye } from "react-icons/fa";
-
 import { CiShoppingCart } from "react-icons/ci";
 
 import { IoIosArrowBack } from "react-icons/io";
@@ -284,9 +283,18 @@ const Home = () => {
           </div>
         </div>
       </section>
-      {/* <QuickView /> */}
+      {/* <QuickView />  */}
+
+<section className="mt-6 mb-100  sm:mb-20 ">
+<Testimonial/>
+</section>
+
+
+
+
     </>
   );
 };
 
 export default Home;
+
