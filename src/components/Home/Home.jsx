@@ -14,7 +14,7 @@ import "./Home.css";
 import { useState } from "react";
 import QuickView from "./QuickView";
 import FadeInFromBottom from "../ui/animations/FadeInFromBottom";
-import One from "../Contact/One";
+import Testimonial from "../Contact/Testimonial";
 const Home = () => {
   const [visibleContainer, setVisibleContainer] = useState({
     one: true,
@@ -287,7 +287,7 @@ const Home = () => {
       {/* <QuickView />  */}
 
 <section className="mt-6 mb-100  sm:mb-20 ">
-<One/>
+<Testimonial/>
 </section>
 
 
@@ -298,3 +298,4 @@ const Home = () => {
 };
 
 export default Home;
+

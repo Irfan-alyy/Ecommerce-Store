@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BsSignpost2Fill } from "react-icons/bs";
 
-const One = () => {
+const Testimonial = () => {
   const testimonials = [
     {
       id: 1,
@@ -124,4 +124,4 @@ const One = () => {
   );
 };
 
-export default One;
+export default Testimonial;
