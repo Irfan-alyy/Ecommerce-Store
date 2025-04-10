@@ -14,6 +14,7 @@ import "./Home.css";
 import { useState } from "react";
 import QuickView from "./QuickView";
 import FadeInFromBottom from "../../ui/animations/FadeInFromBottom";
+import Testimonial from "./components/Testimonial";
 const Home = () => {
   const [visibleContainer, setVisibleContainer] = useState({
     one: true,

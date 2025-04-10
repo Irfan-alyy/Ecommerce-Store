@@ -19,7 +19,6 @@ import { PersistGate } from "redux-persist/integration/react";
 import Dashboard from './components/Dashboard/Dashbord'
 
 function App() {
-  const [count, setCount] = useState(0);
   const router = createBrowserRouter([
     {
       path: "",
@@ -56,6 +55,10 @@ function App() {
         {
           path: "/contact",
           element: <Contact />,
+        },
+        {
+          path:"/admin",
+          element:<Dashboard/>
         },
         {
           path: "*",
