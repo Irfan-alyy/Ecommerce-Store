@@ -67,6 +67,12 @@
     z-index: 1;
    
 }
+.product-one:hover{
+    .icon{
+        opacity: 100;
+        filter: brightness(1);
+    }
+}
 .product-one::after{
     content: "";
     top: 0;

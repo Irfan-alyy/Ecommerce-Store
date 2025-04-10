@@ -3,24 +3,26 @@ import slideTwo from "../../assets/slide2.png";
 import product3 from "../../assets/slide3.jpg";
 import product1 from "../../assets/product1.jpg";
 import product2 from "../../assets/product2.jpg";
-import img1 from "../../assets/1.jpg";
+
 import { FaEye } from "react-icons/fa";
 import { CiShoppingCart } from "react-icons/ci";
-
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import { useRef } from "react";
 import "./Home.css";
 import { useState } from "react";
-import QuickView from "./QuickView";
+import QuickView from "./components/QuickView";
 import FadeInFromBottom from "../../ui/animations/FadeInFromBottom";
 import Testimonial from "./components/Testimonial";
 const Home = () => {
+
   const [visibleContainer, setVisibleContainer] = useState({
     one: true,
     two: false,
     three: false,
   });
+  const [quickViewVisble,setQuickViewVisble]=useState(false)
+  const [quickViewItem,setQuickViewItem]=useState(null)
 
   const refContainer1 = useRef();
   const refContainer2 = useRef();
@@ -72,8 +74,12 @@ const Home = () => {
       });
     }
   };
-  const quickView = (product) => {};
+ ;
 
+const showQuickView=(item)=>{
+  setQuickViewItem(item)
+  setQuickViewVisble(true)
+}
   return (
     <>
       <section className=" bg-[rgb(218,237,255)]">
@@ -258,12 +264,12 @@ const Home = () => {
             <div className="group product-one w-[260px] h-[345px]">
               <CiShoppingCart
                 title="Add Cart"
-                className="brightness-50 opacity-0 group-hover:brightness-100 group-hover:opacity-100 transition-opacity transition-brightness duration-300 z-10 absolute top-1/2 right-22 bg-[rgb(31,115,23)] text-white hover:text-black hover:bg-white rounded-4xl text-3xl "
+                className="icon brightness-50 opacity-0 group-hover:brightness-100 group-hover:opacity-100 transition-opacity transition-brightness duration-300 z-10 absolute top-1/2 right-22 bg-[rgb(31,115,23)] text-white hover:text-black hover:bg-white rounded-4xl text-3xl "
               />
               <FaEye
-                onClick={quickView}
                 title="Quick View"
-                className="brightness-50 opacity-0 group-hover:brightness-100  group-hover:opacity-100 transition-opacity transition-brightness duration-300  absolute top-1/2 left-22  bg-[rgb(31,115,23)] text-white hover:text-black hover:bg-white rounded-4xl   text-3xl z-10 "
+                className=" icon brightness-50 opacity-0 group-hover:brightness-100  group-hover:opacity-100 transition-opacity transition-brightness duration-300  absolute top-1/2 left-22  bg-[rgb(31,115,23)] text-white hover:text-black hover:bg-white rounded-4xl   text-3xl z-10 "
+                onClick={()=>showQuickView("elem from map")}
               />
             </div>
             <div className="flex justify-between mt-[20px] gap-1">
@@ -283,6 +289,9 @@ const Home = () => {
             </div>
           </div>
         </div>
+      </section>
+      <section className="flex items-center justify-center">
+        {quickViewVisble && <QuickView visible={quickViewVisble} setVisible={setQuickViewVisble} product={quickViewItem}/>}
       </section>
       {/* <QuickView />  */}
 

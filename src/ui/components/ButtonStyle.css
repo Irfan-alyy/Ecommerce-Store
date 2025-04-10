@@ -1,0 +1,23 @@
+.shop-btn{
+    position: relative;
+    overflow: hidden;
+    transition: all 1s;
+    overflow: hidden;
+}
+.shop-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #764abc;
+    transition: all 1s ease-in-out;
+    z-index: -1;
+    transform: translateX(-100%);
+  }
+
+  .shop-btn:hover::before{
+      transform: translateX(0);
+     
+    }
