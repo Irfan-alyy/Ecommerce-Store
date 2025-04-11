@@ -8,13 +8,32 @@ import logo from "../../assets/logo.png";
 import { useRef } from "react";
 import Badge from "@mui/material/Badge";
 const Header = () => {
+  const [isSearchBoxVisible, setSearchBoxVisible] = useState(false);
+  const [menuVisible, setMenuVisible] = useState(false);
+
+  const [showHeader, setShowHeader] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const searchRef = useRef();
   const searchBtnRef = useRef();
 
   const menuBtn = useRef();
   const menuBurgerBtn = useRef();
-  const [isSearchBoxVisible, setSearchBoxVisible] = useState(false);
-  const [menuVisible, setMenuVisible] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY <= 0) {
+        setShowHeader(true);
+      } else if (currentScrollY > lastScrollY) {
+        setShowHeader(false);
+      } else {
+        setShowHeader(true);
+      }
+      setLastScrollY(currentScrollY);
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
   useEffect(() => {
     if (!isSearchBoxVisible) return;
@@ -45,7 +64,7 @@ const Header = () => {
     // menuVisible? null: menuBtn.current.classList.add("hidden");menuBtn.current.classList.add("flex")
   };
   return (
-    <div className="Header bg-[rgb(218,237,255)] relative ">
+    <div className={`Header bg-[rgb(218,237,255)] fixed top-0 left-0 w-full z-50 transition-transform duration-300 ${showHeader?"translate-y-0": "-translate-y-full"}`}>
       <div className="px-5  sm:px-15  md:px-30 lg:px-40 flex justify-between  h-25 items-center">
         <div className="hidden items-center gap-5 md:gap-10 md:flex">
           <p className="text-lg">Call Us 3965410</p>
@@ -56,7 +75,7 @@ const Header = () => {
 
         {/* This is humburger button visible only in small screenn */}
         <div className="mobileIcons flex items-center gap-5">
-        <CiSearch
+          <CiSearch
             className="flex sm:hidden cursor-pointer w-7 h-7"
             ref={searchBtnRef}
             onClick={handleSearchClick}
@@ -95,7 +114,7 @@ const Header = () => {
         </div>
       </div>
       <hr className="hidden sm:block mx-40 text-[rgb(180,178,178)]" />
-{/* Navigation menu visible on large screens */}
+      {/* Navigation menu visible on large screens */}
       <ul className="hidden  sm:flex justify-center py-5 gap-10">
         <li>
           <NavLink to="/">Home</NavLink>
@@ -113,10 +132,11 @@ const Header = () => {
 
       <div
         ref={searchRef}
-        className={`flex items-center h-17 bg-[rgb(246,246,248)] p-4 absolute top-25 right-10  sm:right-35 md:right-60 z-10 transition-all duration-300 ease-in transform origin-top perspective-[1000px] ${isSearchBoxVisible
+        className={`flex items-center h-17 bg-[rgb(246,246,248)] p-4 absolute top-25 right-10  sm:right-35 md:right-60 z-10 transition-all duration-300 ease-in transform origin-top perspective-[1000px] ${
+          isSearchBoxVisible
             ? "opacity-100 scale-100 translate-y-0 rotate-x-0"
             : "opacity-0 scale-90 -translate-y-2 rotate-x-90 pointer-events-none"
-          }`}
+        }`}
       >
         <span className="border border-[rgba(188,189,189,0.72)] h-12 p-0 flex items-center border-collapse">
           <input type="text" placeholder="Search" className="pl-4 outline-0" />

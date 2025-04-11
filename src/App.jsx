@@ -72,6 +72,7 @@ function App() {
     <>
       <Provider store={store}>
         <PersistGate loading={<p>Loading..</p>} persistor={persistor}>
+          
           <RouterProvider router={router} />
         </PersistGate>
       </Provider>

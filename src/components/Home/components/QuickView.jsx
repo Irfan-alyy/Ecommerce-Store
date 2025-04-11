@@ -12,7 +12,7 @@ import BasicButton from "../../../ui/components/Button";
 const QuickView = ({ product, visible, setVisible }) => {
   const [startIndex, setStartIndex] = useState(0);
   
-  const [currentPic, setCurrentPic] = useState(0);
+  const [currentPic, setCurrentPic] = useState(image1);
   const modalRef = useRef();
   useEffect(() => {
 
@@ -70,7 +70,7 @@ const QuickView = ({ product, visible, setVisible }) => {
         
         <div className="px-3  md:w-100 flex md:flex-col ">
           <div className="flex w-full h-auto md:h-100 bg-[rgb(246,246,246)] items-center justify-center">
-            <img src={images[currentPic]} alt="" className="w-full " />
+            <img src={currentPic} alt="" className="w-full " />
           </div>
 
           <div className="relative w-full max-w-3xl mx-auto overflow-hidden group">
@@ -85,7 +85,7 @@ const QuickView = ({ product, visible, setVisible }) => {
                   src={src}
                   alt={`img-${idx}`}
                   className="w-[22.5%] object-cover transition-all  duration-500 "
-                  onClick={() => setCurrentPic(idx)}
+                  onClick={() => setCurrentPic(src)}
                 />
               ))}
             </div>

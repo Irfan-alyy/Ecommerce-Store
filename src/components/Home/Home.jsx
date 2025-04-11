@@ -14,8 +14,8 @@ import { useState } from "react";
 import QuickView from "./components/QuickView";
 import FadeInFromBottom from "../../ui/animations/FadeInFromBottom";
 import Testimonial from "./components/Testimonial";
+import { useNavigate } from "react-router";
 const Home = () => {
-
   const [visibleContainer, setVisibleContainer] = useState({
     one: true,
     two: false,
@@ -23,7 +23,8 @@ const Home = () => {
   });
   const [quickViewVisble,setQuickViewVisble]=useState(false)
   const [quickViewItem,setQuickViewItem]=useState(null)
-
+  const navigate=useNavigate();
+  
   const refContainer1 = useRef();
   const refContainer2 = useRef();
   const refContainer3 = useRef();
@@ -261,15 +262,16 @@ const showQuickView=(item)=>{
               New
             </span>
 
-            <div className="group product-one w-[260px] h-[345px]">
+            <div className="group product-one w-[260px] h-[345px]" onClick={()=>navigate(`product/${1}`)}>
               <CiShoppingCart
                 title="Add Cart"
-                className="icon brightness-50 opacity-0 group-hover:brightness-100 group-hover:opacity-100 transition-opacity transition-brightness duration-300 z-10 absolute top-1/2 right-22 bg-[rgb(31,115,23)] text-white hover:text-black hover:bg-white rounded-4xl text-3xl "
-              />
+                className="cursor-pointer icon brightness-50 opacity-0 group-hover:brightness-100 group-hover:opacity-100 transition-opacity transition-brightness duration-300 z-10 absolute top-1/2 right-22 bg-[rgb(31,115,23)] text-white hover:text-black hover:bg-white rounded-4xl text-3xl "
+                onClick={(e)=>{e.stopPropagation();"add to cart dispacther"}}
+               />
               <FaEye
                 title="Quick View"
-                className=" icon brightness-50 opacity-0 group-hover:brightness-100  group-hover:opacity-100 transition-opacity transition-brightness duration-300  absolute top-1/2 left-22  bg-[rgb(31,115,23)] text-white hover:text-black hover:bg-white rounded-4xl   text-3xl z-10 "
-                onClick={()=>showQuickView("elem from map")}
+                className="cursor-pointer icon brightness-50 opacity-0 group-hover:brightness-100  group-hover:opacity-100 transition-opacity transition-brightness duration-300  absolute top-1/2 left-22  bg-[rgb(31,115,23)] text-white hover:text-black hover:bg-white rounded-4xl   text-3xl z-10 "
+                onClick={(e)=>{e.stopPropagation();showQuickView("elem from map")}}
               />
             </div>
             <div className="flex justify-between mt-[20px] gap-1">

@@ -59,7 +59,7 @@ const RatingForm = () => {
             required
             name="message"
             id="msg"
-            className="px-5 py-2 border-2 rounded border-gray-300 h-40 md:h-20 md:h-30 w-70 md:w-125"
+            className="px-5 py-2 border-2 rounded border-gray-300 h-40 sm:h-20 md:h-30 w-70 md:w-125"
             placeholder="Message"
           />
           <button
