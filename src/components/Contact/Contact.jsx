@@ -64,7 +64,7 @@ const Contact = () => {
           </div>
           <div className="main flex justify-center cursor-pointer  items-center flex-row mt-10 mr-10 group">
             <i
-              className="border text-3xl ml-8  h-[40px] w-[40px] flex justify-center items-center border-black    group-hover:bg-black group-hover:text-white"
+              className="border text-3xl ml-5 sm:ml-6 lg:ml-8  h-[40px] w-[40px] flex justify-center items-center border-black    group-hover:bg-black group-hover:text-white"
               style={{ borderRadius: "50%" }}
             >
               <IoLocationOutline

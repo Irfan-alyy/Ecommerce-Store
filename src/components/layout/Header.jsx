@@ -13,6 +13,7 @@ const Header = () => {
 
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isTop,setIsTop]=useState(true)
   const searchRef = useRef();
   const searchBtnRef = useRef();
 
@@ -25,9 +26,13 @@ const Header = () => {
         setShowHeader(true);
       } else if (currentScrollY > lastScrollY) {
         setShowHeader(false);
+        setIsTop(false)
       } else {
         setShowHeader(true);
+        setIsTop(false)
       }
+      if(currentScrollY<=10) setIsTop(true)
+        if(menuVisible) setMenuVisible(false)
       setLastScrollY(currentScrollY);
     };
     window.addEventListener("scroll", handleScroll);
@@ -115,6 +120,7 @@ const Header = () => {
       </div>
       <hr className="hidden sm:block mx-40 text-[rgb(180,178,178)]" />
       {/* Navigation menu visible on large screens */}
+      {isTop &&
       <ul className="hidden  sm:flex justify-center py-5 gap-10">
         <li>
           <NavLink to="/">Home</NavLink>
@@ -129,7 +135,7 @@ const Header = () => {
           <NavLink to="/contact">Contact</NavLink>
         </li>
       </ul>
-
+    }
       <div
         ref={searchRef}
         className={`flex items-center h-17 bg-[rgb(246,246,248)] p-4 absolute top-25 right-10  sm:right-35 md:right-60 z-10 transition-all duration-300 ease-in transform origin-top perspective-[1000px] ${
@@ -145,24 +151,12 @@ const Header = () => {
           </button>
         </span>
       </div>
-
+{/* this menu will only show on small screen after clicking menu button */}
       {menuVisible && (
         <div
           ref={menuBtn}
           className={`sm:hidden flex flex-col   bg-[rgb(218,237,255)] border-[rgba(188,189,189,0.72)] border-b-2 justify-end transition-transform transform duration-5000 ease-in`}
         >
-          {/* <div className="flex ml-10">
-            <span className="flex border rounded border-[rgba(188,189,189,0.72)] p-0 border-collapse m-0">
-              <input
-                type="text"
-                placeholder="Search"
-                className="pl-5 outline-0"
-              />
-              <button className="px-7 py-5 bg-violet-500">
-                <CiSearch className="text-white" />
-              </button>
-            </span>
-          </div> */}
           <ul
             className="flex flex-col gap-5 py-4 pl-10 w-5/6"
             onClick={(e) =>
@@ -171,21 +165,21 @@ const Header = () => {
                 : null
             }
           >
-            <li className=" py-3 active:bg-[rgb(139,157,174)] rounded">
-              <NavLink to="/">Home</NavLink>
-            </li>
-            <li className=" py-3 active:bg-[rgb(139,157,174)] rounded">
-              <NavLink to="/catagory">Catagories</NavLink>
-            </li>
-            <li className=" py-3 active:bg-[rgb(139,157,174)] rounded">
-              <NavLink to="/login">Account</NavLink>
-            </li>
-            <li className=" py-3 active:bg-[rgb(139,157,174)] rounded">
-              <NavLink to="/about">About</NavLink>
-            </li>
-            <li className=" py-3 active:bg-[rgb(139,157,174)] rounded">
-              <NavLink to="/contact">Contact</NavLink>
-            </li>
+            <NavLink to="/"><li className=" py-3 active:bg-[rgb(139,157,174)] rounded">
+              Home
+            </li></NavLink>
+            <NavLink to="/catagory"><li className=" py-3 active:bg-[rgb(139,157,174)] rounded">
+              Catagories
+            </li></NavLink>
+            <NavLink to="/login"> <li className=" py-3 active:bg-[rgb(139,157,174)] rounded">
+              Account
+            </li></NavLink>
+            <NavLink to="/about"><li className=" py-3 active:bg-[rgb(139,157,174)] rounded">
+             About
+            </li></NavLink>
+            <NavLink to="/contact"><li className=" py-3 active:bg-[rgb(139,157,174)] rounded">
+              Contact
+            </li></NavLink>
           </ul>
         </div>
       )}
