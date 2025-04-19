@@ -112,7 +112,7 @@ const QuickView = ({ product, visible, setVisible }) => {
             atque fuga enim optio mollitia libero eos.
           </p>
           <hr className="hidden md:block text-[#7d7d7dcb]pb-5  md:pb-10"/>
-          <BasicButton text="ADD TO CART"/>
+          <BasicButton text="ADD TO CART" />
         </div>
         </div>
       </div>

@@ -1,12 +1,8 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import Header from "./components/layout/Header";
 import { createBrowserRouter, Router, RouterProvider } from "react-router";
 import Layout from "./components/layout/Layout";
 import Home from "./components/Home/Home";
-import Catagory from "./components/catagory/Catogories";
+import Category from "./pages/category/Category"
 import Cart from "./components/Cart/Cart";
 import Product from "./components/Product/Product";
 import About from "./components/About/About";
@@ -17,6 +13,7 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./Feature/Redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import Dashboard from './components/Dashboard/Dashbord'
+
 
 function App() {
   const router = createBrowserRouter([
@@ -37,11 +34,11 @@ function App() {
           element: <Login />,
         },
         {
-          path: "/catagory",
-          element: <Catagory />,
+          path: "/category",
+          element: <Category />,
         },
         {
-          path: "/product/:id",
+          path: "category/product/:id",
           element: <Product />,
         },
         {

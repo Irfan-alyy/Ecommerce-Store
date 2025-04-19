@@ -74,7 +74,7 @@ const Header = () => {
         <div className="hidden items-center gap-5 md:gap-10 md:flex">
           <p className="text-lg">Call Us 3965410</p>
         </div>
-        <NavLink to="/" onClick={() => setMenuVisible(false)}>
+        <NavLink to="/" onClick={() => setMenuVisible(false)} >
           <img src={logo} alt="Logo" />
         </NavLink>
 
@@ -126,7 +126,7 @@ const Header = () => {
           <NavLink to="/">Home</NavLink>
         </li>
         <li>
-          <NavLink to="/catagory">Catagories</NavLink>
+          <NavLink to="/category">Catagories</NavLink>
         </li>
         <li>
           <NavLink to="/about">About</NavLink>
@@ -168,7 +168,7 @@ const Header = () => {
             <NavLink to="/"><li className=" py-3 active:bg-[rgb(139,157,174)] rounded">
               Home
             </li></NavLink>
-            <NavLink to="/catagory"><li className=" py-3 active:bg-[rgb(139,157,174)] rounded">
+            <NavLink to="/category"><li className=" py-3 active:bg-[rgb(139,157,174)] rounded">
               Catagories
             </li></NavLink>
             <NavLink to="/login"> <li className=" py-3 active:bg-[rgb(139,157,174)] rounded">

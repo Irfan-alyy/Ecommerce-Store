@@ -262,7 +262,7 @@ const showQuickView=(item)=>{
               New
             </span>
 
-            <div className="group product-one w-[260px] h-[345px]" onClick={()=>navigate(`product/${1}`)}>
+            <div className="group product-one w-[260px] h-[345px]" onClick={()=>navigate(`category/product/${1}`)}>
               <CiShoppingCart
                 title="Add Cart"
                 className="cursor-pointer icon brightness-50 opacity-0 group-hover:brightness-100 group-hover:opacity-100 transition-opacity transition-brightness duration-300 z-10 absolute top-1/2 right-22 bg-[rgb(31,115,23)] text-white hover:text-black hover:bg-white rounded-4xl text-3xl "
