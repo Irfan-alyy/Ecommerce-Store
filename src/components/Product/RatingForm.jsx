@@ -1,7 +1,8 @@
+import axios from "axios";
 import { use, useRef, useState } from "react";
 import { FaStar } from "react-icons/fa";
 
-const RatingForm = () => {
+const RatingForm = ({product}) => {
   const [rating, setRating] = useState(5);
   const nameRef = useRef();
   const emailRef = useRef();
@@ -9,14 +10,17 @@ const RatingForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const productCopy=product;
     const review = {
       name: nameRef.current.value,
       email: emailRef.current.value,
       message: messageRef.current.value,
       rating: rating,
     };
-    console.log(review);
-    e.target.reset()
+    productCopy.review=[]
+    productCopy.review,push(review)
+    axios.put(`https://fakestoreapi.com/products/${product.id}`, productCopy).then(res=>console.log(res)).catch(err=>console.log(err.message)
+    )
   };
   return (
     <div className="">

@@ -10,7 +10,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
 import BasicButton from "../../ui/components/Button";
-import {motion, AnimatePresence} from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion";
 import {
   TiSocialDribbble,
   TiSocialFacebook,
@@ -20,15 +20,22 @@ import {
 } from "react-icons/ti";
 import { borderBottom } from "@mui/system";
 import RatingForm from "./RatingForm";
+import { useParams } from "react-router";
+import axios from "axios";
+import useProduct from "./useProduct";
 
 const Product = () => {
+  const { id } = useParams();
+  const {product, loading,error} = useProduct({id});
   const [startIndex, setStartIndex] = useState(0);
-  const [currentPic, setCurrentPic] = useState(image1);
+  const [currentPic, setCurrentPic] = useState("");
   const [isDescriptionVisible, setDescriptionVisble] = useState(true);
   const images = [image1, image2, image3, image4];
   const visibleCount = 4;
-
-  const total = images.length;
+  useEffect(() => {
+   images.unshift(product?.image) 
+   setCurrentPic(images[0])
+  },[product]);
 
   const handlePrev = () => {
     setStartIndex((prev) => (prev - 1) % images.length);
@@ -49,9 +56,14 @@ const Product = () => {
       ];
     }
   };
+ if(loading){
+  return <p className="text-center text-2xl">Loading...</p>
+ }
+
 
   return (
     <div className="px-10 sm:px-20 md:px-30 xl:px-40">
+      
       <div className="justify-center h-auto bg-white rounded-xl py-10 lg:py-25  ">
         <div className="flex flex-col lg:flex-row  py-5 lg:py-10 gap-5 md:gap-10 lg:gap-15">
           <div className=" flex flex-col ">
@@ -91,21 +103,18 @@ const Product = () => {
           </div>
           <div className="flex flex-col w-11/12 pl-5">
             <div className="md:pr-15 flex flex-col md:gap-2 py-2">
-              <h1 className="text-2xl md:text-3xl">Lorem Ispum Speaker</h1>
+              <h1 className="text-2xl md:text-3xl">{product.title}</h1>
               <p className="text-2xl py-2">
-                $20 <strike className="text-lg">$30</strike>
+                ${product.price} <strike className="text-lg">{(product.price*1.1).toFixed(2)}</strike>
               </p>
 
               <p className="text-xl py-5 md:py-10">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit
-                expedita neque dignissimos itaque facilis tempore tenetur
-                voluptatem, maiores laudantium distinctio voluptatum. Repellat
-                iusto atque fuga enim optio mollitia libero eos.
+                {product.description.slice(0,200)}...
               </p>
               <hr className="hidden md:block text-[#7d7d7dcb] pb-5  md:pb-10" />
               <BasicButton text="ADD TO CART" />
-              <p className="leading-10 pt-5">Catagories: electronics</p>
-              <p>Tags: electronics</p>
+              <p className="leading-10 pt-5">Catagories:{product.category}</p>
+              <p>Tags: {product.category}</p>
 
               <div className="flex gap-10 mt-5">
                 <TiSocialFacebook className="text-2xl cursor-pointer" />
@@ -134,60 +143,62 @@ const Product = () => {
             }`}
             onClick={() => setDescriptionVisble(false)}
           >
-            Reviews(2)
+            Reviews({product?.ratings?.lenght || 0})
           </button>
         </div>
       </div>
       <AnimatePresence mode="wait">
-      <div className="w-full py-10 h-auto">
-        {isDescriptionVisible?(<motion.div
-      key="description"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.3 }}
-    >
-          <p >
-          Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-          accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
-          ab illo inventore veritatis et quasi architecto beatae vitae dicta
-          sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-          aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos
-          qui ratione voluptatem sequi nesciunt.
-          </p>
-        </motion.div>):(
-       <motion.div
-       key="reviews"
-       initial={{ opacity: 0, y: 20 }}
-       animate={{ opacity: 1, y: 0 }}
-       exit={{ opacity: 0, y: -20 }}
-       transition={{ duration: 0.3 }}
-       className="flex flex-col lg:flex-row gap-5 items-center"
-     >
-      <div className="flex flex-col lg:flex-row gap-5">
-          <div className="flex flex-col lg:flex-row gap-5 w-7/12">
-            <img src={image1} alt="user" className="w-20 h-20" />
-            <div className="flex flex-col gap-4 ">
-            <div className=" w-full flex flex-wrap items-center gap-5 py-10">
-              <h3 className="flex-shrink-1">User Name</h3>
-              <span className="flex gap-1">
-                {[...Array(5)].map((_, ind) => (
-                  <FaStar className={`${ind < 4 ? "text-yellow-400" : ""}`} />
-                ))}
-              </span>
-            </div>
-            <p className="max-w-lg">
-              Vestibulum ante ipsum primis aucibus orci luctustrices posuere
-              cubilia Curae Suspendisse viverra ed viverra. Mauris ullarper
-              euismod vehicula. Phasellus quam nisi, congue id nulla.
-            </p>
-          </div>
-          </div>
-           <RatingForm />
-           </div>
-        </motion.div>)}
-      </div>
-        </AnimatePresence>
+        <div className="w-full py-10 h-auto">
+          {isDescriptionVisible ? (
+            <motion.div
+              key="description"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <p>
+                {product.description}
+              </p>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="reviews"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="flex flex-col lg:flex-row gap-5 items-center"
+            >
+              <div className="flex flex-col lg:flex-row gap-5">
+                <div className="flex flex-col lg:flex-row gap-5 w-7/12">
+                  <img src={image1} alt="user" className="w-20 h-20" />
+                  <div className="flex flex-col gap-4 ">
+                    <div className=" w-full flex flex-wrap items-center gap-5 py-10">
+                      <h3 className="flex-shrink-1">User Name</h3>
+                      <span className="flex gap-1">
+                        {[...Array(5)].map((_, ind) => (
+                          <FaStar
+                          key={ind}
+                            className={`${ind < Math.ceil(product.rating.rate) ? "text-yellow-400" : ""}`}
+                          />
+                        ))}
+                      </span>
+                    </div>
+                    <p className="max-w-lg">
+                      Vestibulum ante ipsum primis aucibus orci luctustrices
+                      posuere cubilia Curae Suspendisse viverra ed viverra.
+                      Mauris ullarper euismod vehicula. Phasellus quam nisi,
+                      congue id nulla.
+                    </p>
+                  </div>
+                </div>
+                <RatingForm product={product} />
+              </div>
+            </motion.div>
+          )}
+        </div>
+      </AnimatePresence>
     </div>
   );
 };

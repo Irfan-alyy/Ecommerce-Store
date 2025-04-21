@@ -13,7 +13,7 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./Feature/Redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import Dashboard from './components/Dashboard/Dashbord'
-import ResetPassword from "./components/resetPassword";
+import ResetPassword from "./components/resetPassword/resetPassword";
 
 
 function App() {
