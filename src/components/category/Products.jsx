@@ -28,7 +28,7 @@ const Product = ({product}) => {
 
           <div
             className="w-full h-auto"
-            onClick={() => navigate(`product/${1}`)}
+            onClick={() => navigate(`product/${product.id}`)}
           >
             {/* <div className="relative w-full h-auto group-hover:opacity-0 transition-opacity duration-300 flex justify-between">
             <img src={product.image} alt="product" className="group-hover:hidden object-cover " />

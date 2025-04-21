@@ -3,7 +3,7 @@ import { CiSearch } from "react-icons/ci";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { CiShoppingCart } from "react-icons/ci";
 import { CiMenuBurger } from "react-icons/ci";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import logo from "../../assets/logo.png";
 import { useRef } from "react";
 import Badge from "@mui/material/Badge";
@@ -14,8 +14,23 @@ const Header = () => {
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isTop,setIsTop]=useState(true)
+
+
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+const handleSearch=(e) => {
+  e.preventDefault();
+  if (query.trim() !== "") {
+    navigate(`/category?search=${encodeURIComponent(query)}`);
+    setQuery("");
+    setSearchBoxVisible(false);
+  }
+};
+
   const searchRef = useRef();
   const searchBtnRef = useRef();
+
+  const searchInputRef=useRef();
 
   const menuBtn = useRef();
   const menuBurgerBtn = useRef();
@@ -41,6 +56,9 @@ const Header = () => {
   }, [lastScrollY]);
 
   useEffect(() => {
+    if (isSearchBoxVisible && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
     if (!isSearchBoxVisible) return;
     const handleOutsideClick = (e) => {
       if (
@@ -61,8 +79,9 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, [isSearchBoxVisible]);
 
-  const handleSearchClick = (e) => {
-    setSearchBoxVisible(!isSearchBoxVisible);
+  const handleSearchClick = () => {
+    setSearchBoxVisible(prev=>prev? false:true);
+    setQuery("")
   };
   const handleMenuBtn = () => {
     setMenuVisible(!menuVisible);
@@ -79,7 +98,7 @@ const Header = () => {
         </NavLink>
 
         {/* This is humburger button visible only in small screenn */}
-        <div className="mobileIcons flex items-center gap-5">
+        {/* <div className="mobileIcons flex items-center gap-5">
           <CiSearch
             className="flex sm:hidden cursor-pointer w-7 h-7"
             ref={searchBtnRef}
@@ -100,15 +119,15 @@ const Header = () => {
             className="sm:hidden"
             onClick={handleMenuBtn}
           />
-        </div>
+        </div> */}
 
-        <div className="navbarLeft hidden sm:flex gap-5 items-center">
+        <div className="navbarLeft flex gap-5 items-center">
           <CiSearch
             className="cursor-pointer w-7 h-7"
             ref={searchBtnRef}
             onClick={handleSearchClick}
           />
-          <NavLink to="/login" className="py-1">
+          <NavLink to="/login" className="hidden sm:flex py-1">
             <FaRegCircleUser className="w-5 h-5" />
           </NavLink>
           <NavLink to="/cart">
@@ -116,6 +135,11 @@ const Header = () => {
               <CiShoppingCart className="w-7 h-7" />
             </Badge>
           </NavLink>
+          <CiMenuBurger
+            ref={menuBurgerBtn}
+            className="sm:hidden"
+            onClick={handleMenuBtn}
+          />
         </div>
       </div>
       <hr className="hidden sm:block mx-40 text-[rgb(180,178,178)]" />
@@ -138,18 +162,18 @@ const Header = () => {
     }
       <div
         ref={searchRef}
-        className={`flex items-center h-17 bg-[rgb(246,246,248)] p-4 absolute top-25 right-10  sm:right-35 md:right-60 z-10 transition-all duration-300 ease-in transform origin-top perspective-[1000px] ${
+        className={`flex items-center h-17 bg-[rgb(246,246,248)] p-4 absolute top-25 right-1   sm:right-35 md:right-50 z-50 transition-all duration-300 ease-in transform origin-top perspective-[1000px] ${
           isSearchBoxVisible
             ? "opacity-100 scale-100 translate-y-0 rotate-x-0"
             : "opacity-0 scale-90 -translate-y-2 rotate-x-90 pointer-events-none"
         }`}
       >
-        <span className="border border-[rgba(188,189,189,0.72)] h-12 p-0 flex items-center border-collapse">
-          <input type="text" placeholder="Search" className="pl-4 outline-0" />
-          <button className="px-6 h-full bg-violet-500">
+        <form className="border border-[rgba(188,189,189,0.72)] h-12 p-0 flex items-center border-collapse" onSubmit={handleSearch}>
+          <input ref={searchInputRef} type="text" required value={query} placeholder="Search" className="pl-4 outline-0" onChange={(e)=>setQuery(e.target.value)} />
+          <button type="submit" className="px-6 h-full bg-violet-500">
             <CiSearch className="text-white" />
           </button>
-        </span>
+        </form>
       </div>
 {/* this menu will only show on small screen after clicking menu button */}
       {menuVisible && (

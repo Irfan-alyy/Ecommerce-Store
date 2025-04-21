@@ -2,40 +2,39 @@ import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import Product from "../../components/category/Products";
 import { TfiLayoutGrid3Alt, TfiLayoutGrid2Alt } from "react-icons/tfi";
 import { FaSearch } from "react-icons/fa";
+import useFetchProducts from "./useFetchProduct";
+import { useLocation } from "react-router";
+
 
 const Category = () => {
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-
+  const useQuery=new URLSearchParams(useLocation().search);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedPrice, setSelectedPrice] = useState("all");
   const [selectedBrand, setSelectedBrand] = useState("all"); // Future use if needed
   const [selectedSort, setSelectedSort] = useState("popularity");
+
+  const {products, categories, loading, error} =  useFetchProducts()
+  let productsCopy = [...products]
+  const query=useQuery.get("search")
+ 
+    if(query && productsCopy.length>0){
+      const lowerCaseQuery=query.toLowerCase();
+      const result=products.filter(product=>product.title.toLowerCase().includes(lowerCaseQuery))
+      productsCopy=result
+    }
+ 
+
 
   const [searchQuery, setSearchQuery] = useState("");
   const pageSize = 12;
   const [currentPage, setCurrentPage] = useState(1);
   const inputRef = useRef(null);
 
-  // Fetch products
-  useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
-      .then((response) => response.json())
-      .then((json) => setProducts(json))
-      .catch((error) => console.error("Error fetching products:", error));
-  }, []);
 
-  // Fetch categories
-  useEffect(() => {
-    fetch("https://fakestoreapi.com/products/categories")
-      .then((response) => response.json())
-      .then((json) => setCategories(["all", ...json]))
-      .catch((error) => console.error("Error fetching categories:", error));
-  }, []);
 
   // Memoized filtering and sorting logic
   const filteredProducts = useMemo(() => {
-    let result = products.filter((product) =>
+    let result = productsCopy.filter((product) =>
       selectedCategory === "all" ? true : product.category === selectedCategory
     );
 
@@ -65,7 +64,7 @@ const Category = () => {
       return false;
     });
     return result;
-  }, [products, selectedCategory, searchQuery, selectedSort, selectedPrice]);
+  }, [productsCopy, selectedCategory, searchQuery, selectedSort, selectedPrice]);
 
   const totalPages = useMemo(
     () => Math.ceil(filteredProducts.length / pageSize),
@@ -117,11 +116,13 @@ const Category = () => {
 
   return (
     <>
-      <div className="w-full px-5 sm:px-15 md:px-30 lg:px-40 grid gap-5 py-10 md:py-20 grid-cols-1 lg:grid-cols-12">
+    
+      
+
+      <div className="w-full px-5 sm:px-15 md:px-30 lg:px-40 grid  gap-5 py-10 md:py-20 grid-cols-1 lg:grid-cols-12">
         <aside className="col-span-12 lg:col-span-3 gap-5">
-          <div className="mb-8">
-            <div>
-              <div className="border border-gray-400 rounded relative flex items-center justify-center mb-4">
+            <div className="w-full">
+              <div className="border max-w-100 border-gray-400 rounded relative flex items-center justify-between mb-4">
                 <input
                   type="text"
                   placeholder="Search..."
@@ -134,13 +135,15 @@ const Category = () => {
                   }}
                 />
                 <span
-                  className="bg-gray-400 px-3 py-3 text-gray-500"
+                  className=" bg-gray-400 px-3 py-3 text-gray-500"
                   onClick={() => setCurrentPage(1)}
                 >
                   <FaSearch className="text-xl text-white font-extralight" />
                 </span>
               </div>
             </div>
+            <div className="flex flex-wrap justify-between mb-4">
+          <div className=" mb-8 md:px-5">
             <h1 className="text-xl font-bold mb-4">Categories</h1>
             <ul>
               {categories.length > 0 &&
@@ -161,7 +164,7 @@ const Category = () => {
                 ))}
             </ul>
           </div>
-          <div className="mb-8">
+          <div className="mb-8 md:px-5">
             <h2 className="text-lg font-semibold mb-4">Price</h2>
             <ul>
               <li className="mb-2 flex items-center gap-4">
@@ -232,7 +235,7 @@ const Category = () => {
             </ul>
           </div>
           {/* Brands section (if needed in future) */}
-          <div>
+          <div className="mb-8 px-5">
             <h2 className="text-lg font-semibold mb-4">Brands</h2>
             <ul>
               <li className="mb-2 flex items-center gap-4">
@@ -260,11 +263,13 @@ const Category = () => {
               </li>
             </ul>
           </div>
+          </div>
         </aside>
 
-        <div className="w-full items-center col-span-12 md:col-span-9 justify-center gap-5">
+        <div className="w-full mr-auto items-center col-span-12 md:col-span-9 justify-center gap-5">
           <div className="flex items-center justify-between mb-10 px-5">
-            <div className="flex items-center">
+            <div className="flex flex-wrap gap-3 items-center">
+              <fieldset>
               <label htmlFor="sort" className="mr-2">
                 Sort by:
               </label>
@@ -278,12 +283,12 @@ const Category = () => {
                 <option value="price-asc">Price: Low to High</option>
                 <option value="price-desc">Price: High to Low</option>
               </select>
-              <span className="ml-4 text-sm text-gray-600">
+              </fieldset>
+              <span className=" text-sm text-gray-600">
                 Showing {startProductNumber} - {endProductNumber} of{" "}
                 {filteredProducts.length} products
               </span>
-            </div>
-            <div className="flex items-center space-x-2">
+            <div className=" items-center gap-2 hidden lg:flex">
               <span
                 className="cursor-pointer px-2 py-1 border-gray-400 rounded"
                 onClick={() => setGridView(3)}
@@ -296,15 +301,20 @@ const Category = () => {
               >
                 <TfiLayoutGrid2Alt className="text-xl" />
               </span>
+              </div>
             </div>
           </div>
           <section
-            className={`w-full px-5 grid grid-cols-2 md:grid-cols-${gridView} gap-5`}
+            className={`w-full px-5 grid grid-cols-1 place-items-center sm:grid-cols-2 lg:grid-cols-${gridView} gap-5`}
           >
             {currentProducts.map((product, index) => (
               <Product key={index} product={product} />
             ))}
+           
           </section>
+          {
+             !loading && !error && (productsCopy.length===0 || currentProducts.length===0) && <p className="text-center">No products found</p>
+            }
           <div className="mt-5 flex justify-center items-center space-x-2">
             <button
               onClick={() => handlePageChange(currentPage - 1)}
@@ -334,6 +344,7 @@ const Category = () => {
           </div>
         </div>
       </div>
+
     </>
   );
 };
