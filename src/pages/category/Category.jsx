@@ -122,9 +122,11 @@ const Category = () => {
       <div className="w-full px-5 sm:px-15 md:px-30 lg:px-40 grid  gap-5 py-10 md:py-20 grid-cols-1 lg:grid-cols-12">
         <aside className="col-span-12 lg:col-span-3 gap-5">
             <div className="w-full">
+                <label htmlFor="search">Search</label>
               <div className="border max-w-100 border-gray-400 rounded relative flex items-center justify-between mb-4">
                 <input
                   type="text"
+                  id="search"
                   placeholder="Search..."
                   className="w-10/12 px-4 py-2 border-gray-400 rounded outline-0"
                   ref={inputRef}
@@ -135,10 +137,10 @@ const Category = () => {
                   }}
                 />
                 <span
-                  className=" bg-gray-400 px-3 py-3 text-gray-500"
+                  className=" border-l-gray-400 px-3 py-3 text-gray-500"
                   onClick={() => setCurrentPage(1)}
                 >
-                  <FaSearch className="text-xl text-white font-extralight" />
+                  <FaSearch className="text-xl  font-extralight" />
                 </span>
               </div>
             </div>
@@ -305,7 +307,7 @@ const Category = () => {
             </div>
           </div>
           <section
-            className={`w-full px-5 grid grid-cols-1 place-items-center sm:grid-cols-2 lg:grid-cols-${gridView} gap-5`}
+            className={`w-full px-5 grid grid-cols-1 place-items-center sm:grid-cols-2 md:grid-cols-${gridView} gap-5`}
           >
             {currentProducts.map((product, index) => (
               <Product key={index} product={product} />

@@ -13,6 +13,7 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./Feature/Redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import Dashboard from './components/Dashboard/Dashbord'
+import ResetPassword from "./components/resetPassword";
 
 
 function App() {
@@ -52,6 +53,10 @@ function App() {
         {
           path: "/contact",
           element: <Contact />,
+        },
+        {
+          path: "/reset-password",
+          element: <ResetPassword/>
         },
         {
           path:"/admin",
