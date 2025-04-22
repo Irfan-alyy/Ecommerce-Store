@@ -6,6 +6,7 @@ const BASE_URL=import.meta.env.VITE_API_BASE_URL
 
 const ResetPassword = () => {
   const [loginData, setLoginData] = useState([]);
+  const [loading, setLoading]=useState(false)
   const token= new URLSearchParams(useLocation().search).get("token")
   const formDataHandle = (e) => {
     setLoginData((prev) => ({
@@ -17,6 +18,7 @@ const ResetPassword = () => {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
   const handleSubmit = (e) => {
+    setLoading(true)
     e.preventDefault();
     if (!passwordRegex.test(loginData.password)) {
       toast.error(
@@ -32,12 +34,19 @@ const ResetPassword = () => {
             return;
           }
 
-    axios.post(`${BASE_URL}/login/reset-password/`, {
+    axios.post(`${BASE_URL}/reset-password/`, {
       token: token,
       new_password: loginData.password,
-    }).then(res=>{console.log(res); 
-        
-    }).catch(err=>console.log(err.message)
+    }).then(res=>{
+       toast.info("🟢 Reseting Password...", { position: "top-right" });
+      console.log(res);
+      setLoading(false)
+    }).catch(err=>{console.log(err.message)
+      toast.error(`❌${err.message}`, {
+        position: "top-right",
+      });
+      setLoading(false)
+    }
     );
   };
   return (

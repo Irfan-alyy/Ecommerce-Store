@@ -1,7 +1,7 @@
 .shop-btn{
     position: relative;
     overflow: hidden;
-    transition: all 1s;
+    transition: all 1s ease-in-out;
     overflow: hidden;
 }
 .shop-btn::before {
@@ -18,6 +18,7 @@
   }
 
   .shop-btn:hover::before{
+    transition: all 1s ease-in-out;
       transform: translateX(0);
-     
+
     }

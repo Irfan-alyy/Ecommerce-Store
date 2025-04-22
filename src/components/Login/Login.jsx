@@ -3,12 +3,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FadeInFromBottom from "../../ui/animations/FadeInFromBottom";
 import axios from "axios";
+import { time } from "framer-motion";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const Login = () => {
   const [showLogin, setShowLogin] = useState(true);
   const [showRegister, setShowRegister] = useState(false);
   const [showForgot, setShowForgot] = useState(false);
   const [loginData, setLoginData] = useState({ user: "", password: "" });
+  const [loading,setLoading]=useState(false)
   const controller = new AbortController();
   const signal = controller.signal;
 
@@ -55,11 +57,15 @@ const Login = () => {
   };
 
   const handleSubmit = (e) => {
+    setLoading(true)
     e.preventDefault();
     const { user, password, email, name, confirm_password, username } =
       loginData;
 
-    const timeout = setTimeout(() => controller.abort(), 3000);
+    const timeout = setTimeout(() => controller.abort(), 5000);
+
+
+    
     if (user && password && !name) {
       axios
         .post(
@@ -70,10 +76,13 @@ const Login = () => {
         .then((res) => {
           toast.info("🟢 Logging in...", { position: "top-right" });
           localStorage.setItem("token", res.data.access_token);
+          setLoading(false)
+          clearTimeout(timeout)
         })
         .catch((error) => {
           clearTimeout(timeout);
           showError(error);
+          setLoading(false)
         });
     } else if (name && username && email && password && confirm_password) {
       console.log("register");
@@ -103,10 +112,12 @@ const Login = () => {
         .post(`${BASE_URL}/register/`, loginData, { signal })
         .then((response) => {
           toast.info("🟢 Registring account...", { position: "top-right" });
+          setLoading(false)
         })
         .catch((error) => {
           clearTimeout(timeout);
           showError(error);
+          setLoading(false)
         });
     } else if (email && !password) {
       console.log("reset");
@@ -126,12 +137,15 @@ const Login = () => {
         })
         .then((res) => {
           toast.info("🟢 Reseting Password...", { position: "top-right" });
+          setLoading(false)
         })
         .catch((error) => {
           clearTimeout(timeout);
           showError(error);
+          setLoading(false)
         });
     }
+    clearTimeout(timeout)
   };
 
   return (
@@ -149,6 +163,7 @@ const Login = () => {
           <hr className="h-5 bg-none border-x-[0.1px]" />
         </span>
         <button
+        
           onClick={showRegisterSection}
           className={`${
             showRegister ? "text-[rgb(167,73,255)]" : ""
@@ -191,8 +206,9 @@ const Login = () => {
               </span> */}
               <span className="w-full">
                 <button
+                disabled={loading}
                   type="submit"
-                  className="cursor-pointer py-2 px-7 text-sm font-medium text-[#333333] bg-[#F2F2F2] hover:bg-[#A749FF] hover:text-white transition ease-linear duration-300"
+                  className="cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed py-2 px-7 text-sm font-medium text-[#333333] bg-[#F2F2F2] hover:bg-[#A749FF] hover:text-white transition ease-linear duration-300"
                 >
                   LOGIN
                 </button>
@@ -262,8 +278,9 @@ const Login = () => {
             />
             <span className="w-full">
               <button
+              disabled={loading}
                 type="submit"
-                className="py-2 px-7 text-sm bg-gray-100 text-gray-950 hover:bg-purple-800 hover:text-white transition ease-linear duration-300"
+                className=" disabled:text-gray-400 disabled:cursor-not-allowed py-2 px-7 text-sm bg-gray-100 text-gray-950 hover:bg-purple-800 hover:text-white transition ease-linear duration-300"
               >
                 REGISTER
               </button>
@@ -286,8 +303,9 @@ const Login = () => {
             />
             <span className="w-full">
               <button
+              disabled={loading}
                 type="submit"
-                className="py-2 px-7 text-sm bg-gray-100 text-gray-950 hover:bg-purple-800 hover:text-white transition ease-linear duration-300"
+                className="disabled:text-gray-400  disabled:cursor-not-allowed py-2 px-7 text-sm bg-gray-100 text-gray-950 hover:bg-purple-800 hover:text-white transition ease-linear duration-300"
               >
                 SUBMIT
               </button>
