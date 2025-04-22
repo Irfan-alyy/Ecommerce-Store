@@ -31,7 +31,7 @@ const QuickView = ({ product, visible, setVisible }) => {
     };
   });
 
-  if (visible === false) return;
+ 
 
   const images = [image1, image2, image3, image4];
   const visibleCount = 4;
@@ -58,8 +58,10 @@ const QuickView = ({ product, visible, setVisible }) => {
     }
   };
 
+
+  if (visible === false) return;
   return (
-    <div className="fixed  inset-0 z-70  bg-gradient-to-br from-black/30 via-black/35 to-black/50 backdrop-blur-sm flex items-center justify-center">
+    <div className="fixed  inset-0 z-50  bg-gradient-to-br from-black/30 via-black/35 to-black/50 backdrop-blur-sm flex items-center justify-center">
     <div  className="relative justify-center  w-11/12  md:w-7/11 h-auto bg-white rounded-xl py-10 lg:py-15  ">
         <IoCloseSharp
           className=" absolute right-5 top-2 lg:top-4 text-3xl text-black"

@@ -267,10 +267,57 @@ const Home = () => {
         </div>
       </section>
       <section className="px-10 md:px-20 overflow-hidden py-10">
+        
         <div className="flex items-center flex-wrap gap-10 justify-center">
+        <div className="mb-[35px] border flex flex-col w-[-260px] relative cart-flex transform transition-all ease-in">
+            <span className="z-10 text-pink-400 text-s font-semibold absolute top-5 right-5">
+              -10%
+            </span>
+            <span className="z-10 absolute top-12 right-6 text-xs text-violet-500 font-semibold">
+              New
+            </span>
 
-          {[...Array(8)].map(elem=>
-          <div className="mb-[35px]  flex flex-col w-[-260px] relative hover:not-target:.cart-flex transform transition-all ease-in">
+            <div
+              className="relative flex flex-col items-center justify-center overflow-hidden group product-one w-[260px] h-[345px]"
+              onClick={() => navigate(`category/product/${1}`)}
+            >
+              <img src={slideOne} alt="" className=" object-cover hover:scale-125 group-hover:translate-x-full" />
+              <CiShoppingCart
+                title="Add Cart"
+                className="cursor-pointer icon brightness-50 opacity-0 group-hover:brightness-100 group-hover:opacity-100 transition-opacity transition-brightness duration-300 z-10 absolute top-1/2 right-22 bg-[rgb(31,115,23)] text-white hover:text-black hover:bg-white rounded-4xl text-3xl "
+                onClick={(e) => {
+                  e.stopPropagation();
+                  ("add to cart dispacther");
+                }}
+              />
+              <FaEye
+                title="Quick View"
+                className="cursor-pointer icon brightness-50 opacity-0 group-hover:brightness-100  group-hover:opacity-100 transition-opacity transition-brightness duration-300  absolute top-1/2 left-22  bg-[rgb(31,115,23)] text-white hover:text-black hover:bg-white rounded-4xl   text-3xl z-10 "
+                onClick={(e) => {
+                  e.stopPropagation();
+                  showQuickView("elem from map");
+                }}
+              />
+            </div>
+            <div className="flex justify-between mt-[20px] gap-1">
+              <div>
+                <h1 className="hover:text-gray-600 cursor-pointer ">
+                  Lorem Ispum Speaker
+                </h1>
+                <p>
+                  <span>$10</span> -
+                  <strike className="text-[rgb(127,127,127)]">$15</strike>
+                </p>
+              </div>
+              <CiShoppingCart
+                title="Add Cart"
+                className="cursor-pointer brightness-100 hover:brightness-70  hover:opacity-100 transition-opacity transition-brightness duration-300 z-10  bg-amber-50 rounded-4xl text-3xl"
+              />
+            </div>
+          </div>
+
+          {/* {[...Array(8)].map((elem,ind)=>
+          <div key={ind} className="mb-[35px]  flex flex-col w-[-260px] relative hover:not-target:.cart-flex transform transition-all ease-in">
             <span className="z-10 text-pink-400 text-s font-semibold absolute top-5 right-5">
               -10%
             </span>
@@ -314,7 +361,7 @@ const Home = () => {
                 className="cursor-pointer brightness-100  group-hover:brightness-70 group-hover:opacity-100 transition-opacity transition-brightness duration-300 z-10  bg-amber-50 rounded-4xl text-3xl"
               />
             </div>
-          </div>)}
+          </div>)} */}
         </div>
       </section>
       <section className="flex items-center justify-center">

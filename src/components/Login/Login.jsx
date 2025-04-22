@@ -3,13 +3,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FadeInFromBottom from "../../ui/animations/FadeInFromBottom";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const Login = () => {
   const [showLogin, setShowLogin] = useState(true);
   const [showRegister, setShowRegister] = useState(false);
   const [showForgot, setShowForgot] = useState(false);
   const [loginData, setLoginData] = useState({ user: "", password: "" });
-  const [RegisterData, setRegisterData] = useState({});
-  const [ForgotData, setForgotData] = useState({});
+  const controller = new AbortController();
+  const signal = controller.signal;
 
   const showLoginSection = () => {
     setShowLogin(true);
@@ -39,45 +40,40 @@ const Login = () => {
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
+  const showError = (error) => {
+    let message = "An error occurred.";
+
+    if (error.name === "AbortError" || error.code === "ERR_CANCELED") {
+      message = "Request timed out.";
+    } else if (error.response?.data?.detail) {
+      message = error.response.data.detail;
+    } else if (error.message) {
+      message = error.message;
+    }
+
+    toast.error(`❌ ${message}`, { position: "top-right" });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const { user, password, email, name, confirm_password, username } =
       loginData;
-    const which = Object.keys(loginData).length;
+
+    const timeout = setTimeout(() => controller.abort(), 3000);
     if (user && password && !name) {
-      axios.post("http://192.168.1.85:8000/login/", {username:loginData.user, password:loginData.password })
+      axios
+        .post(
+          `${BASE_URL}/login/`,
+          { username: loginData.user, password: loginData.password },
+          { signal }
+        )
         .then((res) => {
           toast.info("🟢 Logging in...", { position: "top-right" });
           localStorage.setItem("token", res.data.access_token);
         })
         .catch((error) => {
-          if (error.response) {
-            console.log("Server responded with:", error.response.data);
-            toast.error(
-              `❌${error.response.data.detail}`,
-              {
-                position: "top-right",
-              }
-            );
-            
-          } else if (error.request) {
-            console.log("No response received:", error.request);
-            toast.error(
-              `❌${error.request}`,
-              {
-                position: "top-right",
-              }
-            );
-          } else {
-            console.log("Error:", error.message);
-            toast.error(
-              `❌${error.message}`,
-              {
-                position: "top-right",
-              }
-            );
-          }
-         
+          clearTimeout(timeout);
+          showError(error);
         });
     } else if (name && username && email && password && confirm_password) {
       console.log("register");
@@ -102,26 +98,15 @@ const Login = () => {
         });
         return;
       }
-      console.log(loginData);
+
       axios
-        .post("http://192.168.1.85:8000/register/", loginData)
+        .post(`${BASE_URL}/register/`, loginData, { signal })
         .then((response) => {
           toast.info("🟢 Registring account...", { position: "top-right" });
         })
         .catch((error) => {
-          if (error.response) {
-            console.log("Server responded with:", error.response.data);
-          } else if (error.request) {
-            console.log("No response received:", error.request);
-          } else {
-            console.log("Error:", error.message);
-          }
-          toast.error(
-            `❌${error.response.data.detail || error.message || error.request}`,
-            {
-              position: "top-right",
-            }
-          );
+          clearTimeout(timeout);
+          showError(error);
         });
     } else if (email && !password) {
       console.log("reset");
@@ -133,16 +118,19 @@ const Login = () => {
       }
 
       console.log(loginData);
-      
-      axios.post("http://192.168.1.85:8000/forgot-password/",null, {params:{email:loginData.email}}).then(res=>{
-        toast.info("🟢 Reseting Password...", { position: "top-right" });
 
-
-      }).catch(err=>{console.log(err.message);
-        toast.error(`❌${err.message}`, {
-          position: "top-right",
+      axios
+        .post(`${BASE_URL}/forgot-password/`, null, {
+          params: { email: loginData.email },
+          signal,
+        })
+        .then((res) => {
+          toast.info("🟢 Reseting Password...", { position: "top-right" });
+        })
+        .catch((error) => {
+          clearTimeout(timeout);
+          showError(error);
         });
-      })
     }
   };
 
@@ -295,7 +283,7 @@ const Login = () => {
               required
               placeholder="Email"
               className="mb-7 w-full leading-10 px-3 border border-[#bdbdbd] focus:outline-none"
-            />            
+            />
             <span className="w-full">
               <button
                 type="submit"

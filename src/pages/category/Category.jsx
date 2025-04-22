@@ -4,6 +4,7 @@ import { TfiLayoutGrid3Alt, TfiLayoutGrid2Alt } from "react-icons/tfi";
 import { FaSearch } from "react-icons/fa";
 import useFetchProducts from "./useFetchProduct";
 import { useLocation } from "react-router";
+import QuickView from "../../components/Home/components/QuickView";
 
 
 const Category = () => {
@@ -12,6 +13,9 @@ const Category = () => {
   const [selectedPrice, setSelectedPrice] = useState("all");
   const [selectedBrand, setSelectedBrand] = useState("all"); // Future use if needed
   const [selectedSort, setSelectedSort] = useState("popularity");
+
+  //quick view visbility state
+  const [visible,setVisible] = useState(false);
 
   const {products, categories, loading, error} =  useFetchProducts()
   let productsCopy = [...products]
@@ -113,6 +117,8 @@ const Category = () => {
     setCurrentPage(1);
     smoothScrollToTop();
   }, []);
+
+
 
   return (
     <>

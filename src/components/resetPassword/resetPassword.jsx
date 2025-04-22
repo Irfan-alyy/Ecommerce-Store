@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useLocation } from "react-router";
 import axios from "axios";
 import { toast,ToastContainer } from "react-toastify";
+const BASE_URL=import.meta.env.VITE_API_BASE_URL
 
 const ResetPassword = () => {
   const [loginData, setLoginData] = useState([]);
@@ -31,7 +32,7 @@ const ResetPassword = () => {
             return;
           }
 
-    axios.post("http://192.168.1.85:8000/reset-password/", {
+    axios.post(`${BASE_URL}/login/reset-password/`, {
       token: token,
       new_password: loginData.password,
     }).then(res=>{console.log(res); 

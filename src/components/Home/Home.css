@@ -36,11 +36,8 @@
         display: unset;
     }
 
-@media (min-width:1000px){
     
-    
-}
-.product-one{
+/* .product-one{
     background-position: center;
     background-size: cover;
     position: relative;
@@ -92,4 +89,4 @@
     transform: translate(-100%);
     z-index: 1;
    
-}
+} */
