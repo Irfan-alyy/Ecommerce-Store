@@ -1,93 +1,86 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Header from './components/layout/Header'
-import { createBrowserRouter, Router, RouterProvider } from 'react-router'
-import Layout from './components/layout/Layout'
-import Home from './components/Home/Home'
-import Catagory from './components/catagory/Catogories'
-import Cart from './components/Cart/Cart'
-import Product from './components/Product/Product'
-import About from './components/About/About'
-import Contact from './components/Contact/Contact'
-import Error404 from './components/error/error404'
-import Login from './components/Login/Login'
+import "./App.css";
+import { createBrowserRouter, Router, RouterProvider } from "react-router";
+import Layout from "./components/layout/Layout";
+import Home from "./components/Home/Home";
+import Category from "./pages/category/Category"
+import Cart from "./components/Cart/Cart";
+import Product from "./components/Product/Product";
+import About from "./components/About/About";
+import Contact from "./components/Contact/Contact";
+import Error404 from "./components/error/error404";
+import Login from "./components/Login/Login";
+import { Provider } from "react-redux";
+import { store, persistor } from "./Feature/Redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 import Main from './components/Dashboard/Main'
+import ResetPassword from "./components/resetPassword/resetPassword";
 import Admin from './components/Admin/Admin'
 import Profile from './components/Profile/Profile'
 
-
 function App() {
-  const [count, setCount] = useState(0)
-  const router= createBrowserRouter([
+  const router = createBrowserRouter([
     {
       path: "",
-      element: <Layout/>,
-      children:[
+      element: <Layout />,
+      children: [
         {
           path: "/",
-          element:<Home/>
+          element: <Home />,
         },
         {
-          path:"/Ecommerce-Store",
-          element: <Home/>
+          path: "/Ecommerce-Store",
+          element: <Home />,
         },
         {
           path: "/login",
-          element: <Login/>
-
+          element: <Login />,
         },
         {
-          path: "/catagory",
-          element: <Catagory/>
+          path: "/category",
+          element: <Category />,
         },
         {
-          path: "/product/:id",
-          element:<Product/>
+          path: "category/product/:id",
+          element: <Product />,
         },
         {
           path: "/cart",
-          element: <Cart/>
+          element: <Cart />,
         },
         {
           path: "/about",
-          element: <About/>
+          element: <About />,
         },
         {
           path: "/contact",
-          element: <Contact/>
+          element: <Contact />,
         },
         {
-          path: "*",
-          element: <Error404/>
+          path: "/reset-password",
+          element: <ResetPassword/>
         },
-          
         {
-          path:'/adminpanel',
+          path:"/admin",
           element:<Main/>
         },
         {
-path :'/Admin',
-element : <Admin/>
-
+          path: "*",
+          element: <Error404 />,
         },
-        {
-path :'/profile',
-element:<Profile/>
-          
-        }
-
-      ]
-    }
-  ])
+      ],
+    },
+  ]);
 
   return (
     <>
-    {/* {window.location.pathname !== '/adminpanel' && <Header />} */}
+    <Provider store={store}>
+      <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
     <RouterProvider router={router}/>
+
+      </PersistGate>
+    </Provider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

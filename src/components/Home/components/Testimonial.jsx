@@ -71,15 +71,31 @@ const Testimonial = () => {
         ))}
       </div>
 
-
       <div className="flex justify-center items-center flex-row mt-20 gap-10 ">
-<img src="https://flone.jamstacktemplates.dev/assets/img/brand-logo/brand-logo-3.png" alt="" />
-<img src="https://flone.jamstacktemplates.dev/assets/img/brand-logo/brand-logo-2.png" alt="" />
-<img src="https://flone.jamstacktemplates.dev/assets/img/brand-logo/brand-logo-5.png" alt="" className="hidden sm:block"/>
-<img src="https://flone.jamstacktemplates.dev/assets/img/brand-logo/brand-logo-1.png" alt=""  className="hidden   md:block"/>
-<img src="https://flone.jamstacktemplates.dev/assets/img/brand-logo/brand-logo-3.png" alt=""  className="hidden lg:block"/>
-</div>
-
+        <img
+          src="https://flone.jamstacktemplates.dev/assets/img/brand-logo/brand-logo-3.png"
+          alt=""
+        />
+        <img
+          src="https://flone.jamstacktemplates.dev/assets/img/brand-logo/brand-logo-2.png"
+          alt=""
+        />
+        <img
+          src="https://flone.jamstacktemplates.dev/assets/img/brand-logo/brand-logo-5.png"
+          alt=""
+          className="hidden sm:block"
+        />
+        <img
+          src="https://flone.jamstacktemplates.dev/assets/img/brand-logo/brand-logo-1.png"
+          alt=""
+          className="hidden   md:block"
+        />
+        <img
+          src="https://flone.jamstacktemplates.dev/assets/img/brand-logo/brand-logo-3.png"
+          alt=""
+          className="hidden lg:block"
+        />
+      </div>
 
       {/* Blog Section */}
       <h1 className="text-4xl font-semibold mt-10">OUR BLOG</h1>
@@ -87,7 +103,7 @@ const Testimonial = () => {
       <p className="text-gray-900">Lorem ipsum dolor sit amet consectetur.</p>
 
       {/* Blog Grid */}
-      <div className="h-[120vh]  w-full gap-6 sm:grid sm:grid-cols-2 md:grid md:grid-cols-2 lg:flex lg:flex-row">
+      <div className="h-[100%] w-full gap-6 sm:grid items-center m-auto  sm:grid-cols-2 md:grid md:grid-cols-2 lg:flex lg:flex-row">
         {[
           {
             img: "https://flone.jamstacktemplates.dev/assets/img/blog/blog-1.jpg",
@@ -104,14 +120,12 @@ const Testimonial = () => {
         ].map((blog, idx) => (
           <div
             key={idx}
-            className="imagee mt-20 px-10  pb-20 mb-10 min-h-[100px]  flex justify-between items-center flex-col bg-cover bg-center transition-transform w-full h-[300px]"
-            style={{ backgroundImage: `url(${blog.img})`
-                      
-            ,  }}
+            className="mt-20 px-10 pb-20 mb-10 min-h-[100px]  flex justify-between items-center flex-col bg-cover bg-center transition-transform hover:scale-105 w-full h-[300px]"
+            style={{ backgroundImage: `url(${blog.img})` }}
           >
             <span className="mt-4 px-2 mr-40 bg-purple-600 text-white">
               Lifestyle
-            </span> 
+            </span>
             <div className="flex justify-center items-center flex-col bg-white w-[100%]  mt-56  md:mt-70">
               <h2 className="text-2xl text-center">{blog.title}</h2>
               <h3 className="text-gray-700">By Admin</h3>
@@ -119,9 +133,6 @@ const Testimonial = () => {
           </div>
         ))}
       </div>
-
-
-
     </div>
   );
 };

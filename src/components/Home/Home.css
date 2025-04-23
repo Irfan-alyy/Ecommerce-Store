@@ -1,10 +1,24 @@
-.shop-btn{
+.hero-shop-btn {
     position: relative;
     overflow: hidden;
-    transition: all 1s;
-    overflow: hidden;
-}
-.shop-btn::before {
+    transition: all 1s ease-in-out;
+    span{
+        background-color: #764abc;
+        transform: translateX(-100%);
+        transition: all 1s ease-in-out;
+
+    }
+  }
+
+  .hero-shop-btn:hover{
+    color: white;
+    border: 1xp solid white;
+    span{
+        transform: translateX(0);
+    }
+  }
+  
+  /* .shop-btn::before {
     content: "";
     position: absolute;
     top: 0;
@@ -12,35 +26,26 @@
     width: 100%;
     height: 100%;
     background-color: #764abc;
-    transition: all 1s ease-in-out;
+    transition: transform 1s ease-in-out;
     z-index: -1;
     transform: translateX(-100%);
   }
+  
+  .shop-btn:hover::before {
+    transform: translateX(0);
+  } */
 
-  .shop-btn:hover::before{
-      transform: translateX(0);
-     
-    }
+  
 
-    .shop-btn:hover{
-      color: white;
-      z-index: 1;
-    
-    }
-
-    .container-one:hover .icon-left{
-        display: unset;
-    }
-
-    .container-one:hover .icon-right{
-        display: unset;
-    }
-
-@media (min-width:1000px){
-    
-    
+.container-one:hover .icon-left {
+  display: unset;
 }
-.product-one{
+
+.container-one:hover .icon-right {
+  display: unset;
+}
+
+/* .product-one{
     background-position: center;
     background-size: cover;
     position: relative;
@@ -67,6 +72,12 @@
     z-index: 1;
    
 }
+.product-one:hover{
+    .icon{
+        opacity: 100;
+        filter: brightness(1);
+    }
+}
 .product-one::after{
     content: "";
     top: 0;
@@ -86,4 +97,37 @@
     transform: translate(-100%);
     z-index: 1;
    
+} */
+
+.hover-image1 {
+  z-index: 2;
+}
+.hover-image2 {
+  transform: translateX(100%);
+  z-index: 1;
+}
+
+.product-one {
+  .cart,
+  .eye {
+    opacity: 0.5;
+    filter: brightness(0.5);
+    display: none;
+    transition: transform 1s ease-in-out;
+  }
+}
+.product-one:hover {
+  .hover-image1 {
+    transform: translateX(-100%);
+  }
+  .hover-image2 {
+    transform: translateX(0);
+  }
+
+  .cart,
+  .eye {
+    display: block;
+    opacity: 1;
+    filter: brightness(1);
+  }
 }

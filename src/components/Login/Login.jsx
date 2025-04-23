@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import FadeInFromBottom from "../ui/animations/FadeInFromBottom";
+import FadeInFromBottom from "../../ui/animations/FadeInFromBottom";
+import axios from "axios";
+import { time } from "framer-motion";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const Login = () => {
   const [showLogin, setShowLogin] = useState(true);
   const [showRegister, setShowRegister] = useState(false);
   const [showForgot, setShowForgot] = useState(false);
   const [loginData, setLoginData] = useState({ user: "", password: "" });
-  const [RegisterData, setRegisterData] = useState({});
-  const [ForgotData, setForgotData] = useState({});
+  const [loading,setLoading]=useState(false)
+  const controller = new AbortController();
+  const signal = controller.signal;
 
   const showLoginSection = () => {
     setShowLogin(true);
@@ -35,71 +39,143 @@ const Login = () => {
     }));
   };
   const fullNameRegex = /^[A-Za-z]{1,20}( [A-Za-z]{1,20}){0,19}$/;
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const {user, password, email, fullName, confirmPassword, username}=loginData
-    const which = Object.keys(loginData).length;
-    console.log(Object.keys(loginData));
-    if (user && password && !fullName) {
-      toast.info("🟢 Logging in...", { position: "top-right" });
+  const showError = (error) => {
+    let message = "An error occurred.";
+
+    if (error.name === "AbortError" || error.code === "ERR_CANCELED") {
+      message = "Request timed out.";
+    } else if (error.response?.data?.detail) {
+      message = error.response.data.detail;
+    } else if (error.message) {
+      message = error.message;
     }
-    else if (fullName && username && email && password && confirmPassword) {
-      console.log("register");
-      if (!fullNameRegex.test(loginData.fullName)) {
-        toast.error("❌ Invalid Full Name! It should contain only alphabets & spaces (max 20 characters).", { position: "top-right" });
-        return;
-      }
 
-      if (!passwordRegex.test(loginData.password)) {
-        toast.error("❌ Weak password! It must be at least 8 characters with uppercase, lowercase, number, and special character.", { position: "top-right" });
-        return;
-      }
-      if(loginData.password!==loginData.confirmPassword){
-        toast.error("❌ Your Password and confirm Password Should be same", { position: "top-right" });
-        return;
-      }
-      toast.info("🟢 Registring account...", { position: "top-right" });
-
-    }
-    else if (email && password && confirmPassword) {
-      console.log("reset");
-      if (!passwordRegex.test(loginData.password)) {
-        toast.error("❌ Weak password! It must be at least 8 characters with uppercase, lowercase, number, and special character.", { position: "top-right" });
-        return;
-      }
-      if(loginData.password!==loginData.confirmPassword){
-        toast.error("❌ Your Password and confirm Password Should be same", { position: "top-right" });
-        return;
-      }
-      toast.info("🟢 Reseting Password...", { position: "top-right" });
-
-    }
+    toast.error(`❌ ${message}`, { position: "top-right" });
   };
 
+  const handleSubmit = (e) => {
+    setLoading(true)
+    e.preventDefault();
+    const { user, password, email, name, confirm_password, username } =
+      loginData;
+
+    const timeout = setTimeout(() => controller.abort(), 5000);
+
+
+    
+    if (user && password && !name) {
+      axios
+        .post(
+          `${BASE_URL}/login/`,
+          { username: loginData.user, password: loginData.password },
+          { signal }
+          
+        )
+        .then((res) => {
+          toast.info("🟢 Logging in...", { position: "top-right" });
+          localStorage.setItem("token", res.data.access_token);
+          setLoading(false)
+          clearTimeout(timeout)
+        })
+        .catch((error) => {
+          clearTimeout(timeout);
+          showError(error);
+          setLoading(false)
+        });
+    } else if (name && username && email && password && confirm_password) {
+      console.log("register");
+      if (!fullNameRegex.test(loginData.name)) {
+        toast.error(
+          "❌ Invalid Full Name! It should contain only alphabets & spaces (max 20 characters).",
+          { position: "top-right" }
+        );
+        return;
+      }
+
+      if (!passwordRegex.test(loginData.password)) {
+        toast.error(
+          "❌ Weak password! It must be at least 8 characters with uppercase, lowercase, number, and special character.",
+          { position: "top-right" }
+        );
+        return;
+      }
+      if (loginData.password !== loginData.confirm_password) {
+        toast.error("❌ Your Password and confirm Password Should be same", {
+          position: "top-right",
+        });
+        return;
+      }
+
+      axios
+        .post(`${BASE_URL}/register/`, loginData, { signal })
+        .then((response) => {
+          toast.info("🟢 Registring account...", { position: "top-right" });
+          setLoading(false)
+        })
+        .catch((error) => {
+          clearTimeout(timeout);
+          showError(error);
+          setLoading(false)
+        });
+    } else if (email && !password) {
+      console.log("reset");
+      if (loginData.password !== loginData.confirm_password) {
+        toast.error("❌ Your Password and confirm Password Should be same", {
+          position: "top-right",
+        });
+        return;
+      }
+
+      console.log(loginData);
+
+      axios
+        .post(`${BASE_URL}/forgot-password/`, null, {
+          params: { email: loginData.email },
+          signal,
+        })
+        .then((res) => {
+          toast.info("🟢 Reseting Password...", { position: "top-right" });
+          setLoading(false)
+        })
+        .catch((error) => {
+          clearTimeout(timeout);
+          showError(error);
+          setLoading(false)
+        });
+    }
+    clearTimeout(timeout)
+  };
 
   return (
     <div className=" flex flex-col items-center justify-center py-20">
       <div className="loginBox flex justify-center items-center mb-10">
-        <button onClick={showLoginSection} className={`${showLogin? "text-[rgb(167,73,255)]": ""} cursor-pointer text-2xl mr-3 font-bold`}>
+        <button
+          onClick={showLoginSection}
+          className={`${
+            showLogin ? "text-[rgb(167,73,255)]" : ""
+          } cursor-pointer text-2xl mr-3 font-bold`}
+        >
           Login
         </button>
         <span>
           <hr className="h-5 bg-none border-x-[0.1px]" />
         </span>
         <button
+        
           onClick={showRegisterSection}
-          className={`${showRegister? "text-[rgb(167,73,255)]": ""} cursor-pointer text-2xl ml-3 font-bold`}
+          className={`${
+            showRegister ? "text-[rgb(167,73,255)]" : ""
+          } cursor-pointer text-2xl ml-3 font-bold`}
         >
           Register
         </button>
       </div>
 
       {showLogin && (
-        
         <div className="py-10 px-4 formDiv flex justify-center items-center w-10/12 md:w-2/3 lg:w-1/2 lg:p-24 shadow-[0_0px_3px_rgba(0,0,0,0.25)]">
-                      
           <form onSubmit={handleSubmit} className="w-full">
             <input
               required
@@ -131,8 +207,9 @@ const Login = () => {
               </span> */}
               <span className="w-full">
                 <button
+                disabled={loading}
                   type="submit"
-                  className="cursor-pointer py-2 px-7 text-sm font-medium text-[#333333] bg-[#F2F2F2] hover:bg-[#A749FF] hover:text-white transition ease-linear duration-300"
+                  className="cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed py-2 px-7 text-sm font-medium text-[#333333] bg-[#F2F2F2] hover:bg-[#A749FF] hover:text-white transition ease-linear duration-300"
                 >
                   LOGIN
                 </button>
@@ -146,7 +223,6 @@ const Login = () => {
             </span>
           </form>
         </div>
-       
       )}
 
       {showRegister && (
@@ -157,7 +233,7 @@ const Login = () => {
               type="text"
               maxLength="20"
               minLength="3"
-              name="fullName"
+              name="name"
               onChange={formDataHandle}
               placeholder="Full Name"
               className="mb-7 w-full leading-10 px-3 border border-[#bdbdbd] focus:outline-none"
@@ -196,15 +272,16 @@ const Login = () => {
               maxLength="15"
               minLength="6"
               required
-              name="confirmPassword"
+              name="confirm_password"
               type="password"
               placeholder="Confirm Password"
               className="mb-7 w-full leading-10 px-3 border border-[#bdbdbd] focus:outline-none"
             />
             <span className="w-full">
               <button
+              disabled={loading}
                 type="submit"
-                className="py-2 px-7 text-sm bg-gray-100 text-gray-950 hover:bg-purple-800 hover:text-white transition ease-linear duration-300"
+                className=" disabled:text-gray-400 disabled:cursor-not-allowed py-2 px-7 text-sm bg-gray-100 text-gray-950 hover:bg-purple-800 hover:text-white transition ease-linear duration-300"
               >
                 REGISTER
               </button>
@@ -225,32 +302,13 @@ const Login = () => {
               placeholder="Email"
               className="mb-7 w-full leading-10 px-3 border border-[#bdbdbd] focus:outline-none"
             />
-            <input
-              onChange={formDataHandle}
-              maxLength="15"
-              minLength="6"
-              name="password"
-              type="password"
-              required
-              placeholder="Password"
-              className="mb-7 w-full leading-10 px-3 border border-[#bdbdbd] focus:outline-none"
-            />
-            <input
-              onChange={formDataHandle}
-              maxLength="15"
-              minLength="6"
-              required
-              name="confirmPassword"
-              type="password"
-              placeholder="Confirm password"
-              className="mb-7 w-full leading-10 px-3 border border-[#bdbdbd] focus:outline-none"
-            />
             <span className="w-full">
               <button
+              disabled={loading}
                 type="submit"
-                className="py-2 px-7 text-sm bg-gray-100 text-gray-950 hover:bg-purple-800 hover:text-white transition ease-linear duration-300"
+                className="disabled:text-gray-400  disabled:cursor-not-allowed py-2 px-7 text-sm bg-gray-100 text-gray-950 hover:bg-purple-800 hover:text-white transition ease-linear duration-300"
               >
-                RESET
+                SUBMIT
               </button>
             </span>
           </form>
