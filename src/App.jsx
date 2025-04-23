@@ -66,7 +66,7 @@ function App() {
         },
         {
           path:"/admin",
-          element:<Dashboard/>
+          element:<Main/>
         },
         {
           path: "*",

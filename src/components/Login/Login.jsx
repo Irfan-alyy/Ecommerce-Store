@@ -72,6 +72,7 @@ const Login = () => {
           `${BASE_URL}/login/`,
           { username: loginData.user, password: loginData.password },
           { signal }
+          
         )
         .then((res) => {
           toast.info("🟢 Logging in...", { position: "top-right" });
