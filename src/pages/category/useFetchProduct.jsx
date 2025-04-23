@@ -10,9 +10,11 @@ const useFetchProducts = () => {
     useEffect(()=>{
 
         const fetchProducts=()=>{
-            axios.get('https://fakestoreapi.com/products')
+            axios.get(`${BASE_URL}/products/allproducts`)
             .then(res=>{
                 setProducts(res.data)
+                console.log(res.data)
+                
             })
             .catch(err=>{
                 setError(err.message)
@@ -23,9 +25,10 @@ const useFetchProducts = () => {
             })
         }
         const fetchCategories=()=>{
-            axios.get('https://fakestoreapi.com/products/categories')
+            axios.get(`${BASE_URL}/category/categories`)
             .then(res=>{
-                setCategories(["all",...res.data])
+                setCategories(res.data)
+                
             })
             .catch(err=>{
                 setError(err.message)
@@ -41,9 +44,7 @@ const useFetchProducts = () => {
     },[])
 
 
-
-
-    return {products,categories,loading, error};
+    return {products,loading,error, categories};
 }
  
 export default useFetchProducts;

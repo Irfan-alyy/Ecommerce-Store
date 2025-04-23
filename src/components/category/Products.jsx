@@ -9,6 +9,8 @@ import { useState } from "react";
 const Product = ({ product }) => {
   const [QuickViewVisible, setQuickViewVisible] = useState(false);
 
+  console.log(product)
+
   const actualPrice = (product.price + product.price * 0.1).toFixed(2);
   const navigate = useNavigate();
   const quickView = (e) => {
@@ -70,7 +72,7 @@ const addToCart = (e) => {
         <div className="flex justify-center items-center mt-[20px] gap-1 w-full">
           <div className="flex flex-col items-center justify-center w-full">
             <h1 className="hover:text-gray-600 cursor-pointer w-8/12 m-auto truncate text-center text-[rgb(119,55,178)] font-semibold text-lg">
-              {product.title}
+              {product.product_name}
             </h1>
             <p className="text-center">
               <span>${product.price}</span> -

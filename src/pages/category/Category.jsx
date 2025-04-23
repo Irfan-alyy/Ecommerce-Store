@@ -18,6 +18,10 @@ const Category = () => {
   const [visible,setVisible] = useState(false);
 
   const {products, categories, loading, error} =  useFetchProducts()
+
+
+  
+   
   let productsCopy = [...products]
   const query=useQuery.get("search")
  
@@ -50,9 +54,9 @@ const Category = () => {
 
     // Sorting logic
     result.sort((a, b) => {
-      if (selectedSort === "popularity") return b.rating.rate - a.rating.rate;
-      if (selectedSort === "price-asc") return a.price - b.price;
-      if (selectedSort === "price-desc") return b.price - a.price;
+      // if (selectedSort === "popularity") return b.rating.rate - a.rating.rate;
+      // if (selectedSort === "price-asc") return a.price - b.price;
+      // if (selectedSort === "price-desc") return b.price - a.price;
       return 0;
     });
 
@@ -119,11 +123,10 @@ const Category = () => {
   }, []);
 
 
-
   return (
     <>
     
-      
+
 
       <div className="w-full px-5 sm:px-15 md:px-30 lg:px-40 grid  gap-5 py-10 md:py-20 grid-cols-1 lg:grid-cols-12">
         <aside className="col-span-12 lg:col-span-3 gap-5">
@@ -159,14 +162,14 @@ const Category = () => {
                   <li key={index} className="mb-2 flex items-center gap-4">
                     <input
                       type="radio"
-                      id={category}
+                      id={category.category_name}
                       name="category"
-                      value={category}
+                      value={category.category_name}
                       checked={selectedCategory === category}
                       onChange={() => handleCategoryChange(category)}
                     />
-                    <label htmlFor={category} className="mr-2">
-                      {category}
+                    <label htmlFor={category.category_name} className="mr-2">
+                      {category.category_name}
                     </label>
                   </li>
                 ))}
