@@ -5,7 +5,7 @@ import { HiOutlineLightBulb } from "react-icons/hi2";
 import { CiFaceSmile } from "react-icons/ci";
 
 import { FaRegArrowAltCircleRight } from "react-icons/fa";
-import { NavLink } from "react-router";
+
 
 const About = () => {
   return (
@@ -163,7 +163,7 @@ const About = () => {
         Lorem ipsum dolor sit amet consectetur.
       </p>
 
-      <div className="w-full px-10 h-auto person gap-6 flex flex-col sm:px-20 md:px-10  sm:grid sm:grid-cols-2  md:grid md:grid-rows-1 lg:flex lg:flex-row  ">
+      <div className="w-full px-10 m-auto h-auto person gap-6 lg:ml-20 lg:gap-12    flex flex-col sm:px-20 md:px-10  sm:grid sm:grid-cols-2  md:grid md:grid-rows-1 lg:flex lg:flex-row  ">
         <div className="flex justify-center items-center flex-col bg-gray-100 pb-4">
           <img
             src="https://flone.jamstacktemplates.dev/assets/img/team/team-1.jpg"

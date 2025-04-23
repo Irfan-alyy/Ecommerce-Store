@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdPhone } from "react-icons/md";
 import { FaEarthAfrica } from "react-icons/fa6";
 import { IoLocationOutline } from "react-icons/io5";
@@ -6,6 +6,8 @@ import { FaFacebookF } from "react-icons/fa";
 import { CgTwitter } from "react-icons/cg";
 import { FaTwitter } from "react-icons/fa";
 import { NavLink } from "react-router";
+
+
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -182,8 +184,5 @@ const Contact = () => {
     </div>
   );
 };
-  );
-};
 
-export default Contact;
 export default Contact;

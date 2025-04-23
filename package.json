@@ -11,14 +11,6 @@
     "lint": "eslint .",
     "preview": "vite preview; vite preview --host"
   },
-  "scripts": {
-    "dev": "vite",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview; vite preview --host"
-  },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
@@ -29,6 +21,7 @@
     "axios": "^1.8.4",
     "framer-motion": "^12.5.0",
     "react": "^19.0.0",
+    "react-apexcharts": "^1.7.0",
     "react-circular-progressbar": "^2.2.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
@@ -37,8 +30,8 @@
     "react-router-dom": "^7.5.0",
     "react-toastify": "^11.0.5",
     "recharts": "^2.15.3",
-    "tailwindcss": "^4.0.14",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "tailwindcss": "^4.0.14"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
