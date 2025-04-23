@@ -42,9 +42,9 @@ const Testimonial = () => {
   }, []);
 
   return (
-    <div className="flex mt-10  justify-center items-center flex-col px-6 mb-10 pb-4 ">
+    <div className="flex mt-10   justify-center items-center flex-col px-6 mb-10 pb-4 ">
       {/* Testimonial Section */}
-      <div className="relative w-full max-w-[95%] mx-auto overflow-hidden h-[400px]">
+      <div className="relative w-full max-w-[95%] mx-auto overflow-hidden  h-[400px]">
         {testimonials.map((item, i) => (
           <div
             key={item.id}
@@ -59,7 +59,7 @@ const Testimonial = () => {
             <img
               src={item.image}
               alt={item.name}
-              className="w-[100px] h-[100px] rounded-full mb-4"
+              className="w-[100px] h-[100px] rounded-full mb-4 z-0 hover:scale-110"
             />
             <p className="text-gray-700">{item.review}</p>
             <a href="#" className="text-2xl text-gray-600 mt-3">

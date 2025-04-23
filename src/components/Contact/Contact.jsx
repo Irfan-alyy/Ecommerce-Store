@@ -8,6 +8,48 @@ import { FaTwitter } from "react-icons/fa";
 import { NavLink } from "react-router";
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.name.trim()) newErrors.name = 'Name is required';
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Email is invalid';
+    }
+    if (!formData.subject.trim()) newErrors.subject = 'Subject is required';
+    if (!formData.message.trim()) newErrors.message = 'Message is required';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validate()) {
+      alert("Message submitted successfully!");
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+      setErrors({});
+    }
+  };
+
   return (
     <div
       className="w-full h-[200vh] pb-10  overflow-x-auto"
@@ -140,5 +182,8 @@ const Contact = () => {
     </div>
   );
 };
+  );
+};
 
+export default Contact;
 export default Contact;

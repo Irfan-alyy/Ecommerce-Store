@@ -158,6 +158,10 @@ const handleSearch=(e) => {
         <li>
           <NavLink to="/contact">Contact</NavLink>
         </li>
+        <li>
+          {/* <NavLink to="/admin">Admin</NavLink>  */}
+        </li>
+
       </ul>
     }
       <div
