@@ -9,3 +9,287 @@
         border-bottom: 1px solid;
     }
 }
+
+/* admin panel */
+.AppGlass {
+    width: 97%;
+    height: 97%;
+padding-bottom: 10px;
+  background-color: rgba(128, 0, 128, 0.767);
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 12rem auto 20rem;
+  }
+  
+  .menuitem {
+    position: relative;
+    padding-left: 16px;
+  }
+  
+  .active {
+    border-radius: 10px;
+    margin-left: 0;
+    font-weight: bold;
+  }
+  
+  /* .active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 5px;
+    height: 100%;
+    background-color: red;
+    border-radius: 5px;
+  } */
+  /*  her is the Card */
+.ParentContainer{
+width: 100%;
+
+
+
+}
+.CompactedCard{
+
+display: flex;
+flex: 1;
+height: 10rem!important;
+border-radius: 10px;
+color: white;
+  position: relative;
+cursor: pointer;
+padding: 1rem;
+padding-left: 10px;
+padding-right: 10px;
+
+
+
+}
+.CompactedCard:hover{
+  box-shadow: none!important;
+}
+.Radialbar{
+display: flex;
+/* flex: 1; */
+flex-direction: column;
+justify-content: flex-end;
+gap: 1rem;
+
+
+}
+ .CircularProgressbar-path {
+  stroke:white!important;
+  stroke-width: 12px !important;
+  filter: drop-shadow(1px 2px 5px white);
+}
+.CircularProgressbar-text {
+  fill: white !important;
+  font-weight: bold;
+}
+
+.CircularProgressbar{
+width: 4rem !important;
+overflow: visible;
+
+
+}
+.CircularProgressbar-trail{
+  display: none;
+}
+.detail{
+flex: 1;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+align-items: flex-end;
+}
+.ExpandedCard{
+  position: absolute;
+width: 56%;
+height: 70vh;
+margin-left: 10px;
+z-index: 10;
+left: 13rem;
+border-radius:  10px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-between;
+padding: 10px;
+margin-right: 40px;
+
+
+}
+.ExpandedCard >span:nth-of-type(1){
+box-shadow: 0px 0px 15px white;
+background-color:transparent ;
+}
+.chartContainer{
+width: 70%;
+
+}
+.bars{
+display: flex;
+position: fixed;
+z-index: 9;
+top:  2rem;
+/* background: #ffe0e0 ; */
+padding: 10px;
+border-radius: 10px;
+
+} 
+@media screen and(max-width: 998px) {
+  .bars{
+    display: none;
+  }
+}
+@media screen and(max-width: 1200px) {
+  .bars{
+    display: none;
+  }
+}
+
+/*  responsive ness */
+@media screen and (max-width : 1200px) {
+
+  .AppGlass{
+   grid-template-columns: 10% 50% auto;
+overflow-y: scroll ;
+  }
+
+
+.menuitem > span{
+  display: none;
+}
+.logo{
+  display: none;
+}
+
+.Maindash{
+justify-content: flex-start;
+margin-top: 2rem;
+
+}
+.Cards{
+flex-direction: column;
+}
+.ParentContainer{
+  height: 9rem;
+}
+.ExpandedCard{
+top: 2rem;
+height: 70vh;
+left: 6rem;
+
+}
+.Rightside{
+  
+  justify-content: flex-start;
+margin-top: 3rem;
+
+}
+.Table{
+  width: 10%;
+  margin-top: 2rem;
+}
+
+
+
+}
+
+
+@media screen and (max-width: 768px) {
+ 
+.AppGlass{
+  grid-template-columns: 1fr;
+}
+.AppGlass::-webkit-scrollbar{
+  display: none;
+}
+
+.Maindash{
+  align-items: center;
+
+}
+.Cards{
+  width: 90%;
+
+}
+.ExpandedCard{
+width: 90%;
+top: 8rem;
+height: 50%;
+left: 15px;
+
+}
+.Table{
+display: flex;
+position: relative;
+flex-direction: column;
+align-items: center;
+width: 20rem ;
+
+
+
+}
+.Rightside{
+  width: 100%;
+margin-top: 0;
+
+
+
+}
+.Rightside{
+  width: 100%;
+margin-top: 0;
+
+}
+.Rightside>div{
+display: flex;
+flex-direction: column;
+align-items: center;
+
+
+}
+/* side bar is here */
+ .sidebar{
+position: fixed;
+z-index: 9;
+background: #ffe0e0;
+width:55%;
+height: 90%;
+padding: 1rem;
+
+
+}
+.menuitem>span{
+  display: block;
+
+}
+.logo{
+  display: flex;
+}
+}
+@media screen and(max-width : 768px) {
+  
+  .rebottom{
+  width: 90%;
+
+
+  }
+}
+/*  for the testonomial*/
+
+.imagee {
+  background-size: cover; /* Set the initial background size */
+  transition: background-size 0.8s ease-in-out; /* Smooth transition for background image scaling */
+  cursor: pointer;
+}
+
+.imagee:hover {
+  background-size: 120%; /* Scale the background image to 110% on hover */
+}
+
+
+
+

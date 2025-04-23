@@ -12,9 +12,10 @@ import Login from "./components/Login/Login";
 import { Provider } from "react-redux";
 import { store, persistor } from "./Feature/Redux/store";
 import { PersistGate } from "redux-persist/integration/react";
-import Dashboard from './components/Dashboard/Dashbord'
+import Main from './components/Dashboard/Main'
 import ResetPassword from "./components/resetPassword/resetPassword";
-
+import Admin from './components/Admin/Admin'
+import Profile from './components/Profile/Profile'
 
 function App() {
   const router = createBrowserRouter([
@@ -60,7 +61,7 @@ function App() {
         },
         {
           path:"/admin",
-          element:<Dashboard/>
+          element:<Main/>
         },
         {
           path: "*",
@@ -72,12 +73,12 @@ function App() {
 
   return (
     <>
-      <Provider store={store}>
-        <PersistGate loading={<p>Loading..</p>} persistor={persistor}>
-          
-          <RouterProvider router={router} />
-        </PersistGate>
-      </Provider>
+    <Provider store={store}>
+      <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
+    <RouterProvider router={router}/>
+
+      </PersistGate>
+    </Provider>
     </>
   );
 }

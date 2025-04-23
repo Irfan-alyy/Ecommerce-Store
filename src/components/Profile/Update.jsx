@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Chart = () => {
+const Update = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const Chart = () => {
   )
 }
 
-export default Chart
+export default Update
