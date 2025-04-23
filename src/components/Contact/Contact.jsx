@@ -57,17 +57,6 @@ const Contact = () => {
       className="w-full h-[200vh] pb-10  overflow-x-auto"
       style={{ backgroundColor: "rgb(255,255,255)" }}
     >
-      {/* <header
-        className="w-full h-[80px] text-3xl sm:text-3xl md:justify-center flex justify-center items-center"
-        style={{ backgroundColor: "rgb(247,247,247)" }}
-      >
-        <NavLink to="/Ecommerce-Store">
-          <h1 className="text-2xl  font-thin ">
-            HOME <span className="font-semibold">/ Contact</span>
-          </h1>
-        </NavLink>
-     
-      </header>
 
 
 <section className='mt-20 mb-80   w-[100%] h-[500px] flex justify-center items-center md:mb-20 lg:mb-20'>
@@ -105,17 +94,16 @@ const Contact = () => {
 <i><FaTwitter /></i>
 </div>
 </div>
-{/* inputs */}
 
 
 <div className='w-[88%] h-[600px]  flex justify-center items-center flex-col py-10 lg:w-[55%] lg:h-[600px]     ' style={{backgroundColor:"rgb(243,243,243)"}}>
 <h1 className='text-3xl font-semibold text-gray-600 text-center'>Get In Touch</h1>
 
-{/* <div> */}
+<div>
 
 <input type="text " placeholder='Name*' className='w-[88%] bg-transparent  border-gray-300 border mt-10 mr-10 ml-10 p-3  '/>
 <input type="email"  placeholder='Email*'  className='w-[88%] bg-transparent  border-gray-300 border mt-10 mr-10 ml-10 p-3  '/>
-{/* </div> */}
+</div>
 <input type="text" placeholder='Subject*' className='w-[88%] bg-transparent  border-gray-300 border mt-10 mr-10 ml-10 p-3  '  />
 
 <textarea type="text" placeholder='Your Message*' className=' w-[88%] bg-transparent  border-gray-300 border mt-10 mr-10 ml-10 pb-20 pt-2 pl-3 ' />

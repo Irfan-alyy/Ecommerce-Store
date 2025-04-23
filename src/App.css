@@ -26,11 +26,11 @@ padding-bottom: 10px;
     padding-left: 16px;
   }
   
-  .active {
+  /* .active {
     border-radius: 10px;
     margin-left: 0;
     font-weight: bold;
-  }
+  } */
   
   /* .active::before {
     content: '';
