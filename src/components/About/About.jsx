@@ -26,21 +26,21 @@ const About = () => {
  Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, sequi. Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi quos inventore autem nesciunt deleniti iure aspernatur placeat velit natus esse?</p>
 </div>
 
-<section className="w-full h-auto p-8  flex justify-center items-center flex-col md:flex-row gap-8">
+<section className="w-full h-auto p-2  flex justify-center items-center flex-col md:flex-row gap-8">
 
-  <div className="w-full max-w-9/10  h-auto md:w-[30%] bg-center bg-cover object-cover bg-[url('https://flone.jamstacktemplates.dev/assets/img/banner/banner-1.jpg')] cursor-pointer flex flex-col justify-center p-6">
+  <div className=" w-[98%]  h-auto md:w-[30%] bg-center bg-cover object-cover bg-[url('https://flone.jamstacktemplates.dev/assets/img/banner/banner-1.jpg')] cursor-pointer flex flex-col justify-center p-6">
     <h1 className="text-3xl text-red-900">Watch</h1>
     <h3 className="mt-4 text-[20px]">Starting at <span className="text-red-900">$99</span></h3>
     <button className="text-3xl mt-10 text-red-900"><FaRegArrowAltCircleRight /></button>
   </div>
 
-  <div className=" w-full max-w-9/10  h-auto md:w-[30%] bg-center bg-cover object-cover bg-[url('https://flone.jamstacktemplates.dev/assets/img/banner/banner-2.jpg')] flex flex-col justify-center p-6">
+  <div className=" w-[98%]  h-auto md:w-[30%] bg-center bg-cover object-cover bg-[url('https://flone.jamstacktemplates.dev/assets/img/banner/banner-2.jpg')] flex flex-col justify-center p-6">
     <h1 className="text-3xl text-red-900">Plo Bag</h1>
     <h3 className="mt-4 text-[20px]">Starting at <span className="text-red-900">$79.00</span></h3>
     <button className="text-3xl mt-10 text-red-900"><FaRegArrowAltCircleRight /></button>
   </div>
 
-  <div className=" w-full max-w-9/10  h-auto md:w-[30%] bg-center bg-cover object-cover bg-[url('https://flone.jamstacktemplates.dev/assets/img/banner/banner-3.jpg')] flex flex-col justify-center p-6">
+  <div className="w-[98%]  h-auto md:w-[30%] bg-center bg-cover object-cover bg-[url('https://flone.jamstacktemplates.dev/assets/img/banner/banner-3.jpg')] flex flex-col justify-center p-6">
     <h1 className="text-3xl text-red-900">Sunglass</h1>
     <h3 className="mt-4 text-[20px]">Starting at <span className="text-red-900">$99</span></h3>
     <button className="text-3xl mt-10 text-red-900"><FaRegArrowAltCircleRight /></button>
@@ -97,7 +97,7 @@ const About = () => {
 <hr className='w-[100px]'></hr>
 <p className='text-center text-xl'>Lorem ipsum dolor sit amet consectetur.</p>
 
-<div className="w-full px-10 h-auto person gap-6 flex flex-col sm:px-20 md:px-10  sm:grid sm:grid-cols-2  md:grid md:grid-rows-1 lg:flex lg:flex-row  " >
+<div className="w-full px-6 h-auto person gap-6 flex flex-col sm:px-20 md:px-10  sm:grid sm:grid-cols-2  md:grid md:grid-rows-1 lg:flex lg:flex-row  " >
 
 <div className='flex justify-center items-center flex-col bg-gray-100 pb-4'>
 <img src="https://flone.jamstacktemplates.dev/assets/img/team/team-1.jpg" alt="" className='w-[80%] mb-5  ' />

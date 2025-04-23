@@ -42,9 +42,9 @@ const Testimonial = () => {
   }, []);
 
   return (
-    <div className="flex mt-10  justify-center items-center flex-col px-6 mb-10 pb-4 ">
+    <div className="flex mt-10   justify-center items-center flex-col px-6 mb-10 pb-4 ">
       {/* Testimonial Section */}
-      <div className="relative w-full max-w-[95%] mx-auto overflow-hidden h-[400px]">
+      <div className="relative w-full max-w-[95%] mx-auto overflow-hidden  h-[400px]">
         {testimonials.map((item, i) => (
           <div
             key={item.id}
@@ -59,7 +59,7 @@ const Testimonial = () => {
             <img
               src={item.image}
               alt={item.name}
-              className="w-[100px] h-[100px] rounded-full mb-4"
+              className="w-[100px] h-[100px] rounded-full mb-4 z-0 hover:scale-110"
             />
             <p className="text-gray-700">{item.review}</p>
             <a href="#" className="text-2xl text-gray-600 mt-3">
@@ -87,7 +87,7 @@ const Testimonial = () => {
       <p className="text-gray-900">Lorem ipsum dolor sit amet consectetur.</p>
 
       {/* Blog Grid */}
-      <div className="h-[100vh] w-full gap-6 sm:grid sm:grid-cols-2 md:grid md:grid-cols-2 lg:flex lg:flex-row">
+      <div className="h-[120vh]  w-full gap-6 sm:grid sm:grid-cols-2 md:grid md:grid-cols-2 lg:flex lg:flex-row">
         {[
           {
             img: "https://flone.jamstacktemplates.dev/assets/img/blog/blog-1.jpg",
@@ -104,8 +104,10 @@ const Testimonial = () => {
         ].map((blog, idx) => (
           <div
             key={idx}
-            className="mt-20 px-10  pb-20 mb-10 min-h-[100px]  flex justify-between items-center flex-col bg-cover bg-center transition-transform hover:scale-105 w-full h-[300px]"
-            style={{ backgroundImage: `url(${blog.img})`,  }}
+            className="imagee mt-20 px-10  pb-20 mb-10 min-h-[100px]  flex justify-between items-center flex-col bg-cover bg-center transition-transform w-full h-[300px]"
+            style={{ backgroundImage: `url(${blog.img})`
+                      
+            ,  }}
           >
             <span className="mt-4 px-2 mr-40 bg-purple-600 text-white">
               Lifestyle

@@ -13,8 +13,9 @@ import About from './components/About/About'
 import Contact from './components/Contact/Contact'
 import Error404 from './components/error/error404'
 import Login from './components/Login/Login'
-import Dashboard from './components/Dashboard/Dashbord'
-
+import Main from './components/Dashboard/Main'
+import Admin from './components/Admin/Admin'
+import Profile from './components/Profile/Profile'
 
 
 function App() {
@@ -58,19 +59,32 @@ function App() {
           element: <Contact/>
         },
         {
-          path: "/admin",
-          element: <Dashboard/>
-        },
-        {
           path: "*",
           element: <Error404/>
+        },
+          
+        {
+          path:'/adminpanel',
+          element:<Main/>
+        },
+        {
+path :'/Admin',
+element : <Admin/>
+
+        },
+        {
+path :'/profile',
+element:<Profile/>
+          
         }
+
       ]
     }
   ])
 
   return (
     <>
+    {/* {window.location.pathname !== '/adminpanel' && <Header />} */}
     <RouterProvider router={router}/>
     </>
   )
