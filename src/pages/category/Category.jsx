@@ -9,7 +9,7 @@ import QuickView from "../../components/Home/components/QuickView";
 
 const Category = () => {
   const useQuery=new URLSearchParams(useLocation().search);
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedPrice, setSelectedPrice] = useState("all");
   const [selectedBrand, setSelectedBrand] = useState("all"); // Future use if needed
   const [selectedSort, setSelectedSort] = useState("popularity");
@@ -19,6 +19,13 @@ const Category = () => {
 
   const {products, categories, loading, error} =  useFetchProducts()
 
+  useEffect(()=>{
+    categories.unshift(
+      {category_name: 'All', description: 'All Categories'})
+    console.log(categories)
+
+  },[categories])
+
 
   
    
@@ -27,7 +34,7 @@ const Category = () => {
  
     if(query && productsCopy.length>0){
       const lowerCaseQuery=query.toLowerCase();
-      const result=products.filter(product=>product.title.toLowerCase().includes(lowerCaseQuery))
+      const result=products.filter(product=>product.product_name.toLowerCase().includes(lowerCaseQuery))
       productsCopy=result
     }
  
@@ -42,33 +49,38 @@ const Category = () => {
 
   // Memoized filtering and sorting logic
   const filteredProducts = useMemo(() => {
-    let result = productsCopy.filter((product) =>
-      selectedCategory === "all" ? true : product.category === selectedCategory
+    let result = productsCopy.filter((product) =>{
+      if(selectedCategory==="All") return true
+      const category= categories.find(cat=>cat.category_name===selectedCategory)
+      if(!category) return false
+
+      return product.category_id===category.id
+    }
     );
 
     if (searchQuery.trim() !== "") {
       result = result.filter((product) =>
-        product.title.toLowerCase().includes(searchQuery.toLowerCase())
+        product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
     // Sorting logic
     result.sort((a, b) => {
       // if (selectedSort === "popularity") return b.rating.rate - a.rating.rate;
-      // if (selectedSort === "price-asc") return a.price - b.price;
-      // if (selectedSort === "price-desc") return b.price - a.price;
+      if (selectedSort === "price-asc") return a.variants[0].price - b.variants[0].price;
+      if (selectedSort === "price-desc") return b.variants[0].price - a.variants[0].price;
       return 0;
     });
 
     // Price filtering
     result = result.filter((product) => {
       if (selectedPrice === "all") return true;
-      if (selectedPrice === "0-50") return product.price <= 50;
+      if (selectedPrice === "0-50") return product.variants[0].price <= 50;
       if (selectedPrice === "50-100")
-        return product.price > 50 && product.price <= 100;
+        return product.variants[0].price > 50 && product.variants[0].price <= 100;
       if (selectedPrice === "100-200")
-        return product.price > 100 && product.price <= 200;
-      if (selectedPrice === "200+") return product.price > 200;
+        return product.variants[0].price > 100 && product.variants[0].price <= 200;
+      if (selectedPrice === "200+") return product.variants[0].price > 200;
       return false;
     });
     return result;
@@ -122,6 +134,28 @@ const Category = () => {
     smoothScrollToTop();
   }, []);
 
+  if(productsCopy.length===0 && loading){
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <h1 className="text-2xl font-bold">Loading...</h1>
+      </div>
+    );
+  }
+  if(error){
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <h1 className="text-2xl font-bold">{error}</h1>
+      </div>
+    );
+  }
+  // if(!loading && productsCopy.length===0){
+  //   return (
+  //     <div className="flex justify-center items-center h-screen">
+  //       <h1 className="text-2xl font-bold">No products found</h1>
+  //     </div>
+  //   );
+  // }
+
 
   return (
     <>
@@ -165,8 +199,8 @@ const Category = () => {
                       id={category.category_name}
                       name="category"
                       value={category.category_name}
-                      checked={selectedCategory === category}
-                      onChange={() => handleCategoryChange(category)}
+                      checked={selectedCategory === category.category_name}
+                      onChange={() => handleCategoryChange(category.category_name)}
                     />
                     <label htmlFor={category.category_name} className="mr-2">
                       {category.category_name}

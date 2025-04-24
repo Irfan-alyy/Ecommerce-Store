@@ -6,32 +6,42 @@ import { FaEye } from "react-icons/fa";
 import QuickView from "../Home/components/QuickView";
 import { useState } from "react";
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const Product = ({ product }) => {
   const [QuickViewVisible, setQuickViewVisible] = useState(false);
 
-  console.log(product)
+  const price=product.variants[0]?.price
+  const discount=product.variants[0]?.discount
+  let actualPrice = price;
 
-  const actualPrice = (product.price + product.price * 0.1).toFixed(2);
+  
+  if(discount) actualPrice=(price/(1-(discount/100))).toFixed(2)
+
+
   const navigate = useNavigate();
   const quickView = (e) => {
     e.stopPropagation();
     setQuickViewVisible(true);
   };
-const addToCart = (e) => {
-  e.stopPropagation();
-  // Add to cart logic here
-  console.log("Product added to cart:", product.id);
-}
-
+  const addToCart = (e) => {
+    e.stopPropagation();
+    // Add to cart logic here
+    console.log("Product added to cart:", product.id);
+  };
+  const createdDate = new Date(product.created_at);
+  const currentDate = new Date();
+  const timeDifference = currentDate.getTime() - createdDate.getTime();
+  const sevenDaysInMillis = 7 * 24 * 60 * 60 * 1000;
 
   return (
     <>
       <div className=" relative group mb-[35px]  flex flex-col  cursor-pointer w-full h-auto  shadow-md rounded-lg overflow-hidden">
         <span className="z-20 text-pink-400 text-s font-semibold absolute top-5 right-5">
-          -10%
+          {discount>0? discount + "%":null}
         </span>
         <span className="z-20 absolute top-12 right-6 text-xs text-violet-500 font-semibold">
-          New
+          {timeDifference<sevenDaysInMillis? "New":null}
         </span>
 
         <div
@@ -45,13 +55,15 @@ const addToCart = (e) => {
 
           <div className="flex items-center justify-center flex-col w-full inset-0 group-hover:flex z-50 ">
             <img
-              src={product.image}
+              src={`${BASE_URL}${product.variants[0].images[0]}`}
               alt="product 2"
               className="object-cover h-80 w-auto z-10"
             />
             <div className=" flex w-full  items-center gap-0">
-              <span className="flex items-center justify-center cursor-pointer brightness-100  opacity-100 transition-opacity transition-brightness duration-300  bg-[rgb(167,73,255)] hover:bg-black w-2/11 h-12 text-xl"
-                onClick={addToCart}>
+              <span
+                className="flex items-center justify-center cursor-pointer brightness-100  opacity-100 transition-opacity transition-brightness duration-300  bg-[rgb(167,73,255)] hover:bg-black w-2/11 h-12 text-xl"
+                onClick={addToCart}
+              >
                 <CiShoppingCart title="Add Cart" className="text-3xl" />
               </span>
               <button
@@ -75,14 +87,15 @@ const addToCart = (e) => {
               {product.product_name}
             </h1>
             <p className="text-center">
-              <span>${product.price}</span> -
-              <strike className="text-[rgb(127,127,127)]">{actualPrice}</strike>
+              <span>${product.variants[0]?.price}</span> 
+
+              { actualPrice!=price && <span className="text-[rgb(127,127,127)]"> - <strike>{actualPrice}</strike></span>}
             </p>
           </div>
         </div>
       </div>
 
-      {QuickViewVisible&& (
+      {QuickViewVisible && (
         <QuickView
           product={product}
           setVisible={setQuickViewVisible}

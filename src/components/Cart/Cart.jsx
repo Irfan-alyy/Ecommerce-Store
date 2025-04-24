@@ -2,47 +2,49 @@ import { color } from "framer-motion";
 import React from "react";
 import { ImCross } from "react-icons/im";
 import { useDispatch , useSelector} from "react-redux";
-import {removeItem, handleDecrement, handleIncrement } from "../../Feature/Redux/cartSlice";
+import {removeItem, handleDecrement, handleIncrement, clearCart } from "../../Feature/Redux/cartSlice";
 import { NavLink } from "react-router";
+const BASE_URL=import.meta.env.VITE_API_BASE_URL
 
-function Cart(props) {
+function Cart() {
     const dispatch=useDispatch()
-    // const items=useSelector(state=>state.reducer.items)
-    const items= [
-        {
-            image: "https://vgl.ucdavis.edu/sites/g/files/dgvnsk15116/files/styles/sf_landscape_4x3/public/images/marketing_highlight/Sample-Collection-Box-Cat-640px.jpg?h=52d3fcb6&itok=4r75E_w2",
-            title:"lorem lipsum jacket",
-            color: " white",
-            size: "x",
-            price: 12.5,
-            offPrice: 11.5,
-            quantity:1
+    const items=useSelector(state=>state.reducer.items)
+    // const items= [
+    //     {
+    //         image: "https://vgl.ucdavis.edu/sites/g/files/dgvnsk15116/files/styles/sf_landscape_4x3/public/images/marketing_highlight/Sample-Collection-Box-Cat-640px.jpg?h=52d3fcb6&itok=4r75E_w2",
+    //         title:"lorem lipsum jacket",
+    //         color: " white",
+    //         size: "x",
+    //         price: 12.5,
+    //         offPrice: 11.5,
+    //         quantity:1
     
-        },
-        {
-            image: "https://vgl.ucdavis.edu/sites/g/files/dgvnsk15116/files/styles/sf_landscape_4x3/public/images/marketing_highlight/Sample-Collection-Box-Cat-640px.jpg?h=52d3fcb6&itok=4r75E_w2",
-            title:"lorem lipsum jacket",
-            color: " white",
-            size: "x",
-            price: 12.5,
-            offPrice: 11.5,
-            quantity:1
+    //     },
+    //     {
+    //         image: "https://vgl.ucdavis.edu/sites/g/files/dgvnsk15116/files/styles/sf_landscape_4x3/public/images/marketing_highlight/Sample-Collection-Box-Cat-640px.jpg?h=52d3fcb6&itok=4r75E_w2",
+    //         title:"lorem lipsum jacket",
+    //         color: " white",
+    //         size: "x",
+    //         price: 12.5,
+    //         offPrice: 11.5,
+    //         quantity:1
     
-        },
-        {
-            image: "https://vgl.ucdavis.edu/sites/g/files/dgvnsk15116/files/styles/sf_landscape_4x3/public/images/marketing_highlight/Sample-Collection-Box-Cat-640px.jpg?h=52d3fcb6&itok=4r75E_w2",
-            title:"lorem lipsum jacket",
-            color: " white",
-            size: "x",
-            price: 12.5,
-            offPrice: 11.5,
-            quantity:1
+    //     },
+    //     {
+    //         image: "https://vgl.ucdavis.edu/sites/g/files/dgvnsk15116/files/styles/sf_landscape_4x3/public/images/marketing_highlight/Sample-Collection-Box-Cat-640px.jpg?h=52d3fcb6&itok=4r75E_w2",
+    //         title:"lorem lipsum jacket",
+    //         color: " white",
+    //         size: "x",
+    //         price: 12.5,
+    //         offPrice: 11.5,
+    //         quantity:1
     
-        }
-    ]
+    //     }
+    // ]
   
 const handleRemove = (item) => {
-    dispatch(removeItem(item));
+  console.log(item,"item");
+  dispatch(removeItem(item));
   };
   const handlePlus = (index) => {
     dispatch(handleIncrement(index));
@@ -57,34 +59,36 @@ const handleRemove = (item) => {
   }
   return (
     <div className=" w-12/12 px-4 sm:px-10 py-10 sm:py:20 md:py:30 md:px-30 lg:px-25 xl:px-40">
-      <h3 className="text-[20px] font-medium">Your Cart Items</h3>
+      <h3 className="text-[20px] font-medium">{items.length>0?"Your Cart Items":"No items in cart"}</h3>
 
       {items.map((elem, ind) => (
         <div key={ind} className="Wrapper w-full grid grid-cols-2 sm:flex sm:flex-wrap justify-between border-collapse border mb-1 border-[#8E8E8E]  p-4">
           <div className="image w-auto h-auto flex flex-col">
             <div className="data w-24 h-32 flex justify-center items-center">
               <img
-                src={elem.image}
-                alt={elem.title}
+                src={`${BASE_URL}${elem.variant.images[0]}`}
+                alt={elem.name}
               />
             </div>
           </div>
           <div className="pName w-auto h-auto flex flex-col">
             <div className="data w-full h-32 p-1 flex flex-col justify-center items-center">
               <span className="font-bold my-2.5 hover:text-[#A749FF] transition duration-300">
-                <a href="#">{elem.title}</a>
+                <NavLink to={`/category/product/${elem.id}`}>
+                  {elem.title}
+                </NavLink>
               </span>
-              <span>Color: {elem.color}</span>
-              <span>Size: {elem.size}</span>
+              <span>Color: {elem.variant.attributes.color}</span>
+              <span>Size: {elem.variant.attributes.size}</span>
             </div>
           </div>
           <div className="pName w-auto h-auto flex flex-col">
             <div className="data w-full h-32 p-1 flex flex-col justify-center items-center">
               <span>
                 <span className="text-[#8E8E8E] font-medium line-through">
-                  $ {elem.price}
+                  $ {(elem.variant.price/(1-elem.variant.discount/100)).toFixed(2)}
                 </span>
-                <span className="pl-3 font-medium">$ {elem.offPrice}</span>
+                <span className="pl-3 font-medium">$ {elem.variant.price}</span>
               </span>
             </div>
           </div>
@@ -105,12 +109,12 @@ const handleRemove = (item) => {
           </div>
           <div className="pName lg:w-36 h-auto flex flex-col">
             <div className="data w-full h-32 p-1 flex flex-col justify-center items-center">
-              <span className="font-medium">$ {elem.offPrice}</span>
+              <span className="font-medium"> -{elem.variant.discount} %</span>
             </div>
           </div>
           <div className="pName w-36 h-auto flex flex-col">
             <div className="data w-full h-32 p-1 flex flex-col justify-center items-center">
-              <span className="" onClick={()=>handleRemove(elem[ind])}>
+              <span className="" onClick={()=>handleRemove(elem)}>
                 <ImCross className="hover:text-[#A749FF] transition duration-300 cursor-pointer" />
               </span>
             </div>

@@ -81,9 +81,9 @@ const Login = () => {
           clearTimeout(timeout)
         })
         .catch((error) => {
-          clearTimeout(timeout);
           showError(error);
           setLoading(false)
+          clearTimeout(timeout);
         });
     } else if (name && username && email && password && confirm_password) {
       console.log("register");
@@ -114,11 +114,12 @@ const Login = () => {
         .then((response) => {
           toast.info("🟢 Registring account...", { position: "top-right" });
           setLoading(false)
+          clearTimeout(timeout)
         })
         .catch((error) => {
-          clearTimeout(timeout);
           showError(error);
           setLoading(false)
+          clearTimeout(timeout);
         });
     } else if (email && !password) {
       console.log("reset");
@@ -129,7 +130,7 @@ const Login = () => {
         return;
       }
 
-      console.log(loginData);
+      // console.log(loginData);
 
       axios
         .post(`${BASE_URL}/forgot-password/`, null, {
@@ -141,12 +142,12 @@ const Login = () => {
           setLoading(false)
         })
         .catch((error) => {
-          clearTimeout(timeout);
           showError(error);
           setLoading(false)
+          clearTimeout(timeout);
         });
     }
-    clearTimeout(timeout)
+    
   };
 
   return (
@@ -209,7 +210,7 @@ const Login = () => {
                 <button
                 disabled={loading}
                   type="submit"
-                  className="cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed py-2 px-7 text-sm font-medium text-[#333333] bg-[#F2F2F2] hover:bg-[#A749FF] hover:text-white transition ease-linear duration-300"
+                  className="cursor-pointer disabled:text-gray-400 disabled:cursor-progress py-2 px-7 text-sm font-medium text-[#333333] bg-[#F2F2F2] hover:bg-[#A749FF] hover:text-white transition ease-linear duration-300"
                 >
                   LOGIN
                 </button>
@@ -281,7 +282,7 @@ const Login = () => {
               <button
               disabled={loading}
                 type="submit"
-                className=" disabled:text-gray-400 disabled:cursor-not-allowed py-2 px-7 text-sm bg-gray-100 text-gray-950 hover:bg-purple-800 hover:text-white transition ease-linear duration-300"
+                className=" disabled:text-gray-400 disabled:cursor-progress py-2 px-7 text-sm bg-gray-100 text-gray-950 hover:bg-purple-800 hover:text-white transition ease-linear duration-300"
               >
                 REGISTER
               </button>
@@ -306,7 +307,7 @@ const Login = () => {
               <button
               disabled={loading}
                 type="submit"
-                className="disabled:text-gray-400  disabled:cursor-not-allowed py-2 px-7 text-sm bg-gray-100 text-gray-950 hover:bg-purple-800 hover:text-white transition ease-linear duration-300"
+                className="disabled:text-gray-400  disabled:cursor-progress py-2 px-7 text-sm bg-gray-100 text-gray-950 hover:bg-purple-800 hover:text-white transition ease-linear duration-300"
               >
                 SUBMIT
               </button>

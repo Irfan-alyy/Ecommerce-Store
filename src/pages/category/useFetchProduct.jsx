@@ -5,7 +5,7 @@ const useFetchProducts = () => {
     const [products,setProducts]=useState([])
     const [loading,setLoading]=useState(true)
     const [error,setError]=useState(null)
-    const [categories,setCategories]=useState([])
+    const [categories,setCategories]=useState(["all"])
     
     useEffect(()=>{
 
@@ -13,7 +13,7 @@ const useFetchProducts = () => {
             axios.get(`${BASE_URL}/products/allproducts`)
             .then(res=>{
                 setProducts(res.data)
-                console.log(res.data)
+                
                 
             })
             .catch(err=>{

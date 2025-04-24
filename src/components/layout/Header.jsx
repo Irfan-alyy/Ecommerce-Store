@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { CiShoppingCart } from "react-icons/ci";
@@ -7,6 +7,7 @@ import { NavLink, useNavigate } from "react-router";
 import logo from "../../assets/logo.png";
 import { useRef } from "react";
 import Badge from "@mui/material/Badge";
+import { useSelector } from "react-redux";
 const Header = () => {
   const [isSearchBoxVisible, setSearchBoxVisible] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
@@ -87,7 +88,10 @@ const handleSearch=(e) => {
     setMenuVisible(!menuVisible);
     // menuVisible? null: menuBtn.current.classList.add("hidden");menuBtn.current.classList.add("flex")
   };
+
+  const cartItemsLength=useSelector((state) => state.reducer.items.length);
   return (
+    
     <div className={`Header bg-[rgb(218,237,255)] fixed top-0 left-0 w-full z-50 transition-transform duration-300 ${showHeader?"translate-y-0": "-translate-y-full"}`}>
       <div className="px-5  sm:px-15  md:px-30 lg:px-40 flex justify-between  h-25 items-center">
         <div className="hidden items-center gap-5 md:gap-10 md:flex">
@@ -131,7 +135,7 @@ const handleSearch=(e) => {
             <FaRegCircleUser className="w-5 h-5" />
           </NavLink>
           <NavLink to="/cart">
-            <Badge badgeContent={2}>
+            <Badge badgeContent={cartItemsLength} color="primary">
               <CiShoppingCart className="w-7 h-7" />
             </Badge>
           </NavLink>
@@ -144,6 +148,7 @@ const handleSearch=(e) => {
       </div>
       <hr className="hidden sm:block mx-40 text-[rgb(180,178,178)]" />
       {/* Navigation menu visible on large screens */}
+      <nav>
       {isTop &&
       <ul className="hidden  sm:flex justify-center py-5 gap-10">
         <li>
@@ -164,6 +169,7 @@ const handleSearch=(e) => {
 
       </ul>
     }
+    </nav>
       <div
         ref={searchRef}
         className={`flex items-center h-17 bg-[rgb(246,246,248)] p-4 absolute top-25 right-1   sm:right-35 md:right-50 z-50 transition-all duration-300 ease-in transform origin-top perspective-[1000px] ${

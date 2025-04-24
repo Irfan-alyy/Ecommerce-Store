@@ -26,6 +26,15 @@ padding-bottom: 10px;
     padding-left: 16px;
   }
   
+  nav{
+    .active{
+      font-weight: 500;
+      color:#764abc;
+
+      transition: all 0.3s ease-in;
+    }
+    
+  }
   /* .active {
     border-radius: 10px;
     margin-left: 0;
