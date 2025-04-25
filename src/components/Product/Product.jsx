@@ -1,15 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import image1 from "../../assets/1.jpg";
-import { IoCloseSharp } from "react-icons/io5";
-import image2 from "../../assets/7.jpg";
-import image3 from "../../assets/product1.jpg";
-import image4 from "../../assets/product2.jpg";
+
 
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
-import { CiStar } from "react-icons/ci";
-import { FaStar } from "react-icons/fa";
-import BasicButton from "../../ui/components/Button";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   TiSocialDribbble,
@@ -24,22 +17,22 @@ import useProduct from "./useProduct";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { addToCart, removeItem } from "../../Feature/Redux/cartSlice";
+import { addToCart } from "../../Feature/Redux/cartSlice";
+import ProductReviews from "./productReview";
+import FadeInFromBottom from "../../ui/animations/FadeInFromBottom";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Product = () => {
   const { id } = useParams();
-  const { product, loading, error } = useProduct({ id });
-  const [startIndex, setStartIndex] = useState(0);
+  const { product,category, loading, error, productReviews } = useProduct({ id });
   const [currentPic, setCurrentPic] = useState("");
   const [selectedVariant, setSelectedVariant] = useState([]);
-  const [variantIndex, setVariantIndex] = useState(0);
 const [addedToCart,setAddedToCart]=useState(false)
   const [isDescriptionVisible, setDescriptionVisble] = useState(true);
   const dispatch = useDispatch();
 
-  
+  // console.log(category,"categ")
   const cartItems = useSelector((state) => state.reducer.items);
   useEffect(() => {
     const isInCart = cartItems.some(
@@ -122,16 +115,18 @@ const [addedToCart,setAddedToCart]=useState(false)
 
 
   return (
+    
     <div className="px-10 sm:px-20 md:px-30 xl:px-40">
       <div className="justify-center h-auto bg-white rounded-xl py-10 lg:py-25  ">
         <div className="flex flex-col lg:flex-row  py-5 lg:py-10 gap-5 md:gap-10 lg:gap-15">
           <div className=" flex flex-col ">
+          <FadeInFromBottom duration={1} delay={0} yOffset={50}>
             <div className="relative flex w-full h-auto bg-[rgb(246,246,246)] items-center justify-center">
               {/* Button for previous image */}
 
               <IoIosArrowBack
                 onClick={() => handleImageChange("prev")}
-                className=" group-hover:hidden text-2xl absolute    left-0 top-1/2 -translate-y-1/2 "
+                className=" group-hover:hidden text-2xl absolute cursor-pointer  left-0 top-1/2 -translate-y-1/2 "
               />
 
               <img
@@ -143,13 +138,14 @@ const [addedToCart,setAddedToCart]=useState(false)
               {/* Button for next image */}
               <IoIosArrowForward
                 onClick={() => handleImageChange("next")}
-                className="group-hover:hidden text-2xl absolute right-0 top-1/2 -translate-y-1/2 "
+                className="group-hover:hidden text-2xl absolute right-0 top-1/2 cursor-pointer  -translate-y-1/2 "
               />
 
               <p className="absolute top-5 left-5 bg-[rgb(250,107,255)] px-2 rounded text-sm">
-                {selectedVariant?.discount}
+                {selectedVariant?.id && "-"+selectedVariant.discount+"%"}
               </p>
             </div>
+            </FadeInFromBottom>
 
             <div className="relative w-full max-w-3xl mx-auto overflow-hidden group">
               <div className="w-100 flex flex-row items-center gap-2 py-5 flex-wrap justify-start">
@@ -158,7 +154,7 @@ const [addedToCart,setAddedToCart]=useState(false)
                     key={idx}
                     src={`${BASE_URL}${elem.images[0]}`}
                     alt={`img-${idx}`}
-                    className="w-[22.5%] object-cover transition-all  duration-500 "
+                    className="w-[22.5%] max-h-25 object-cover transition-all cursor-pointer  duration-500 "
                     onClick={() => handleVariantChange(elem, idx)}
                     // onMouseOver={() => setCurrentPic(elem.images[0])}
                   />
@@ -166,6 +162,7 @@ const [addedToCart,setAddedToCart]=useState(false)
               </div>
             </div>
           </div>
+          <FadeInFromBottom duration={1} delay={0} yOffset={50}>
           <div className="flex flex-col w-11/12 pl-5">
             <div className="md:pr-15 flex flex-col md:gap-2 py-2">
               <h1 className="text-2xl md:text-3xl">{product.product_name}</h1>
@@ -192,8 +189,8 @@ const [addedToCart,setAddedToCart]=useState(false)
                 {addedToCart? "ADDED TO CART":"ADD TO CART"}
               </button>
 
-              <p className="leading-10 pt-5">Catagories:{product.category}</p>
-              <p>Tags: {product.brand}</p>
+              <p className="leading-10 pt-5">Catagories: {category?.category_name}</p>
+              <p>Tags: {product.brand}, {category?.category_name} </p>
 
               <div className="flex gap-10 mt-5">
                 <TiSocialFacebook className="text-2xl cursor-pointer" />
@@ -204,6 +201,7 @@ const [addedToCart,setAddedToCart]=useState(false)
               </div>
             </div>
           </div>
+          </FadeInFromBottom>
         </div>
       </div>
       <div className="w-full py-10 md:py-0 border-[#9d9b9bec] border-b-1">
@@ -222,7 +220,7 @@ const [addedToCart,setAddedToCart]=useState(false)
             }`}
             onClick={() => setDescriptionVisble(false)}
           >
-            Reviews({product?.ratings?.lenght || 0})
+            Reviews({productReviews?.length})
           </button>
         </div>
       </div>
@@ -247,33 +245,12 @@ const [addedToCart,setAddedToCart]=useState(false)
               transition={{ duration: 0.3 }}
               className="flex flex-col lg:flex-row gap-5 items-center"
             >
-              <div className="flex flex-col lg:flex-row gap-5">
-                <div className="flex flex-col lg:flex-row gap-5 w-7/12">
-                  <img src={image1} alt="user" className="w-20 h-20" />
-                  <div className="flex flex-col gap-4 ">
-                    <div className=" w-full flex flex-wrap items-center gap-5 py-10">
-                      <h3 className="flex-shrink-1">User Name</h3>
-                      <span className="flex gap-1">
-                        {[...Array(5)].map((_, ind) => (
-                          <FaStar
-                            key={ind}
-                            className={`${
-                              ind < Math.ceil(product.rating.rate)
-                                ? "text-yellow-400"
-                                : ""
-                            }`}
-                          />
-                        ))}
-                      </span>
-                    </div>
-                    <p className="max-w-lg">
-                      Vestibulum ante ipsum primis aucibus orci luctustrices
-                      posuere cubilia Curae Suspendisse viverra ed viverra.
-                      Mauris ullarper euismod vehicula. Phasellus quam nisi,
-                      congue id nulla.
-                    </p>
-                  </div>
-                </div>
+              <div className="flex w-full flex-col lg:flex-row gap-5">
+                <div className="flex-1/2 flex-col col-span-6">
+              {productReviews.length>0 && productReviews.map((elem,ind)=>(
+                <ProductReviews review={elem}/>
+              ))}
+              </div>
                 <RatingForm product={product} />
               </div>
             </motion.div>

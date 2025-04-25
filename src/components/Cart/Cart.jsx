@@ -4,6 +4,7 @@ import { ImCross } from "react-icons/im";
 import { useDispatch , useSelector} from "react-redux";
 import {removeItem, handleDecrement, handleIncrement, clearCart } from "../../Feature/Redux/cartSlice";
 import { NavLink } from "react-router";
+import FadeInFromBottom from "../../ui/animations/FadeInFromBottom";
 const BASE_URL=import.meta.env.VITE_API_BASE_URL
 
 function Cart() {
@@ -42,6 +43,11 @@ function Cart() {
     //     }
     // ]
   
+console.log(items)
+let totalAmount=0;
+if(items.length>0) totalAmount=(items.reduce((acc,curr)=>acc+=curr.quantity*curr.variant.price,0)).toFixed(2)
+
+console.log(totalAmount)
 const handleRemove = (item) => {
   console.log(item,"item");
   dispatch(removeItem(item));
@@ -59,23 +65,31 @@ const handleRemove = (item) => {
   }
   return (
     <div className=" w-12/12 px-4 sm:px-10 py-10 sm:py:20 md:py:30 md:px-30 lg:px-25 xl:px-40">
+      <div className="flex justify-between">
       <h3 className="text-[20px] font-medium">{items.length>0?"Your Cart Items":"No items in cart"}</h3>
+      {items.length>0 &&<h3 className="text-[20px] font-medium">Total Amount: ${totalAmount}</h3>}
+
+
+      </div>
+
 
       {items.map((elem, ind) => (
+      <FadeInFromBottom duration={ind+1} delay={0} yOffset={50}>
         <div key={ind} className="Wrapper w-full grid grid-cols-2 sm:flex sm:flex-wrap justify-between border-collapse border mb-1 border-[#8E8E8E]  p-4">
           <div className="image w-auto h-auto flex flex-col">
             <div className="data w-24 h-32 flex justify-center items-center">
               <img
                 src={`${BASE_URL}${elem.variant.images[0]}`}
                 alt={elem.name}
+                className="object-cover h-full"
               />
             </div>
           </div>
           <div className="pName w-auto h-auto flex flex-col">
-            <div className="data w-full h-32 p-1 flex flex-col justify-center items-center">
+            <div className="data max-w-30 h-32 p-1 flex flex-col justify-center">
               <span className="font-bold my-2.5 hover:text-[#A749FF] transition duration-300">
                 <NavLink to={`/category/product/${elem.id}`}>
-                  {elem.title}
+                  {elem.name}
                 </NavLink>
               </span>
               <span>Color: {elem.variant.attributes.color}</span>
@@ -120,6 +134,7 @@ const handleRemove = (item) => {
             </div>
           </div>
         </div>
+      </FadeInFromBottom>
       ))}
       <div className="flex justify-between items-center flex-col-reverse sm:flex-row gap-2 my-10 font-medium">
        <NavLink to="/">

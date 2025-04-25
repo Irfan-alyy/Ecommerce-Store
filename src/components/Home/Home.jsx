@@ -4,13 +4,12 @@ import product3 from "../../assets/slide3.jpg";
 import product1 from "../../assets/product1.jpg";
 import product2 from "../../assets/product2.jpg";
 
-
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import { useRef } from "react";
 import "./Home.css";
 import { useState } from "react";
-import QuickView from "./components/QuickView";
+import QuickView from "../../components/quickView/QuickView";
 import FadeInFromBottom from "../../ui/animations/FadeInFromBottom";
 import Testimonial from "./components/Testimonial";
 import { useNavigate } from "react-router";
@@ -103,13 +102,23 @@ const Home = () => {
               <h5 className="text-md sm:text-lg font-semibold leading-4  ">
                 New Arrival
               </h5>
-              <FadeInFromBottom duration={1} delay={0} yOffset={50}>
+              <FadeInFromBottom
+                duration={1}
+                delay={0}
+                yOffset={50}
+                key={
+                  (visibleContainer.one && "one") ||
+                  (visibleContainer.two && "two") ||
+                  (visibleContainer.three && "three")
+                }
+              >
                 <div className="flex flex-col gap-3">
                   <h1 className="text-2xl md:text-4xl lg:text-5xl font-semibold leading-10 md:leading-15 tracking-wide">
                     New Design <br />
-                    Bluetooth Speaker{(visibleContainer.one && "1") ||
-                    (visibleContainer.two && "2") ||
-                    (visibleContainer.three && "3")}
+                    Bluetooth Speaker
+                    {(visibleContainer.one && "1") ||
+                      (visibleContainer.two && "2") ||
+                      (visibleContainer.three && "3")}
                   </h1>
                   <button
                     className="hero-shop-btn md:px-15 md:py-4 px-8 py-3 z-2 bg-transparent border-1  w-fit"
@@ -122,7 +131,16 @@ const Home = () => {
               </FadeInFromBottom>
             </div>
             <div>
-              <FadeInFromBottom duration={1} delay={0.8} yOffset={100}>
+              <FadeInFromBottom
+                duration={1}
+                delay={0.5}
+                yOffset={100}
+                key={
+                  (visibleContainer.one && "one") ||
+                  (visibleContainer.two && "two") ||
+                  (visibleContainer.three && "three")
+                }
+              >
                 <img
                   src={
                     (visibleContainer.one && slideOne) ||
@@ -214,7 +232,10 @@ const Home = () => {
       </section>
       <section className="px-10 sm:px-18  md:px-25 lg:px-40 overfllow-hidden">
         <div className="flex flex-col lg:flex-row gap-8 items-center mt-[-100px] sm:mt-[-180px] pb-20">
-          <div className="flex flex-col items-center justify-end pb-10 gap-2 w-75 sm:w-[375px] h-80 sm:h-[350px] relative overflow-hidden" onClick={()=>navigate("/category")}>
+          <div
+            className="flex flex-col items-center justify-end pb-10 gap-2 w-75 sm:w-[375px] h-80 sm:h-[350px] relative overflow-hidden"
+            onClick={() => navigate("/category")}
+          >
             <div className="absolute overflow-hidden">
               <img
                 src={product1}
@@ -227,7 +248,10 @@ const Home = () => {
               <h2 className="text-xl font-semibold ">Bluetooth Speaker</h2>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-end pb-10 gap-2 w-75 sm:w-[375px] h-80 sm:h-[350px] relative overflow-hidden" onClick={()=>navigate("/category")}>
+          <div
+            className="flex flex-col items-center justify-end pb-10 gap-2 w-75 sm:w-[375px] h-80 sm:h-[350px] relative overflow-hidden"
+            onClick={() => navigate("/category")}
+          >
             <div className="absolute overflow-hidden">
               <img
                 src={product2}
@@ -240,7 +264,10 @@ const Home = () => {
               <h2 className="text-xl font-semibold">Bluetooth Speaker</h2>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-end pb-10 gap-2 w-75 sm:w-[375px] h-80 sm:h-[350px] relative overflow-hidden" onClick={()=>navigate("/category")}>
+          <div
+            className="flex flex-col items-center justify-end pb-10 gap-2 w-75 sm:w-[375px] h-80 sm:h-[350px] relative overflow-hidden"
+            onClick={() => navigate("/category")}
+          >
             <div className="absolute overflow-hidden">
               <img
                 src={product3}
@@ -269,9 +296,9 @@ const Home = () => {
         </div>
       </section>
       <section className="px-10 md:px-20 overflow-hidden py-10">
-        <FeaturedProducts quickView={showQuickView}/>
-       
-          {/* {[...Array(8)].map((elem,ind)=>
+        <FeaturedProducts quickView={showQuickView} />
+
+        {/* {[...Array(8)].map((elem,ind)=>
           <div key={ind} className="mb-[35px]  flex flex-col w-[-260px] relative hover:not-target:.cart-flex transform transition-all ease-in">
             <span className="z-10 text-pink-400 text-s font-semibold absolute top-5 right-5">
               -10%
@@ -317,21 +344,21 @@ const Home = () => {
               />
             </div>
           </div>)} */}
-      
       </section>
       <section className="flex items-center justify-center">
         {quickViewVisble && (
+          <FadeInFromBottom delay={0.4} duration={1} yOffset={59} >
           <QuickView
             visible={quickViewVisble}
             setVisible={setQuickViewVisble}
             product={quickViewItem}
           />
+          </FadeInFromBottom>
         )}
       </section>
       {/* <QuickView />  */}
       <section>
-        <Banner/>
-        
+        <Banner />
       </section>
 
       <section className="mt-6  sm:mb-20 ">

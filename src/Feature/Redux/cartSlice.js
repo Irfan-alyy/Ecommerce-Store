@@ -28,8 +28,9 @@ export const counterSlice = createSlice({
       }
     },
     removeItem: (state, action) => {
-      console.log(action.payload);
-      state.items = state.items.filter((elem) => elem.id != action.payload.id);
+      console.log(action.payload,"payload");
+      state.items = state.items.filter((elem) =>elem.variant.id!=action.payload.variant.id);
+      console.log(state.items,"itemss")
       if (state.items.length === 0) state.totalPrice = 0;
     },
     handleIncrement: (state, action) => {

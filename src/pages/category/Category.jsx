@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
-import Product from "../../components/category/Products";
 import { TfiLayoutGrid3Alt, TfiLayoutGrid2Alt } from "react-icons/tfi";
 import { FaSearch } from "react-icons/fa";
 import useFetchProducts from "./useFetchProduct";
 import { useLocation } from "react-router";
-import QuickView from "../../components/Home/components/QuickView";
+import QuickView from "../../components/quickView/QuickView";
+import Products from "./Products";
 
 
 const Category = () => {
@@ -353,7 +353,7 @@ const Category = () => {
             className={`w-full px-5 grid grid-cols-1 place-items-center sm:grid-cols-2 md:grid-cols-${gridView} gap-5`}
           >
             {currentProducts.map((product, index) => (
-              <Product key={index} product={product} />
+              <Products key={index} product={product} />
             ))}
            
           </section>
