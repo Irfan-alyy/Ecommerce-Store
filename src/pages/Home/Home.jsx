@@ -7,14 +7,14 @@ import product2 from "../../assets/product2.jpg";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import { useRef } from "react";
-import "./Home.css";
+import "../../styles/Home/Home.css";
 import { useState } from "react";
 import QuickView from "../../components/quickView/QuickView";
 import FadeInFromBottom from "../../ui/animations/FadeInFromBottom";
-import Testimonial from "./components/Testimonial";
+import Testimonial from "../../components/Home/Testimonial";
 import { useNavigate } from "react-router";
-import FeaturedProducts from "./components/homeProducts";
-import Banner from "./components/banner";
+import FeaturedProducts from "../../components/Home/homeProducts";
+import Banner from "../../components/Home/banner";
 const Home = () => {
   const [visibleContainer, setVisibleContainer] = useState({
     one: true,

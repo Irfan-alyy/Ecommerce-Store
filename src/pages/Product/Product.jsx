@@ -11,14 +11,15 @@ import {
   TiSocialPinterest,
   TiSocialTwitter,
 } from "react-icons/ti";
-import RatingForm from "./RatingForm";
 import { useParams } from "react-router";
-import useProduct from "./useProduct";
+import useProduct from "../../customHooks/useFetchProduct";
 
 import { useSelector, useDispatch } from "react-redux";
+import { addToCart } from "../../store/Redux/cartSlice";
 
-import { addToCart } from "../../Feature/Redux/cartSlice";
-import ProductReviews from "./productReview";
+import RatingForm from "../../components/Product/RatingForm";
+import ProductReviews from "../../components/Product/productReview";
+
 import FadeInFromBottom from "../../ui/animations/FadeInFromBottom";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -84,11 +85,17 @@ const [addedToCart,setAddedToCart]=useState(false)
   };
 
   if (loading) {
-    return <p className="text-center text-2xl">Loading...</p>;
+    return (
+      <div className="flex justify-center items-center h-[70vh]">
+        <h1 className="text-2xl font-bold">Loading...</h1>
+      </div>
+    );
   }
   if (error) {
     return (
-      <p className="text-center text-2xl">Error Fetching Product details!</p>
+      <div className="flex justify-center items-center h-[70vh]">
+        <h1 className="text-2xl font-bold">{error}</h1>
+      </div>
     );
   }
 

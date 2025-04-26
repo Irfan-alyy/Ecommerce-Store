@@ -1,10 +1,10 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { CiShoppingCart } from "react-icons/ci";
 import { CiMenuBurger } from "react-icons/ci";
 import { NavLink, useNavigate } from "react-router";
-import logo from "../../assets/logo.png";
+import logo from "../assets/logo.png";
 import { useRef } from "react";
 import Badge from "@mui/material/Badge";
 import { useSelector } from "react-redux";

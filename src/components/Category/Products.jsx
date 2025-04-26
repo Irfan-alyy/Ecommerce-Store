@@ -3,7 +3,7 @@ import image1 from "../../assets/1.jpg";
 import image2 from "../../assets/7.jpg";
 import { CiShoppingCart } from "react-icons/ci";
 import { FaEye } from "react-icons/fa";
-import QuickView from "../../components/quickView/QuickView";
+import QuickView from "../quickView/QuickView";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 

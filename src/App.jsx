@@ -1,26 +1,23 @@
-
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { Provider } from "react-redux";
-import { store, persistor } from "./Feature/Redux/store";
-import Layout from "./components/layout/Layout";
-import Home from "./components/Home/Home";
-import Category from "./pages/category/Category"
-import Cart from "./components/Cart/Cart";
-import Product from "./components/Product/Product";
-import About from "./components/About/About";
-import Contact from "./components/Contact/Contact";
-import Error404 from "./components/error/error404";
-import Login from "./components/Login/Login";
-import Dashboard from './components/Dashboard/Main'
-import ResetPassword from "./components/resetPassword/resetPassword";
+import { store, persistor } from "./store/Redux/store";
 import { PersistGate } from "redux-persist/integration/react";
-import './App.css'
-
-
-import Main from './components/Dashboard/Main'
-import Admin from './components/Admin/Admin'
-import Profile from './components/Profile/Profile'
-
+import "./App.css";
+//website pages and layout
+import Layout from "./layout/Layout";
+import Home from "./pages/Home/Home";
+import Cart from "./pages/Cart/Cart";
+import Product from "./pages/Product/Product";
+import Category from "./pages/category/Category";
+import About from "./pages/About/About";
+import Contact from "./pages/Contact/Contact";
+import Error404 from "./pages/Error/error404";
+import Login from "./pages/Login/Login";
+import ResetPassword from "./pages/resetPassword/resetPassword";
+import Main from "./pages/Dashboard/Main";
+import Admin from "./pages/Admin/Admin";
+import Profile from "./pages/Profile/Profile";
+// import ProductImageMagnifier from "./ui/components/magnifyImage";
 
 function App() {
   const router = createBrowserRouter([
@@ -62,45 +59,44 @@ function App() {
         },
         {
           path: "/reset-password",
-          element: <ResetPassword/>
+          element: <ResetPassword />,
         },
         {
-          path:"/admin",
-          element:<Main/>
+          path: "/admin",
+          element: <Main />,
         },
         {
           path: "*",
           element: <Error404 />,
         },
         {
-          path:'/adminpanel',
-          element:<Main/>
+          path: "/adminpanel",
+          element: <Main />,
         },
         {
-      path :'/Admin',
-      element : <Admin/>
-      
+          path: "/Admin",
+          element: <Admin />,
         },
         {
-      path :'/profile',
-      element:<Profile/>
-          
-        }
+          path: "/profile",
+          element: <Profile />,
+        },
+        // {
+        //   path:"/magnify",
+        //   element: <ProductImageMagnifier/>
+        // }
       ],
     },
   ]);
-
 
   return (
     <>
       <Provider store={store}>
         <PersistGate loading={<p>Loading..</p>} persistor={persistor}>
-          
           <RouterProvider router={router} />
         </PersistGate>
       </Provider>
-    {/* {window.location.pathname !== '/adminpanel' && <Header />} */}
-    
+      {/* {window.location.pathname !== '/adminpanel' && <Header />} */}
     </>
   );
 }

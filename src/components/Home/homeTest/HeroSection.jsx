@@ -3,7 +3,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import React, { useState, useEffect } from "react";
 import HeroButton from "./button";
-import FadeInFromBottom from "../../../../ui/animations/FadeInFromBottom";
+import FadeInFromBottom from "../../../ui/animations/FadeInFromBottom";
 import { Navigate, useNavigate } from "react-router";
 import { current } from "@reduxjs/toolkit";
 

@@ -4,20 +4,21 @@ import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import BasicButton from "../../ui/components/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../../Feature/Redux/cartSlice";
+import { addToCart } from "../../store/Redux/cartSlice";
 import FadeInFromBottom from "../../ui/animations/FadeInFromBottom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-
 const QuickView = ({ product, visible, setVisible }) => {
+
+  
+  if(!product) return
   const [selectedVariant, setSelectedVariant] = useState(product?.variants[0]);
   const [currentPic, setCurrentPic] = useState(product?.variants[0]?.images[0]);
-const [addedToCart,setAddedToCart]=useState(false)
+  const [addedToCart, setAddedToCart] = useState(false);
   const cartItems = useSelector((state) => state.reducer.items);
-  
 
   const modalRef = useRef();
   const dispatch = useDispatch();
@@ -73,10 +74,9 @@ const [addedToCart,setAddedToCart]=useState(false)
       quantity: 1,
     };
     console.log(item);
-    
+
     dispatch(addToCart(item));
     toast.info("Product Added to Cart", { position: "top-center" });
-    
   };
 
   // const getVisibleImages = () => {
@@ -177,26 +177,31 @@ const [addedToCart,setAddedToCart]=useState(false)
             <div className="md:pr-15 flex flex-col md:gap-2 py-2">
               <h1 className="text-2xl md:text-3xl">{product.product_name}</h1>
               <p className="text-2xl py-2">
-                $ {selectedVariant.price} <strike className="text-lg">{selectedVariant.discount &&(selectedVariant.price/(1-selectedVariant.discount/100)).toFixed(2)}</strike>
+                $ {selectedVariant.price}{" "}
+                <strike className="text-lg">
+                  {selectedVariant.discount &&
+                    (
+                      selectedVariant.price /
+                      (1 - selectedVariant.discount / 100)
+                    ).toFixed(2)}
+                </strike>
               </p>
 
-              <p className="text-xl py-5 md:py-10">
-                {product.description}
-              </p>
+              <p className="text-xl py-5 md:py-10">{product.description}</p>
               <hr className="hidden md:block text-[#7d7d7dcb]pb-5  md:pb-10" />
-              
-              <button className=" px-15 py-4 disabled:cursor-not-allowed  bg-black text-white text-lg font-semibold  cursor-pointer w-fit"
-              disabled={addedToCart}
-              onClick={handleAddCart}
+
+              <button
+                className=" px-15 py-4 disabled:cursor-not-allowed  bg-black text-white text-lg font-semibold  cursor-pointer w-fit"
+                disabled={addedToCart}
+                onClick={handleAddCart}
               >
-              {addedToCart? "ADDED TO CART":"ADD TO CART"}
-                    </button>
+                {addedToCart ? "ADDED TO CART" : "ADD TO CART"}
+              </button>
             </div>
           </div>
         </div>
       </div>
       <ToastContainer />
-
     </div>
   );
 };

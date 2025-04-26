@@ -2,7 +2,7 @@ import { color } from "framer-motion";
 import React from "react";
 import { ImCross } from "react-icons/im";
 import { useDispatch , useSelector} from "react-redux";
-import {removeItem, handleDecrement, handleIncrement, clearCart } from "../../Feature/Redux/cartSlice";
+import {removeItem, handleDecrement, handleIncrement, clearCart } from "../../store/Redux/cartSlice";
 import { NavLink } from "react-router";
 import FadeInFromBottom from "../../ui/animations/FadeInFromBottom";
 const BASE_URL=import.meta.env.VITE_API_BASE_URL

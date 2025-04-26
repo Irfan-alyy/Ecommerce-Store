@@ -21,12 +21,7 @@ const useProduct = ({id}) => {
         .get(`${BASE_URL}/reviews/product_id/${id}`)
         .then((res) => {setProductReviews(res.data)})
         .catch(err=>console.error)
-        .finally(res=>setLoading(false));
-
-
-
-       
-        
+        .finally(res=>setLoading(false)); 
     },[])
     useEffect(()=>{
       if(product){
