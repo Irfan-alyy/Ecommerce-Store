@@ -9,7 +9,7 @@ import { FaRegArrowAltCircleRight } from "react-icons/fa";
 
 const About = () => {
   return (
-    <div className="gap-8 mb-10 pb-10 flex items-center flex-col overflow-y-hidden">
+    <div className="w-full gap-8 mb-10 pb-10 flex items-center flex-col overflow-y-hidden">
       {/* <header
         className="w-[100%] h-[80px] flex justify-center items-center"
         style={{ backgroundColor: "rgb(247,247,247)" }}
@@ -21,7 +21,7 @@ const About = () => {
         </NavLink>
       </header> */}
 
-      <div className="w-full flex justify-center items-center flex-col pt-20 pb-10 ">
+      <div className="w-full flex justify-center items-center flex-col pt-20 pb-10 px-5  sm:px-15 md:px-30 lg:px-40 ">
         <h4 className="font-semibold text-gray-700 mb-4">WHO ARE WE</h4>
         <h1 className="text-3xl font-semibold">WELCOME TO FLONE</h1>
         <hr
@@ -29,7 +29,7 @@ const About = () => {
           style={{ color: "black", width: "100px", fontSize: "30px" }}
         ></hr>
 
-        <p className="text-center max-w-lg mx-auto leading-relaxed mt-4 px-8 ">
+        <p className="text-center max-w-4xl mx-auto leading-relaxed tracking-widest mt-4 px-8 ">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, sequi.
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi
           quos inventore autem nesciunt deleniti iure aspernatur placeat velit
@@ -37,8 +37,8 @@ const About = () => {
         </p>
       </div>
 
-      <section className="w-full h-auto p-8  flex justify-center items-center flex-col md:flex-row gap-8">
-        <div className="w-full max-w-9/10  h-auto md:w-[30%] bg-center bg-cover object-cover bg-[url('https://flone.jamstacktemplates.dev/assets/img/banner/banner-1.jpg')] cursor-pointer flex flex-col justify-center p-6">
+      <section className=" w-full h-auto px-5  sm:px-15 md:px-30 lg:px-40 py-10 lg:py-20  flex justify-between items-center flex-col md:flex-row gap-8">
+        <div className="w-full max-w-9/10  h-auto md:w-[33%] bg-center bg-cover object-cover bg-[url('https://flone.jamstacktemplates.dev/assets/img/banner/banner-1.jpg')] cursor-pointer flex flex-col justify-center p-6">
           <h1 className="text-3xl text-red-900">Watch</h1>
           <h3 className="mt-4 text-[20px]">
             Starting at <span className="text-red-900">$99</span>
@@ -48,17 +48,17 @@ const About = () => {
           </button>
         </div>
 
-        <div className=" w-full max-w-9/10  h-auto md:w-[30%] bg-center bg-cover object-cover bg-[url('https://flone.jamstacktemplates.dev/assets/img/banner/banner-2.jpg')] flex flex-col justify-center p-6">
+        <div className=" w-full max-w-9/10 h-auto md:w-[33%] bg-center bg-cover object-cover bg-[url('https://flone.jamstacktemplates.dev/assets/img/banner/banner-2.jpg')] flex flex-col justify-center p-6">
           <h1 className="text-3xl text-red-900">Plo Bag</h1>
           <h3 className="mt-4 text-[20px]">
             Starting at <span className="text-red-900">$79.00</span>
           </h3>
-          <button className="text-3xl mt-10 text-red-900">
+          <button className="text-3xl mt-10 md:mt-2 lg:mt-10 text-red-900">
             <FaRegArrowAltCircleRight />
           </button>
         </div>
 
-        <div className=" w-full max-w-9/10  h-auto md:w-[30%] bg-center bg-cover object-cover bg-[url('https://flone.jamstacktemplates.dev/assets/img/banner/banner-3.jpg')] flex flex-col justify-center p-6">
+        <div className=" w-full max-w-9/10  h-auto md:w-[33%] bg-center bg-cover object-cover bg-[url('https://flone.jamstacktemplates.dev/assets/img/banner/banner-3.jpg')] flex flex-col justify-center p-6">
           <h1 className="text-3xl text-red-900">Sunglass</h1>
           <h3 className="mt-4 text-[20px]">
             Starting at <span className="text-red-900">$99</span>
@@ -69,7 +69,7 @@ const About = () => {
         </div>
       </section>
 
-      <div className="flex gap-8 flex-col justify-center items-center pl-5 pr-5 sm:flex-col md:flex-row lg:flex-row  ">
+      <div className="flex gap-8 flex-col justify-center items-center px-5  sm:px-15 md:px-30 lg:px-40 pt-10 md:pb-20 sm:flex-col md:flex-row lg:flex-row  ">
         <div>
           <h2 className="text-3xl font-semibold   ">Our Vision</h2>
           <p className="text-start">
@@ -101,10 +101,10 @@ const About = () => {
         </div>
       </div>
       <section
-        className="flex px-10  justify-between items-center flex-col w-full py-8 sm:grid sm:grid-cols-2  md:grid md:grid-cols-2 lg:flex lg:flex-row  lg:px-10      "
+        className="flex px-5  sm:px-15 md:px-30 lg:px-40 py-10 md:py-20 lg:py-25  justify-between items-center flex-col w-full sm:grid sm:grid-cols-2  md:grid md:grid-cols-2 lg:flex lg:flex-row      "
         style={{ backgroundColor: "rgb(247,247,247)" }}
       >
-        <div className="flex justify-center items-center flex-col mb-4">
+        <div className="flex justify-center items-center gap-3 flex-col mb-4">
           <a href="" className="mb-4">
             <RiProjectorLine style={{ fontSize: "59px " }} />
           </a>
@@ -117,7 +117,7 @@ const About = () => {
           <h4 className="text-2xl">Project Done</h4>
         </div>
 
-        <div className="flex justify-center items-center flex-col mb-4">
+        <div className="flex justify-center gap-3 items-center flex-col mb-4">
           <a href="" className="mb-4">
             <TfiCup style={{ fontSize: "59px " }} />
           </a>
@@ -130,7 +130,7 @@ const About = () => {
           <h4 className="text-2xl">Cup Of Coffe</h4>
         </div>
 
-        <div className="flex justify-center items-center flex-col mb-4">
+        <div className="flex justify-center gap-3 items-center flex-col mb-4">
           <a href="" className="mb-4">
             <HiOutlineLightBulb style={{ fontSize: "59px " }} />
           </a>
@@ -143,7 +143,7 @@ const About = () => {
           <h4 className="text-2xl">Branding</h4>
         </div>
 
-        <div className="flex justify-center items-center flex-col mb-4">
+        <div className="flex justify-center gap-3 items-center flex-col mb-4">
           <a href="" className="mb-4">
             <CiFaceSmile style={{ fontSize: "59px " }} />
           </a>
@@ -157,13 +157,19 @@ const About = () => {
         </div>
       </section>
 
+<section className="w-full px-5  sm:px-15 md:px-30 lg:px-40 py-10 md:py-20  flex justify-between items-center flex-col ">
+      
+      <div className="flex justify-center items-center flex-col gap-5 pb-10 mb-10">
+
+    
       <h1 className="text-4xl mb-0 font-bold">Team Members</h1>
       <hr className="w-[100px]"></hr>
-      <p className="text-center text-xl">
+      <p className="text-center text-xl ">
         Lorem ipsum dolor sit amet consectetur.
       </p>
+      </div>
 
-      <div className="w-full px-10 m-auto h-auto person gap-6 lg:ml-20 lg:gap-12    flex flex-col sm:px-20 md:px-10  sm:grid sm:grid-cols-2  md:grid md:grid-rows-1 lg:flex lg:flex-row  ">
+      <div className="w-full  h-auto person gap-6 lg:gap-12  justify-center    flex flex-col   sm:grid sm:grid-cols-2  md:grid md:grid-rows-1 lg:flex lg:flex-row  ">
         <div className="flex justify-center items-center flex-col bg-gray-100 pb-4">
           <img
             src="https://flone.jamstacktemplates.dev/assets/img/team/team-1.jpg"
@@ -204,8 +210,9 @@ const About = () => {
           <h4>Developer</h4>
         </div>
       </div>
+      </section>
 
-      <section className="flex justify-center items-center flex-row gap-10    ">
+      <section className="px-5  sm:px-15 md:px-30 lg:px-40 w-full flex items-center flex-row justify-between    ">
         <img
           src="https://flone.jamstacktemplates.dev/assets/img/brand-logo/brand-logo-1.png"
           alt=""

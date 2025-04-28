@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -11,19 +11,40 @@ const Login = () => {
   const [loading,setLoading]=useState(false)
   
 
+  const abortControllerRef = useRef(null);
+  const timeoutRef = useRef(null);
+  const suppressRedFlag = useRef(false); // Flag to suppress red flag for abort error
+
+
+  const cancelPendingRequest = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    suppressRedFlag.current = true; // Suppress red flag for abort error
+    setLoading(false);
+  };
+
   const showLoginSection = () => {
+    cancelPendingRequest(); // Cancel any pending requests before switching sections
     setShowLogin(true);
     setShowRegister(false);
     setShowForgot(false);
     setLoginData({});
   };
   const showRegisterSection = () => {
+    cancelPendingRequest(); 
     setShowLogin(false);
     setShowRegister(true);
     setShowForgot(false);
     setLoginData({});
   };
   const showForgotSection = () => {
+    cancelPendingRequest(); 
     setShowLogin(false);
     setShowRegister(false);
     setShowForgot(true);
@@ -43,6 +64,9 @@ const Login = () => {
   const showError = (error) => {
     let message = "An error occurred.";
 
+    if ((error.name === "AbortError" || error.code === "ERR_CANCELED") && suppressRedFlag.current) {
+      return;
+    }
     if (error.name === "AbortError" || error.code === "ERR_CANCELED") {
       message = "Request timed out.";
     } else if (error.response?.data?.detail) {
@@ -55,14 +79,19 @@ const Login = () => {
   };
 
   const handleSubmit = (e) => {
+    suppressRedFlag.current = false; // Reset the suppress flag
     setLoading(true)
     e.preventDefault();
     const { user, password, email, name, confirm_password, username } =
       loginData;
-    const controller = new AbortController();
-    const signal = controller.signal;
-    const timeout = setTimeout(() => controller.abort(), 5000);
 
+    abortControllerRef.current = new AbortController();
+    const signal = abortControllerRef.current.signal;
+    timeoutRef.current=setTimeout(() => {
+      if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    }, 5000); // 10 seconds timeout
 
     
     if (user && password && !name) {
@@ -78,12 +107,16 @@ const Login = () => {
           toast.info("🟢 Logging in...", { position: "top-right" });
           localStorage.setItem("token", res.data.access_token);
           setLoading(false)
-          clearTimeout(timeout)
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current=null
+          abortControllerRef.current=null
         })
         .catch((error) => {
           showError(error);
           setLoading(false)
-          clearTimeout(timeout);
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current=null
+          abortControllerRef.current=null
         });
     } else if (name && username && email && password && confirm_password) {
       console.log("register",loginData);
@@ -92,7 +125,8 @@ const Login = () => {
           "❌ Invalid Full Name! It should contain only alphabets & spaces (max 20 characters).",
           { position: "top-right" }
         );
-        clearTimeout(timeout);
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current=null
         setLoading(false)
         return;
       }
@@ -101,7 +135,8 @@ const Login = () => {
           "❌ Invalid Username! It should contain only alphabets, numbers, underscores, and dots (3-20 characters).",
           { position: "top-right" }
         );
-        clearTimeout(timeout);
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current=null;
         setLoading(false)
         return;
       }
@@ -111,7 +146,8 @@ const Login = () => {
           "❌ Weak password! It must be at least 8 characters with uppercase, lowercase, number, and special character.",
           { position: "top-right" }
         );
-        clearTimeout(timeout);
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current=null;
         setLoading(false)
         return;
       }
@@ -119,7 +155,8 @@ const Login = () => {
         toast.error("❌ Your Password and confirm Password Should be same", {
           position: "top-right",
         });
-        clearTimeout(timeout);
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current=null;
         setLoading(false)
         return;
       }
@@ -129,26 +166,30 @@ const Login = () => {
         .then((response) => {
           toast.info("🟢 Registring account...", { position: "top-right" });
           setLoading(false)
-          clearTimeout(timeout)
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current=null
+          abortControllerRef.current=null
         })
         .catch((error) => {
           showError(error);
           setLoading(false)
-          clearTimeout(timeout);
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current=null
+          abortControllerRef.current=null
         });
     } else if (email && !password) {
       console.log("reset", loginData);
-      if (loginData.password !== loginData.confirm_password) {
-        toast.error("❌ Your Password and confirm Password Should be same", {
-          position: "top-right",
-        });
-        clearTimeout(timeout);
-        setLoading(false)
-        return;
-      }
+      // if (loginData.password !== loginData.confirm_password) {
+      //   toast.error("❌ Your Password and confirm Password Should be same", {
+      //     position: "top-right",
+      //   });
+      //   clearTimeout(timeoutRef.current);
+      //   timeoutRef.current=null;
+      //   setLoading(false)
+      //   return;
+      // }
 
       // console.log(loginData);
-
       axios
         .post(`${BASE_URL}/forgot-password/`, null, {
           params: { email: loginData.email },
@@ -157,13 +198,18 @@ const Login = () => {
         .then((res) => {
           toast.info(`🟢Reset password link sent to ${loginData.email}`, { position: "top-right" });
           setLoading(false)
-          clearTimeout(timeout);
+          clearTimeout(timeoutRef.current);
+        timeoutRef.current=null;
+        abortControllerRef.current=null 
+
           
         })
         .catch((error) => {
           showError(error);
           setLoading(false)
-          clearTimeout(timeout);
+          clearTimeout(timeoutRef.current);
+        timeoutRef.current=null;
+        abortControllerRef.current=null 
         });
     }
     
@@ -312,7 +358,8 @@ const Login = () => {
 
       {/* <h3 className="font-medium text-2xl hidden">Reset Password</h3> */}
       {showForgot && (
-        <div className="py-10 px-4 formDiv flex justify-center items-center w-10/12 md:w-2/3 lg:w-1/2 lg:p-24 shadow-[0_0px_3px_rgba(0,0,0,0.25)]">
+        <div className="py-10 px-4 formDiv flex flex-col justify-center gap-10 items-center w-10/12 md:w-2/3 lg:w-1/2 lg:px-24 lg:py-15 shadow-[0_0px_3px_rgba(0,0,0,0.25)]">
+          <h1 className="text-[rgb(167,73,255)] cursor-pointer text-2xl mr-3 font-bold">Reset Password</h1>
           <form onSubmit={handleSubmit} className="w-full">
             <input
               onChange={formDataHandle}
