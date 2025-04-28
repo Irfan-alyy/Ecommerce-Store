@@ -21,36 +21,74 @@ import Profile from "./pages/Profile/Profile";
 
 function App() {
   const router = createBrowserRouter([
-    // Layout pages
     {
       path: "",
       element: <Layout />,
       children: [
-        { path: "/", element: <Home /> },
-        { path: "/Ecommerce-Store", element: <Home /> },
-        { path: "/login", element: <Login /> },
-        { path: "/category", element: <Category /> },
-        { path: "category/product/:id", element: <Product /> },
-        { path: "/cart", element: <Cart /> },
-        { path: "/about", element: <About /> },
-        { path: "/contact", element: <Contact /> },
-        { path: "/reset-password", element: <ResetPassword /> },
-        { path: "/profile", element: <Profile /> },
-        { path: "/show", element: <Show /> },
-        { path: "/update", element: <Update /> },
-        { path: "*", element: <Error404 /> },
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          path: "/Ecommerce-Store",
+          element: <Home />,
+        },
+        {
+          path: "/login",
+          element: <Login />,
+        },
+        {
+          path: "/category",
+          element: <Category />,
+        },
+        {
+          path: "category/product/:id",
+          element: <Product />,
+        },
+        {
+          path: "/cart",
+          element: <Cart />,
+        },
+        {
+          path: "/about",
+          element: <About />,
+        },
+        {
+          path: "/contact",
+          element: <Contact />,
+        },
+        {
+          path: "/reset-password",
+          element: <ResetPassword />,
+        },
+        {
+          path: "/admin",
+          element: <Main />,
+        },
+        {
+          path: "*",
+          element: <Error404 />,
+        },
+        {
+          path: "/adminpanel",
+          element: <Main />,
+        },
+        {
+          path: "/Admin",
+          element: <Admin />,
+        },
+        {
+          path: "/profile",
+          element: <Profile />,
+        },
+        // {
+        //   path:"/magnify",
+        //   element: <ProductImageMagnifier/>
+        // }
       ],
     },
-  
-    // Admin Pages (no Layout, no Header)
-    { path: "/main", element: <Main /> },
-    { path: "/admin", element: <Admin /> },
-    { path: "/adminprofile", element: <AdminProfile /> },
-    { path: "/update", element: <Update/> },
-
   ]);
-  
-    
+
   return (
     <>
       <Provider store={store}>
