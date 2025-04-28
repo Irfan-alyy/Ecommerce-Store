@@ -55,99 +55,72 @@ const Login = () => {
 
     toast.error(`❌ ${message}`, { position: "top-right" });
   };
-
-  const handleSubmit = (e) => {
-    setLoading(true)
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const { user, password, email, name, confirm_password, username } =
-      loginData;
-
-    const timeout = setTimeout(() => controller.abort(), 5000);
-
-
-    
-    if (user && password && !name) {
-      axios
-        .post(
-          `${BASE_URL}/login/`,
-          { username: loginData.user, password: loginData.password },
-          { signal }
-          
-        )
-        .then((res) => {
-          toast.info("🟢 Logging in...", { position: "top-right" });
-          localStorage.setItem("token", res.data.access_token);
-          setLoading(false)
-          clearTimeout(timeout)
-        })
-        .catch((error) => {
-          clearTimeout(timeout);
-          showError(error);
-          setLoading(false)
+    setLoading(true);
+  
+    const { user, password, email, name, confirm_password, username } = loginData;
+  
+    try {
+      
+      // Login
+      if (user && password && !name) {
+        const res = await axios.post(`${BASE_URL}/login/`, {
+          username: user,
+          password: password,
         });
-    } else if (name && username && email && password && confirm_password) {
-      console.log("register");
-      if (!fullNameRegex.test(loginData.name)) {
-        toast.error(
-          "❌ Invalid Full Name! It should contain only alphabets & spaces (max 20 characters).",
-          { position: "top-right" }
-        );
-        return;
+  
+        localStorage.setItem("token", res.data.access_token); // ✅ token stored
+        toast.success("🟢 Login Successful!", { position: "top-right" });
+        setLoginData({});
       }
-
-      if (!passwordRegex.test(loginData.password)) {
-        toast.error(
-          "❌ Weak password! It must be at least 8 characters with uppercase, lowercase, number, and special character.",
-          { position: "top-right" }
-        );
-        return;
+  
+      // Register
+      else if (name && username && email && password && confirm_password) {
+        if (!fullNameRegex.test(name)) {
+          toast.error("❌ Invalid Full Name.", { position: "top-right" });
+          setLoading(false);
+          return;
+        }
+  
+        if (!passwordRegex.test(password)) {
+          toast.error("❌ Weak Password.", { position: "top-right" });
+          setLoading(false);
+          return;
+        }
+  
+        if (password !== confirm_password) {
+          toast.error("❌ Passwords do not match.", { position: "top-right" });
+          setLoading(false);
+          return;
+        }
+  
+        await axios.post(`${BASE_URL}/register/`, loginData);
+        toast.success("🟢 Registration Successful!", { position: "top-right" });
+        setLoginData({});
+        setShowLogin(true); // ✅ go to Login tab after registration
       }
-      if (loginData.password !== loginData.confirm_password) {
-        toast.error("❌ Your Password and confirm Password Should be same", {
-          position: "top-right",
+  
+      // Forgot password
+      else if (email && !password) {
+        await axios.post(`${BASE_URL}/forgot-password/`, null, {
+          params: { email },
         });
-        return;
+  
+        toast.success("🟢 Reset link sent!", { position: "top-right" });
+        setLoginData({});
+        setShowLogin(true); // ✅ go to Login tab after reset request
       }
-
-      axios
-        .post(`${BASE_URL}/register/`, loginData, { signal })
-        .then((response) => {
-          toast.info("🟢 Registring account...", { position: "top-right" });
-          setLoading(false)
-        })
-        .catch((error) => {
-          clearTimeout(timeout);
-          showError(error);
-          setLoading(false)
-        });
-    } else if (email && !password) {
-      console.log("reset");
-      if (loginData.password !== loginData.confirm_password) {
-        toast.error("❌ Your Password and confirm Password Should be same", {
-          position: "top-right",
-        });
-        return;
-      }
-
-      console.log(loginData);
-
-      axios
-        .post(`${BASE_URL}/forgot-password/`, null, {
-          params: { email: loginData.email },
-          signal,
-        })
-        .then((res) => {
-          toast.info("🟢 Reseting Password...", { position: "top-right" });
-          setLoading(false)
-        })
-        .catch((error) => {
-          clearTimeout(timeout);
-          showError(error);
-          setLoading(false)
-        });
+    } catch (error) {
+      showError(error);
+    } finally {
+      setLoading(false);
     }
-    clearTimeout(timeout)
   };
+  const token = localStorage.getItem("token");
+console.log(token); // Check if token is correctly retrieved.
+
+  
 
   return (
     <div className=" flex flex-col items-center justify-center py-20">

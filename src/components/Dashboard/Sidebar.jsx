@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IoLogoGithub } from "react-icons/io";
+import { FaUserCircle } from "react-icons/fa";
 import { IoHomeOutline } from "react-icons/io5";
 import { LuUsersRound } from "react-icons/lu";
 import { RiBillLine } from "react-icons/ri";
@@ -7,6 +7,8 @@ import { CiMedicalClipboard } from "react-icons/ci";
 import { MdOutlineAnalytics } from "react-icons/md";
 import { HiOutlineBars3 } from "react-icons/hi2";
 import { motion } from 'framer-motion';
+import { NavLink } from 'react-router-dom';
+
 
 const Data = [
   { icon: <IoHomeOutline />, heading: "D.board" },
@@ -30,7 +32,8 @@ const[expanded , setExpanded] = useState(true);
   return (
 
 <>
-<div className='bars  mt-40  block '
+<div className='bars   block md:hidden '
+
  style={expanded ? {left: '54%'} : {left: '20%'}}
 onClick={()=> setExpanded(!expanded)}
 
@@ -45,11 +48,13 @@ animate={window.innerWidth <= 768?`${expanded}` : '' }
 
 
       {/* Logo Section */}
-      <div className='logo flex items-center mt-6 ml-2 '>
-        <i className='text-4xl text-red-500'><IoLogoGithub /></i>
-        <span className='ml-4 font-bold text-3xl tracking-wide text-gray-800'>
-          Sh<span className='text-red-500'>o</span>ps
-        </span>
+      <div className='logo flex items-center mt-6 ml-2 cursor-pointer '>
+      <NavLink to="/adminprofile" className="flex items-center space-x-2">
+  <i className="text-4xl text-red-500"><FaUserCircle /></i>
+  <span className="font-bold text-3xl tracking-wide text-gray-800">
+    Ad<span className="text-red-500">mi</span>n
+  </span>
+</NavLink>
       </div>
 
       {/* Menu */}
