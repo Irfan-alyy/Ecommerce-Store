@@ -2,16 +2,14 @@ import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { time } from "framer-motion";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const Login = () => {
   const [showLogin, setShowLogin] = useState(true);
   const [showRegister, setShowRegister] = useState(false);
   const [showForgot, setShowForgot] = useState(false);
-  const [loginData, setLoginData] = useState({ user: "", password: "" });
+  const [loginData, setLoginData] = useState({});
   const [loading,setLoading]=useState(false)
-  const controller = new AbortController();
-  const signal = controller.signal;
+  
 
   const showLoginSection = () => {
     setShowLogin(true);
@@ -40,6 +38,7 @@ const Login = () => {
   const fullNameRegex = /^[A-Za-z]{1,20}( [A-Za-z]{1,20}){0,19}$/;
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const userNameRegex=/^[a-zA-Z0-9_.]{3,20}$/;
 
   const showError = (error) => {
     let message = "An error occurred.";
@@ -60,12 +59,14 @@ const Login = () => {
     e.preventDefault();
     const { user, password, email, name, confirm_password, username } =
       loginData;
-
+    const controller = new AbortController();
+    const signal = controller.signal;
     const timeout = setTimeout(() => controller.abort(), 5000);
 
 
     
     if (user && password && !name) {
+      console.log("login",loginData);
       axios
         .post(
           `${BASE_URL}/login/`,
@@ -85,12 +86,23 @@ const Login = () => {
           clearTimeout(timeout);
         });
     } else if (name && username && email && password && confirm_password) {
-      console.log("register");
+      console.log("register",loginData);
       if (!fullNameRegex.test(loginData.name)) {
         toast.error(
           "❌ Invalid Full Name! It should contain only alphabets & spaces (max 20 characters).",
           { position: "top-right" }
         );
+        clearTimeout(timeout);
+        setLoading(false)
+        return;
+      }
+      if (!userNameRegex.test(loginData.username)) {
+        toast.error(
+          "❌ Invalid Username! It should contain only alphabets, numbers, underscores, and dots (3-20 characters).",
+          { position: "top-right" }
+        );
+        clearTimeout(timeout);
+        setLoading(false)
         return;
       }
 
@@ -99,12 +111,16 @@ const Login = () => {
           "❌ Weak password! It must be at least 8 characters with uppercase, lowercase, number, and special character.",
           { position: "top-right" }
         );
+        clearTimeout(timeout);
+        setLoading(false)
         return;
       }
       if (loginData.password !== loginData.confirm_password) {
         toast.error("❌ Your Password and confirm Password Should be same", {
           position: "top-right",
         });
+        clearTimeout(timeout);
+        setLoading(false)
         return;
       }
 
@@ -121,11 +137,13 @@ const Login = () => {
           clearTimeout(timeout);
         });
     } else if (email && !password) {
-      console.log("reset");
+      console.log("reset", loginData);
       if (loginData.password !== loginData.confirm_password) {
         toast.error("❌ Your Password and confirm Password Should be same", {
           position: "top-right",
         });
+        clearTimeout(timeout);
+        setLoading(false)
         return;
       }
 
@@ -137,8 +155,10 @@ const Login = () => {
           signal,
         })
         .then((res) => {
-          toast.info("🟢 Reseting Password...", { position: "top-right" });
+          toast.info(`🟢Reset password link sent to ${loginData.email}`, { position: "top-right" });
           setLoading(false)
+          clearTimeout(timeout);
+          
         })
         .catch((error) => {
           showError(error);
