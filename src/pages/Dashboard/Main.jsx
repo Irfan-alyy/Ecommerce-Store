@@ -1,8 +1,8 @@
 import React from 'react'
-import Sidebar from './../Dashboard/Sidebar';
-import Right from './../Dashboard/Right/Right';
-import MainDash from './Center/MainDash';
-import './Dashboard.css'
+import Sidebar from '../../components/Dashboard/Sidebar';
+import Right from '../../components/Dashboard/Right/Right';
+import MainDash from '../../components/Dashboard/Center/MainDash'
+import '../../styles/Dashboard/Dashboard.css'
 
 
 
@@ -13,7 +13,7 @@ const Main = () => {
 backgroundColor :' rgba(58, 140, 194, 0.747)'
 
     }}
-    
+
     > 
     <>
       <div className="AppGlass pb-20  ">

@@ -77,52 +77,6 @@ const Login = () => {
 
     toast.error(`❌ ${message}`, { position: "top-right" });
   };
-<<<<<<< HEAD:src/components/Login/Login.jsx
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-  
-    const { user, password, email, name, confirm_password, username } = loginData;
-  
-    try {
-      
-      // Login
-      if (user && password && !name) {
-        const res = await axios.post(`${BASE_URL}/login/`, {
-          username: user,
-          password: password,
-        });
-  
-        localStorage.setItem("token", res.data.access_token); // ✅ token stored
-        toast.success("🟢 Login Successful!", { position: "top-right" });
-        setLoginData({});
-      }
-  
-      // Register
-      else if (name && username && email && password && confirm_password) {
-        if (!fullNameRegex.test(name)) {
-          toast.error("❌ Invalid Full Name.", { position: "top-right" });
-          setLoading(false);
-          return;
-        }
-  
-        if (!passwordRegex.test(password)) {
-          toast.error("❌ Weak Password.", { position: "top-right" });
-          setLoading(false);
-          return;
-        }
-  
-        if (password !== confirm_password) {
-          toast.error("❌ Passwords do not match.", { position: "top-right" });
-          setLoading(false);
-          return;
-        }
-  
-        await axios.post(`${BASE_URL}/register/`, loginData);
-        toast.success("🟢 Registration Successful!", { position: "top-right" });
-        setLoginData({});
-        setShowLogin(true); // ✅ go to Login tab after registration
-=======
 
   const handleSubmit = (e) => {
     suppressRedFlag.current = false; // Reset the suppress flag
@@ -196,26 +150,13 @@ const Login = () => {
         timeoutRef.current=null;
         setLoading(false)
         return;
->>>>>>> add33a5807c84600c834139a37b3400a301ad7db:src/pages/Login/Login.jsx
       }
   
       // Forgot password
       else if (email && !password) {
-        await axios.post(`${BASE_URL}/forgot-password/`, null, {
+         axios.post(`${BASE_URL}/forgot-password/`, null, {
           params: { email },
         });
-<<<<<<< HEAD:src/components/Login/Login.jsx
-  
-        toast.success("🟢 Reset link sent!", { position: "top-right" });
-        setLoginData({});
-        setShowLogin(true); // ✅ go to Login tab after reset request
-      }
-    } catch (error) {
-      showError(error);
-    } finally {
-      setLoading(false);
-    }
-=======
         clearTimeout(timeoutRef.current);
         timeoutRef.current=null;
         setLoading(false)
@@ -274,7 +215,6 @@ const Login = () => {
         });
     }
     
->>>>>>> add33a5807c84600c834139a37b3400a301ad7db:src/pages/Login/Login.jsx
   };
   const token = localStorage.getItem("token");
 console.log(token); // Check if token is correctly retrieved.

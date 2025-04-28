@@ -18,7 +18,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../../store/Redux/cartSlice";
 
 import RatingForm from "../../components/Product/RatingForm";
-import ProductReviews from "../../components/Product/productReview";
 
 import FadeInFromBottom from "../../ui/animations/FadeInFromBottom";
 
