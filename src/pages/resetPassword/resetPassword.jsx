@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import axios from "axios";
 import { toast,ToastContainer } from "react-toastify";
 const BASE_URL=import.meta.env.VITE_API_BASE_URL
@@ -8,6 +8,8 @@ const ResetPassword = () => {
   const [loginData, setLoginData] = useState([]);
   const [loading, setLoading]=useState(false)
   const token= new URLSearchParams(useLocation().search).get("token")
+
+  const navigate=useNavigate()
   const formDataHandle = (e) => {
     setLoginData((prev) => ({
       ...prev,
@@ -31,6 +33,7 @@ const ResetPassword = () => {
             toast.error("❌ Your Password and confirm Password Should be same", {
               position: "top-right",
             });
+            setLoading(false)
             return;
           }
 
@@ -39,6 +42,7 @@ const ResetPassword = () => {
       new_password: loginData.password,
     }).then(res=>{
        toast.info("🟢 Reseting Password...", { position: "top-right" });
+      navigate("/login")
       console.log(res);
       setLoading(false)
     }).catch(err=>{console.log(err.message)
@@ -80,7 +84,8 @@ const ResetPassword = () => {
           <span className="w-full">
             <button
               type="submit"
-              className="py-2 px-7 text-sm bg-gray-100 text-gray-950 hover:bg-purple-800 hover:text-white transition ease-linear duration-300"
+              disabled={loading}
+              className="py-2 px-7 text-sm bg-gray-100 disabled:bg-gray-400 disabled:cursor-progress text-gray-950 hover:bg-purple-800 hover:text-white transition ease-linear duration-300"
             >
               RESET PASSWORD
             </button>

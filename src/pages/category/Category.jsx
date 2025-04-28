@@ -126,6 +126,7 @@ const Category = () => {
       window.scrollTo(0, c - c / 8);
     }
   };
+  
 
   const handlePageChange = useCallback(
     (page) => {
@@ -170,7 +171,7 @@ const Category = () => {
 
   return (
     <>
-    
+  
 
 
       <div className="w-full px-5 sm:px-15 md:px-30 lg:px-40 grid  gap-5 py-10 md:py-20 grid-cols-1 lg:grid-cols-12">
@@ -291,7 +292,7 @@ const Category = () => {
             </ul>
           </div>
           {/* Brands section (if needed in future) */}
-          <div className="mb-8 px-5">
+          {/* <div className="mb-8 px-5">
             <h2 className="text-lg font-semibold mb-4">Brands</h2>
             <ul>
               <li className="mb-2 flex items-center gap-4">
@@ -318,7 +319,7 @@ const Category = () => {
                 </label>
               </li>
             </ul>
-          </div>
+          </div> */}
           </div>
         </aside>
 
@@ -335,7 +336,7 @@ const Category = () => {
                 value={selectedSort}
                 onChange={(e) => setSelectedSort(e.target.value)}
               >
-                <option value="popularity">Popularity</option>
+                <option value="popularity">Default</option>
                 <option value="price-asc">Price: Low to High</option>
                 <option value="price-desc">Price: High to Low</option>
               </select>

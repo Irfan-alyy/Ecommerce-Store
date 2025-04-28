@@ -4,8 +4,10 @@ import image2 from "../../assets/7.jpg";
 import { CiShoppingCart } from "react-icons/ci";
 import { FaEye } from "react-icons/fa";
 import QuickView from "../quickView/QuickView";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../store/Redux/cartSlice";
+import { toast,ToastContainer } from "react-toastify";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -15,12 +17,14 @@ const Products = ({ product }) => {
 
   const cartItems = useSelector((state) => state.reducer.items);
   useEffect(() => {
+    console.log( product,"product")
+    console.log(cartItems,"cart")
     const isInCart = cartItems.some(
-      (elem) => elem.variant.id === selectedVariant.id
+      (elem) => elem?.variant?.id === product.variants[0]?.id
     );
     setAddedToCart(isInCart);
-    console.log(cartItems);
-  }, [cartItems, selectedVariant.id]);
+    // console.log(cartItems);
+  }, [cartItems, product]);
 
   const dispatch=useDispatch()
   const price=product.variants[0]?.price
@@ -43,7 +47,7 @@ const Products = ({ product }) => {
   const sevenDaysInMillis = 7 * 24 * 60 * 60 * 1000;
 
 
-  const addToCart = (e) => {
+  const handleAddToCart = (e) => {
     e.stopPropagation();
     if(!addedToCart){
       const item = {
@@ -54,10 +58,14 @@ const Products = ({ product }) => {
       };
       // console.log(item)
       dispatch(addToCart(item));
+      alert("Product Added to Cart");
+      
+
     }
     };
   return (
     <>
+    
       <div className=" relative group mb-[35px]  flex flex-col  cursor-pointer w-full h-auto  shadow-md rounded-lg overflow-hidden">
         <span className="z-20 text-pink-400 text-s font-semibold absolute top-5 right-5">
           {discount>0?"-"+discount + "%":null}
@@ -70,6 +78,7 @@ const Products = ({ product }) => {
           className="w-full h-auto"
           onClick={() => navigate(`product/${product.id}`)}
         >
+          
           {/* <div className="relative w-full h-auto group-hover:opacity-0 transition-opacity duration-300 flex justify-between">
             <img src={product.image} alt="product" className="group-hover:hidden object-cover " />
             <img src={image2} alt="product" className="hidden group-hover:block" />
@@ -84,7 +93,7 @@ const Products = ({ product }) => {
             <div className=" flex w-full  items-center gap-0">
               <span
                 className="flex items-center justify-center cursor-pointer brightness-100  opacity-100 transition-opacity transition-brightness duration-300  bg-[rgb(167,73,255)] hover:bg-black w-2/11 h-12 text-xl"
-                onClick={addToCart}
+                onClick={handleAddToCart}
               >
                 <CiShoppingCart title="Add Cart" className={`text-3xl ${addedToCart?"cursor-not-allowed":null}`} />
               </span>
@@ -110,6 +119,7 @@ const Products = ({ product }) => {
             </h1>
             <p className="text-center">
               <span>${product.variants[0]?.price}</span> 
+              
 
               { actualPrice!=price && <span className="text-[rgb(127,127,127)]"> - <strike>{actualPrice}</strike></span>}
             </p>
@@ -124,6 +134,7 @@ const Products = ({ product }) => {
           visible={QuickViewVisible}
         />
       )}
+      
     </>
   );
 };
