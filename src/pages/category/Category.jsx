@@ -1,23 +1,45 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
-import Product from "../../components/category/Products";
 import { TfiLayoutGrid3Alt, TfiLayoutGrid2Alt } from "react-icons/tfi";
 import { FaSearch } from "react-icons/fa";
-import useFetchProducts from "./useFetchProduct";
+import useAllProducts from "../../customHooks/useFetchAllProducts";
 import { useLocation } from "react-router";
-import QuickView from "../../components/Home/components/QuickView";
+import Products from "../../components/Category/Products";
 
 
 const Category = () => {
   const useQuery=new URLSearchParams(useLocation().search);
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedPrice, setSelectedPrice] = useState("all");
   const [selectedBrand, setSelectedBrand] = useState("all"); // Future use if needed
   const [selectedSort, setSelectedSort] = useState("popularity");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [gridView, setGridView] = useState(3);
+  // listView state is available for future extension if needed
+  const [listView, setListView] = useState(false);
+  const [retry, setRetry] = useState(false);
+  
+  const {products, categories, loading, error} =  useAllProducts({retry})
 
-  //quick view visbility state
-  const [visible,setVisible] = useState(false);
+  useEffect(()=>{
+    categories.unshift(
 
-  const {products, categories, loading, error} =  useFetchProducts()
+    {category_name: 'All', description: 'All Categories'})
+
+  },[categories])
+
+  // Debounce search query to avoid excessive re-renders
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+      setCurrentPage(1);
+    }, 500);
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchQuery]);
+
 
 
   
@@ -27,48 +49,51 @@ const Category = () => {
  
     if(query && productsCopy.length>0){
       const lowerCaseQuery=query.toLowerCase();
-      const result=products.filter(product=>product.title.toLowerCase().includes(lowerCaseQuery))
+      const result=products.filter(product=>product.product_name.toLowerCase().includes(lowerCaseQuery))
       productsCopy=result
     }
  
 
 
-  const [searchQuery, setSearchQuery] = useState("");
   const pageSize = 12;
-  const [currentPage, setCurrentPage] = useState(1);
   const inputRef = useRef(null);
 
 
 
   // Memoized filtering and sorting logic
   const filteredProducts = useMemo(() => {
-    let result = productsCopy.filter((product) =>
-      selectedCategory === "all" ? true : product.category === selectedCategory
+    let result = productsCopy.filter((product) =>{
+      if(selectedCategory==="All") return true
+      const category= categories.find(cat=>cat.category_name===selectedCategory)
+      if(!category) return false
+
+      return product.category_id===category.id
+    }
     );
 
-    if (searchQuery.trim() !== "") {
+    if (debouncedSearchQuery.trim() !== "") {
       result = result.filter((product) =>
-        product.title.toLowerCase().includes(searchQuery.toLowerCase())
+        product.product_name.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
       );
     }
 
     // Sorting logic
     result.sort((a, b) => {
       // if (selectedSort === "popularity") return b.rating.rate - a.rating.rate;
-      // if (selectedSort === "price-asc") return a.price - b.price;
-      // if (selectedSort === "price-desc") return b.price - a.price;
+      if (selectedSort === "price-asc") return a.variants[0]?.price - b.variants[0]?.price;
+      if (selectedSort === "price-desc") return b.variants[0]?.price - a.variants[0]?.price;
       return 0;
     });
 
     // Price filtering
     result = result.filter((product) => {
       if (selectedPrice === "all") return true;
-      if (selectedPrice === "0-50") return product.price <= 50;
+      if (selectedPrice === "0-50") return product?.variants[0].price <= 50;
       if (selectedPrice === "50-100")
-        return product.price > 50 && product.price <= 100;
+        return product.variants[0].price > 50 && product?.variants[0].price <= 100;
       if (selectedPrice === "100-200")
-        return product.price > 100 && product.price <= 200;
-      if (selectedPrice === "200+") return product.price > 200;
+        return product.variants[0].price > 100 && product?.variants[0].price <= 200;
+      if (selectedPrice === "200+") return product?.variants[0].price > 200;
       return false;
     });
     return result;
@@ -101,6 +126,7 @@ const Category = () => {
       window.scrollTo(0, c - c / 8);
     }
   };
+  
 
   const handlePageChange = useCallback(
     (page) => {
@@ -112,9 +138,7 @@ const Category = () => {
     [totalPages]
   );
 
-  const [gridView, setGridView] = useState(3);
-  // listView state is available for future extension if needed
-  const [listView, setListView] = useState(false);
+ 
 
   const handleCategoryChange = useCallback((category) => {
     setSelectedCategory(category);
@@ -122,10 +146,32 @@ const Category = () => {
     smoothScrollToTop();
   }, []);
 
+  if(productsCopy.length===0 && loading){
+    return (
+      <div className="flex justify-center items-center h-[70vh]">
+        <h1 className="text-2xl font-bold">Loading...</h1>
+      </div>
+    );
+  }
+  if(error){
+    return (
+      <div className="flex justify-center items-center h-[70vh]">
+        <h1 className="text-2xl font-bold">{error}</h1>   
+      </div>
+    );
+  }
+  // if(!loading && productsCopy.length===0){
+  //   return (
+  //     <div className="flex justify-center items-center h-screen">
+  //       <h1 className="text-2xl font-bold">No products found</h1>
+  //     </div>
+  //   );
+  // }
+
 
   return (
     <>
-    
+  
 
 
       <div className="w-full px-5 sm:px-15 md:px-30 lg:px-40 grid  gap-5 py-10 md:py-20 grid-cols-1 lg:grid-cols-12">
@@ -165,8 +211,8 @@ const Category = () => {
                       id={category.category_name}
                       name="category"
                       value={category.category_name}
-                      checked={selectedCategory === category}
-                      onChange={() => handleCategoryChange(category)}
+                      checked={selectedCategory === category.category_name}
+                      onChange={() => handleCategoryChange(category.category_name)}
                     />
                     <label htmlFor={category.category_name} className="mr-2">
                       {category.category_name}
@@ -246,7 +292,7 @@ const Category = () => {
             </ul>
           </div>
           {/* Brands section (if needed in future) */}
-          <div className="mb-8 px-5">
+          {/* <div className="mb-8 px-5">
             <h2 className="text-lg font-semibold mb-4">Brands</h2>
             <ul>
               <li className="mb-2 flex items-center gap-4">
@@ -273,7 +319,7 @@ const Category = () => {
                 </label>
               </li>
             </ul>
-          </div>
+          </div> */}
           </div>
         </aside>
 
@@ -290,7 +336,7 @@ const Category = () => {
                 value={selectedSort}
                 onChange={(e) => setSelectedSort(e.target.value)}
               >
-                <option value="popularity">Popularity</option>
+                <option value="popularity">Default</option>
                 <option value="price-asc">Price: Low to High</option>
                 <option value="price-desc">Price: High to Low</option>
               </select>
@@ -319,7 +365,7 @@ const Category = () => {
             className={`w-full px-5 grid grid-cols-1 place-items-center sm:grid-cols-2 md:grid-cols-${gridView} gap-5`}
           >
             {currentProducts.map((product, index) => (
-              <Product key={index} product={product} />
+              <Products key={index} product={product} />
             ))}
            
           </section>

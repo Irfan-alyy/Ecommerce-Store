@@ -3,7 +3,7 @@ import HeroSection from "./HeroSection";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import slideOne from "../../../assets/slide1.png";
 import slideTwo from "../../../assets/slide2.png";
-import FadeInFromBottom from "../../../../ui/animations/FadeInFromBottom";
+import FadeInFromBottom from "../../../ui/animations/FadeInFromBottom";
 const HomeCopy = () => {
   const [current, setCurrent] = useState(0);
   const hero = [

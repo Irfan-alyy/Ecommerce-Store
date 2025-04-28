@@ -1,7 +1,7 @@
 
 import { FaEye } from "react-icons/fa";
 import { CiShoppingCart } from "react-icons/ci";
-import slideOne from "../../../assets/slide1.png"
+import slideOne from "../../assets/slide1.png"
 
 const FeaturedProducts = ({quickView}) => {
     return (<>
