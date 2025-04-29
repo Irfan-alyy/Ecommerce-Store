@@ -17,6 +17,8 @@ import ResetPassword from "./pages/resetPassword/resetPassword";
 import Main from "./pages/Dashboard/Main";
 import Admin from "./pages/Admin/Admin";
 import Profile from "./pages/Profile/Profile";
+
+//To be used in the future, for magnifying product images
 // import ProductImageMagnifier from "./ui/components/magnifyImage";
 
 function App() {
