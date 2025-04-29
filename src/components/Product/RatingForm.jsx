@@ -2,25 +2,32 @@ import axios from "axios";
 import { use, useRef, useState } from "react";
 import { FaStar } from "react-icons/fa";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { toast,ToastContainer } from "react-toastify";
 
-const RatingForm = ({product}) => {
+const RatingForm = ({productId}) => {
   const [rating, setRating] = useState(5);
   const nameRef = useRef();
   const emailRef = useRef();
   const messageRef = useRef();
 
+
+  const token= localStorage.getItem("token")
   const handleSubmit = (e) => {
     e.preventDefault();
-    const productCopy=product;
     const review = {
-      name: nameRef.current.value,
+      product_id:productId,
       email: emailRef.current.value,
-      message: messageRef.current.value,
+      description: messageRef.current.value,
       rating: rating,
     };
-    axios.post(`${BASE_URL}/reviews`, review)
-    .then(res=>console.log(res))
-    .catch(err=>console.log(err.message)
+    axios.post(`${BASE_URL}/reviews`, review,{headers:{Authorization:`Bearer ${token}`}})
+    .then(res=>{toast.info(`Review submit: ${res}`);
+    
+  })
+    .catch(err=>{
+      toast.error(`${err.response?.data?.detail || err.message}`)
+      // console.log(err.response?.data?.detail)
+    }
     )
   };
   return (
@@ -33,6 +40,7 @@ const RatingForm = ({product}) => {
             <span className="flex gap-1">
               {[...Array(5)].map((_, ind) => (
                 <FaStar
+                key={ind}
                   className={`${ind < rating ? "text-yellow-400" : ""}`}
                   onClick={() => setRating(ind + 1)}
                 />
@@ -75,6 +83,7 @@ const RatingForm = ({product}) => {
           </button>
         </div>
       </form>
+      <ToastContainer/>
     </div>
   );
 };

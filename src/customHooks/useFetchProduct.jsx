@@ -11,12 +11,15 @@ const useProduct = ({id}) => {
     const [loading,setLoading]=useState(true)
 
     useEffect(()=>{
+
+      //Fetch product by product id
         axios
         .get(`${BASE_URL}/products/${id}`)
         .then((res) => {setProduct(res.data)})
         .catch(err=>{setError(err.message);setLoading(false)})
         .finally(res=>setLoading(false));
 
+        //Fetch product reviews based on product id
         axios
         .get(`${BASE_URL}/reviews/product_id/${id}`)
         .then((res) => {setProductReviews(res.data)})
@@ -25,6 +28,7 @@ const useProduct = ({id}) => {
     },[])
     useEffect(()=>{
       if(product){
+        //Fetch category details based on category id from product details
       axios
       .get(`${BASE_URL}/category/${product.category_id}`)
       .then((res) => {setCategory(res.data[0])})

@@ -17,8 +17,6 @@ const Products = ({ product }) => {
 
   const cartItems = useSelector((state) => state.reducer.items);
   useEffect(() => {
-    console.log( product,"product")
-    console.log(cartItems,"cart")
     const isInCart = cartItems.some(
       (elem) => elem?.variant?.id === product.variants[0]?.id
     );
