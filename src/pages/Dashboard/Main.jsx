@@ -1,7 +1,7 @@
 import React from 'react'
-import Sidebar from './../Dashboard/Sidebar';
-import Right from './../Dashboard/Right/Right';
-import MainDash from './Center/MainDash';
+import Sidebar from '../../components/Dashboard/Sidebar';
+import Right from '../../components/Dashboard/Right/Right';
+import MainDash from '../../components/Dashboard/Center/MainDash';
 
 
 

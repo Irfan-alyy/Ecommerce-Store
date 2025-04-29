@@ -61,22 +61,12 @@ function App() {
           path: "/reset-password",
           element: <ResetPassword />,
         },
-        {
-          path: "/admin",
-          element: <Main />,
-        },
+       
         {
           path: "*",
           element: <Error404 />,
         },
-        {
-          path: "/adminpanel",
-          element: <Main />,
-        },
-        {
-          path: "/Admin",
-          element: <Admin />,
-        },
+        
         {
           path: "/profile",
           element: <Profile />,
@@ -86,6 +76,15 @@ function App() {
         //   element: <ProductImageMagnifier/>
         // }
       ],
+    },
+    //No layout for these pages
+    {
+      path: "/admin",
+      element: <Main />,
+    },
+    {
+      path: "/admin-login",
+      element: <Admin />,
     },
   ]);
 
