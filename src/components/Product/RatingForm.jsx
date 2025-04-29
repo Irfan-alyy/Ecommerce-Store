@@ -9,6 +9,8 @@ const RatingForm = ({productId}) => {
   const nameRef = useRef();
   const emailRef = useRef();
   const messageRef = useRef();
+  const formRef = useRef();
+
 
 
   const token= localStorage.getItem("token")
@@ -20,19 +22,21 @@ const RatingForm = ({productId}) => {
       description: messageRef.current.value,
       rating: rating,
     };
-    axios.post(`${BASE_URL}/reviews`, review,{headers:{Authorization:`Bearer ${token}`}})
-    .then(res=>{toast.info(`Review submit: ${res}`);
+
     
+    axios.post(`${BASE_URL}/reviews`, review,{headers:{Authorization:`Bearer ${token}`}})
+    .then(res=>{toast.info(`Review submit: ${res?.statusText}`);
+    formRef.current.reset()
   })
     .catch(err=>{
       toast.error(`${err.response?.data?.detail || err.message}`)
       // console.log(err.response?.data?.detail)
     }
-    )
+  )
   };
   return (
     <div className="">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} ref={formRef}>
         <div className="flex flex-col gap-2">
           <h3 className="font-semibold">Add a Review</h3>
           <div className="flex items-center gap-5">
