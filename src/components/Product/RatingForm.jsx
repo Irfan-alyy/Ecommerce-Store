@@ -1,6 +1,7 @@
 import axios from "axios";
 import { use, useRef, useState } from "react";
 import { FaStar } from "react-icons/fa";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const RatingForm = ({product}) => {
   const [rating, setRating] = useState(5);
@@ -17,9 +18,9 @@ const RatingForm = ({product}) => {
       message: messageRef.current.value,
       rating: rating,
     };
-    productCopy.review=[]
-    productCopy.review,push(review)
-    axios.put(`https://fakestoreapi.com/products/${product.id}`, productCopy).then(res=>console.log(res)).catch(err=>console.log(err.message)
+    axios.post(`${BASE_URL}/reviews`, review)
+    .then(res=>console.log(res))
+    .catch(err=>console.log(err.message)
     )
   };
   return (
