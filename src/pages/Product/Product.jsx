@@ -256,7 +256,9 @@ const [addedToCart,setAddedToCart]=useState(false)
               <div className="flex w-full flex-col lg:flex-row gap-5">
                 <div className="flex-1/2 flex-col col-span-6">
               {productReviews && productReviews.length>0 && productReviews.map((elem,ind)=>(
+                <>
                 <ProductReviews review={elem} key={ind}/>
+                </>
               ))}
               {!productReviews && !productReviews.length>0 && (
                 <div className="flex items-center justify-center h-full">

@@ -4,7 +4,7 @@ import { FaSearch } from "react-icons/fa";
 import useAllProducts from "../../customHooks/useFetchAllProducts";
 import { useLocation } from "react-router";
 import Products from "../../components/Category/Products";
-
+import scrollToTop from "../../Feature/scrollToTop";
 
 const Category = () => {
   const useQuery=new URLSearchParams(useLocation().search);
@@ -123,7 +123,7 @@ const Category = () => {
     const c = document.documentElement.scrollTop || document.body.scrollTop;
     if (c > 0) {
       window.requestAnimationFrame(smoothScrollToTop);
-      window.scrollTo(0, c - c / 8);
+      window.scrollTo(0, c - c / 5);
     }
   };
   
@@ -137,7 +137,7 @@ const Category = () => {
     },
     [totalPages]
   );
-
+  
  
 
   const handleCategoryChange = useCallback((category) => {
@@ -172,8 +172,6 @@ const Category = () => {
   return (
     <>
   
-
-
       <div className="w-full px-5 sm:px-15 md:px-30 lg:px-40 grid  gap-5 py-10 md:py-20 grid-cols-1 lg:grid-cols-12">
         <aside className="col-span-12 lg:col-span-3 gap-5">
             <div className="w-full">
