@@ -24,7 +24,8 @@ This is a fully responsive E-commerce Store built using React.js, inspired by th
 ---
 
 🏗️ Project Structure
-```bash/src
+```bash
+/src
 │── components/         # All components related to pages
 │── customHooks/        # Custom React hooks
 │── features/           # Reusable app logic (e.g., scroll-to-top)
@@ -34,7 +35,9 @@ This is a fully responsive E-commerce Store built using React.js, inspired by th
 │── store/              # Redux Toolkit store and slices
 │── UI/                 # Reusable small components, animations, etc.
 │── App.jsx             # Main application component
-│── main.jsx            # Entry point of the application```
+│── main.jsx            # Entry point of the application
+
+```
 
 
 ---
