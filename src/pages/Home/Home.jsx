@@ -15,6 +15,7 @@ import Testimonial from "../../components/Home/Testimonial";
 import { useNavigate } from "react-router";
 import FeaturedProducts from "../../components/Home/homeProducts";
 import Banner from "../../components/Home/banner";
+import HeroSection from "../../components/Home/HeroProducts";
 const Home = () => {
   const [visibleContainer, setVisibleContainer] = useState({
     one: true,
@@ -87,6 +88,7 @@ const Home = () => {
   };
   return (
     <>
+    {/* <HeroSection/> */}
       <section className=" bg-[rgb(218,237,255)]">
         <div className="flex overflow-hidden items-center justify-center pb-30 sm:pb-50 ">
           <div
