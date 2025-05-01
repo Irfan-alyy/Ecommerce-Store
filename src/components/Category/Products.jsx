@@ -42,7 +42,7 @@ const Products = ({ product }) => {
   const createdDate = new Date(product.created_at);
   const currentDate = new Date();
   const timeDifference = currentDate.getTime() - createdDate.getTime();
-  const sevenDaysInMillis = 7 * 24 * 60 * 60 * 1000;
+  const sevenDaysInMillis = 7 * 24 * 60 * 60 * 1000;  
 
 
   const handleAddToCart = (e) => {

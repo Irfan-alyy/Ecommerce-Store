@@ -13,8 +13,7 @@ const useAllProducts = () => {
             axios.get(`${BASE_URL}/products/allproducts`)
             .then(res=>{
                 setProducts(res.data)
-                
-                
+                setLoading(false)
             })
             .catch(err=>{
                 setError(err.message)
@@ -28,6 +27,7 @@ const useAllProducts = () => {
             axios.get(`${BASE_URL}/category/categories`)
             .then(res=>{
                 setCategories(res.data)
+                setLoading(false)
                 
             })
             .catch(err=>{

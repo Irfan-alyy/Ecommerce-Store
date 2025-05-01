@@ -17,6 +17,8 @@ import ResetPassword from "./pages/resetPassword/resetPassword";
 import Main from "./pages/Dashboard/Main";
 import Admin from "./pages/Admin/Admin";
 import Profile from "./pages/Profile/Profile";
+import HeroSection from "./components/Home/HeroProducts";
+
 
 //To be used in the future, for magnifying product images
 // import ProductImageMagnifier from "./ui/components/magnifyImage";
@@ -30,6 +32,10 @@ function App() {
         {
           path: "/",
           element: <Home />,
+        },
+        {
+          path:"/hero",
+          element: <HeroSection/>
         },
         {
           path: "/Ecommerce-Store",

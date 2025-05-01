@@ -17,10 +17,8 @@ const Category = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [gridView, setGridView] = useState(3);
   // listView state is available for future extension if needed
-  const [listView, setListView] = useState(false);
-  const [retry, setRetry] = useState(false);
-  
-  const {products, categories, loading, error} =  useAllProducts({retry})
+  const [listView, setListView] = useState(false);  
+  const {products, categories, loading, error} =  useAllProducts()
 
   useEffect(()=>{
     categories.unshift(

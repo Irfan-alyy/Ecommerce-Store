@@ -27,7 +27,7 @@ const QuickView = ({ product, visible, setVisible }) => {
       (elem) => elem.variant.id === selectedVariant.id
     );
     setAddedToCart(isInCart);
-    console.log(cartItems);
+    // console.log(cartItems);
   }, [cartItems, selectedVariant.id]);
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -73,10 +73,8 @@ const QuickView = ({ product, visible, setVisible }) => {
       variant: selectedVariant,
       quantity: 1,
     };
-    console.log(item);
-
     dispatch(addToCart(item));
-    toast.info("Product Added to Cart", { position: "top-center" });
+    toast.success("Product Added to Cart", { position: "top-center" });
   };
 
   // const getVisibleImages = () => {

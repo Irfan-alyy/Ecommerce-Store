@@ -43,13 +43,13 @@ function Cart() {
     //     }
     // ]
   
-console.log(items)
+// console.log(items)
 let totalAmount=0;
 if(items.length>0) totalAmount=(items.reduce((acc,curr)=>acc+=curr.quantity*curr.variant.price,0)).toFixed(2)
 
-console.log(totalAmount)
+// console.log(totalAmount)
 const handleRemove = (item) => {
-  console.log(item,"item");
+  // console.log(item,"item");
   dispatch(removeItem(item));
   };
   const handlePlus = (index) => {
@@ -74,8 +74,8 @@ const handleRemove = (item) => {
 
 
       {items.map((elem, ind) => (
-      <FadeInFromBottom duration={ind+1} delay={0} yOffset={50}>
-        <div key={ind} className="Wrapper w-full grid grid-cols-2 sm:flex sm:flex-wrap justify-between border-collapse border mb-1 border-[#8E8E8E]  p-4">
+      <FadeInFromBottom duration={ind+1} delay={0} yOffset={50}  key={ind}>
+        <div className="Wrapper w-full grid grid-cols-2 sm:flex sm:flex-wrap justify-between border-collapse border mb-1 border-[#8E8E8E]  p-4">
           <div className="image w-auto h-auto flex flex-col">
             <div className="data w-24 h-32 flex justify-center items-center">
               <img
