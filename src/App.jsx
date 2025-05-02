@@ -17,17 +17,18 @@ import Error404 from "./pages/Error/error404";
 import Login from "./pages/Login/Login";
 import ResetPassword from "./pages/resetPassword/resetPassword";
 import Main from "./pages/Dashboard/Main";
-import Adminlogin from './components/Dashboard/Admin/Adminlogin'
-import Adminprofile from './components/Dashboard/Admin/Adminprofile'
-import Order from './components/Dashboard/Sidebar/Order'
-import Products from "./components/Dashboard/Sidebar/Products";
+import Admin from "./pages/Admin/Admin";
+import Profile from "./pages/Profile/Profile";
+import HeroSection from "./components/Home/HeroProducts";
+import AddProduct from "./components/Dashboard/AddProduct/AddProduct";
+import ProductForm from "./components/Dashboard/AddProduct/variantForm";
 
-import Customer from "./components/Dashboard/Sidebar/Customer";
-import Analystics from "./components/Dashboard/Sidebar/Analystics";
+
+//To be used in the future, for magnifying product images
+// import ProductImageMagnifier from "./ui/components/magnifyImage";
 
 function App() {
   const router = createBrowserRouter([
-    // Layout pages
     {
       path: "",
       element: <Layout />,
@@ -35,6 +36,10 @@ function App() {
         {
           path: "/",
           element: <Home />,
+        },
+        {
+          path:"/hero",
+          element: <HeroSection/>
         },
         {
           path: "/Ecommerce-Store",
@@ -53,6 +58,10 @@ function App() {
           element: <Product />,
         },
         {
+          path: "add",
+          element: <ProductForm />,
+        },
+        {
           path: "/cart",
           element: <Cart />,
         },
@@ -68,54 +77,33 @@ function App() {
           path: "/reset-password",
           element: <ResetPassword />,
         },
-      
+       
         {
           path: "*",
           element: <Error404 />,
-        }
-       // {
+        },
+        
+        {
+          path: "/profile",
+          element: <Profile />,
+        },
+        // {
         //   path:"/magnify",
         //   element: <ProductImageMagnifier/>
         // }
       ],
     },
+    //No layout for these pages
     {
-path :"/main",
-element:<Main/>,
-
+      path: "/admin",
+      element: <Main />,
     },
     {
-path:'/order',
-element:<Order/>
-
+      path: "/admin-login",
+      element: <Admin />,
     },
-    {
-      path:'/product',
-      element:<Products/>
-      
-          },
-          {
-            path:'/customer',
-            element:<Customer/>
-            
-                },
-                {
-path :'/analyse',
-element: <Analystics/>
-
-                }
-                ,{
-                  path: '/adlogin',
-                  element: <Adminlogin/>},
-                  
-                  {
-        path: '/adminprofile',
-        element: <Adminprofile/>
-        
-        }
-              
-
   ]);
+
   return (
     <>
       <Provider store={store}>

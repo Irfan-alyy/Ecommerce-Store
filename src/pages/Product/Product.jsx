@@ -39,12 +39,12 @@ const [addedToCart,setAddedToCart]=useState(false)
       (elem) => elem.variant.id === selectedVariant.id
     );
     setAddedToCart(isInCart);
-    console.log(cartItems);
+    // console.log(cartItems);
   }, [cartItems, selectedVariant.id]);
 
 
   useEffect(() => {
-    console.log("Product", product);
+    // console.log("Product", product);
     if (product) {
       setCurrentPic(`${product?.variants[0]?.images[0]}`);
       setSelectedVariant(product?.variants[0]);
@@ -138,7 +138,7 @@ const [addedToCart,setAddedToCart]=useState(false)
               <img
                 src={`${BASE_URL}${currentPic}`}
                 alt={currentPic}
-                className="w-full md:w-auto h-100 object-cover"
+                className="w-full max-w-100 md:w-auto h-100 object-cover"
               />
 
               {/* Button for next image */}
@@ -154,13 +154,14 @@ const [addedToCart,setAddedToCart]=useState(false)
             </FadeInFromBottom>
 
             <div className="relative w-full max-w-3xl mx-auto overflow-hidden group">
-              <div className="w-100 flex flex-row items-center gap-2 py-5 flex-wrap justify-start">
+              <h2 className="text-2xl py-2">Product variants</h2>
+              <div className="w-100 flex flex-row items-center gap-2 pb-5 flex-wrap justify-start">
                 {product.variants.map((elem, idx) => (
                   <img
                     key={idx}
                     src={`${BASE_URL}${elem.images[0]}`}
                     alt={`img-${idx}`}
-                    className="w-[22.5%] max-h-25 object-cover transition-all cursor-pointer  duration-500 "
+                    className={`w-[22.5%] max-h-25 object-cover transition-all cursor-pointer  duration-500 ${selectedVariant.id===elem.id?"border":""} rounded-xl `}
                     onClick={() => handleVariantChange(elem, idx)}
                     // onMouseOver={() => setCurrentPic(elem.images[0])}
                   />
@@ -253,11 +254,18 @@ const [addedToCart,setAddedToCart]=useState(false)
             >
               <div className="flex w-full flex-col lg:flex-row gap-5">
                 <div className="flex-1/2 flex-col col-span-6">
-              {productReviews.length>0 && productReviews.map((elem,ind)=>(
-                <ProductReviews review={elem}/>
+              {productReviews && productReviews.length>0 && productReviews.map((elem,ind)=>(
+                <>
+                <ProductReviews review={elem} key={ind}/>
+                </>
               ))}
+              {!productReviews && !productReviews.length>0 && (
+                <div className="flex items-center justify-center h-full">
+                  <h1 className="text-2xl">No Review for this product</h1>
+                </div>
+              )}
               </div>
-                <RatingForm product={product} />
+                <RatingForm productId={product.id} />
               </div>
             </motion.div>
           )}

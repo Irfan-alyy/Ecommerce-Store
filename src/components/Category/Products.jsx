@@ -17,8 +17,6 @@ const Products = ({ product }) => {
 
   const cartItems = useSelector((state) => state.reducer.items);
   useEffect(() => {
-    console.log( product,"product")
-    console.log(cartItems,"cart")
     const isInCart = cartItems.some(
       (elem) => elem?.variant?.id === product.variants[0]?.id
     );
@@ -44,7 +42,7 @@ const Products = ({ product }) => {
   const createdDate = new Date(product.created_at);
   const currentDate = new Date();
   const timeDifference = currentDate.getTime() - createdDate.getTime();
-  const sevenDaysInMillis = 7 * 24 * 60 * 60 * 1000;
+  const sevenDaysInMillis = 7 * 24 * 60 * 60 * 1000;  
 
 
   const handleAddToCart = (e) => {
@@ -86,6 +84,7 @@ const Products = ({ product }) => {
 
           <div className="flex items-center justify-center flex-col w-full inset-0 group-hover:flex z-50 ">
             <img
+            loading="lazy"
               src={`${BASE_URL}${product.variants[0]?.images[0]}`}
               alt="product 2"
               className="object-cover h-80 w-auto z-10"

@@ -48,12 +48,13 @@ const Testimonial = () => {
         {testimonials.map((item, i) => (
           <div
             key={item.id}
-            className={`absolute inset-0 flex flex-col items-center justify-center text-center py-40  bg-gray-100 px-10 rounded-lg shadow-md transition-transform duration-700 
-              ${i === index
+            className={`absolute inset-0 flex flex-col items-center justify-center text-center py-40  bg-gray-100 px-10 rounded-lg shadow-md transition-transform duration-800  ${
+              i === index
                 ? "translate-x-0 opacity-100"
                 : i > index
-                ? "translate-x-full opacity-0"
-                : (i<index) ? "translate-x-full opacity-0": null
+                ? "translate-x-full opacity-0":
+                i<index?
+                "translate-x-full opacity-0":""
             }`}
           >
             <img
@@ -103,7 +104,7 @@ const Testimonial = () => {
       <p className="text-gray-900">Lorem ipsum dolor sit amet consectetur.</p>
 
       {/* Blog Grid */}
-      <div className="h-[100%] w-full gap-6 sm:grid items-center m-auto  sm:grid-cols-2 md:grid md:grid-cols-2 lg:flex lg:flex-row">
+      <div className="h-[100%] w-full gap-5 justify-center  sm:grid items-center px-5 sm:px-15 md:px-30 lg:px-40   sm:grid-cols-2 md:grid md:grid-cols-2 lg:flex lg:flex-row">
         {[
           {
             img: "https://flone.jamstacktemplates.dev/assets/img/blog/blog-1.jpg",
@@ -119,14 +120,15 @@ const Testimonial = () => {
           },
         ].map((blog, idx) => (
           <div
-            key={idx}
-            className="mt-20 px-10 pb-20 mb-10 min-h-[100px]  flex justify-between items-center flex-col bg-cover bg-center transition-transform hover:scale-105 w-full h-[300px]"
-            style={{ backgroundImage: `url(${blog.img})` }}
+            key={idx} 
+            className="xl:w-4/12 relative overflow-hidden mt-20 pb-20 mb-10 h-auto  flex justify-between items-center flex-col bg-cover bg-center  "
+          
           >
-            <span className="mt-4 px-2 mr-40 bg-purple-600 text-white">
+            <img src={blog.img} alt={blog.title} className="transition-transform duration-500 hover:scale-110 w-full h-full" />
+            <span className="absolute top-5 left-5 xl:top-10 xl:left-20 bg-purple-600 text-white">
               Lifestyle
             </span>
-            <div className="flex justify-center items-center flex-col bg-white w-[100%]  mt-56  md:mt-70">
+            <div className=" absolute bottom-5  xl:w-7/12 flex justify-center px-5 pt-2 items-center flex-col bg-white">
               <h2 className="text-2xl text-center">{blog.title}</h2>
               <h3 className="text-gray-700">By Admin</h3>
             </div>

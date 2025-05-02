@@ -15,6 +15,7 @@ import Testimonial from "../../components/Home/Testimonial";
 import { useNavigate } from "react-router";
 import FeaturedProducts from "../../components/Home/homeProducts";
 import Banner from "../../components/Home/banner";
+import HeroSection from "../../components/Home/HeroProducts";
 const Home = () => {
   const [visibleContainer, setVisibleContainer] = useState({
     one: true,
@@ -25,9 +26,6 @@ const Home = () => {
   const [quickViewItem, setQuickViewItem] = useState(null);
   const navigate = useNavigate();
 
-  const refContainer1 = useRef();
-  const refContainer2 = useRef();
-  const refContainer3 = useRef();
 
   const slideForward = (e) => {
     if (visibleContainer.one == true) {
@@ -87,9 +85,12 @@ const Home = () => {
   };
   return (
     <>
-      <section className=" bg-[rgb(218,237,255)]">
-        <div className="flex overflow-hidden items-center justify-center pb-30 sm:pb-50 ">
-          <div
+    <HeroSection/>
+
+
+      {/* <section className=" bg-[rgb(218,237,255)]">
+        <div className="flex overflow-hidden items-center justify-center pb-30 sm:pb-50 "> */}
+          {/* <div
             ref={refContainer1}
             className="px-10 sm:px-18 relative  md:px-25 lg:px-40 container-one grid grid-cols-1 md:grid-cols-2 pt-10 pb-20 md:py-20 lg:py-30 gap-10 w-full justify-between"
           >
@@ -155,7 +156,7 @@ const Home = () => {
               className="icon-right absolute right-[10%] top-[40%] text-5xl text-violet-400  hover:text-violet-700  hidden cursor-pointer"
               onClick={slideForward}
             />
-          </div>
+          </div> */}
 
           {/* {visibleContainer.two && (
             <div
@@ -228,8 +229,8 @@ const Home = () => {
               />
             </div>
           )} */}
-        </div>
-      </section>
+        {/* </div>
+      </section> */}
       <section className="px-10 sm:px-18  md:px-25 lg:px-40 overfllow-hidden">
         <div className="flex flex-col lg:flex-row gap-8 items-center mt-[-100px] sm:mt-[-180px] pb-20">
           <div
@@ -347,14 +348,12 @@ const Home = () => {
           </div>)} */}
       </section>
       <section className="flex items-center justify-center">
-        {quickViewVisble && (
-          <FadeInFromBottom delay={0.4} duration={1} yOffset={59} >
+        {quickViewVisble && ( 
           <QuickView
             visible={quickViewVisble}
             setVisible={setQuickViewVisble}
             product={quickViewItem}
           />
-          </FadeInFromBottom>
         )}
       </section>
       {/* <QuickView />  */}

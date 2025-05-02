@@ -8,9 +8,9 @@ import '../../styles/Dashboard/Dashboard.css'
 
 const Main = () => {
   return (
-    <div className='flex justify-center items-center h-[140vh] w-[100%] overflow-scroll  '
+    <div className='flex justify-center items-center h-[120vh] w-[100%]  '
     style={{
-backgroundColor :' rgba(58, 140, 194, 0.747)'
+backgroundColor :'rgba(128, 0, 128, 0.945)'
 
     }}
 

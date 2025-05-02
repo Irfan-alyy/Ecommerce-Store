@@ -1,32 +1,42 @@
 import axios from "axios";
 import { use, useRef, useState } from "react";
 import { FaStar } from "react-icons/fa";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { toast,ToastContainer } from "react-toastify";
 
-const RatingForm = ({ product }) => {
+const RatingForm = ({productId}) => {
   const [rating, setRating] = useState(5);
   const nameRef = useRef();
   const emailRef = useRef();
   const messageRef = useRef();
+  const formRef = useRef();
 
+
+
+  const token= localStorage.getItem("token")
   const handleSubmit = (e) => {
     e.preventDefault();
-    const productCopy = product;
     const review = {
-      name: nameRef.current.value,
+      product_id:productId,
       email: emailRef.current.value,
-      message: messageRef.current.value,
+      description: messageRef.current.value,
       rating: rating,
     };
-    productCopy.review = [];
-    productCopy.review, push(review);
-    axios
-      .put(`https://fakestoreapi.com/products/${product.id}`, productCopy)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err.message));
+
+    
+    axios.post(`${BASE_URL}/reviews`, review,{headers:{Authorization:`Bearer ${token}`}})
+    .then(res=>{toast.info(`Review submit: ${res?.statusText}`);
+    formRef.current.reset()
+  })
+    .catch(err=>{
+      toast.error(`${err.response?.data?.detail || err.message}`)
+      // console.log(err.response?.data?.detail)
+    }
+  )
   };
   return (
     <div className="">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} ref={formRef}>
         <div className="flex flex-col gap-2">
           <h3 className="font-semibold">Add a Review</h3>
           <div className="flex items-center gap-5">
@@ -34,6 +44,7 @@ const RatingForm = ({ product }) => {
             <span className="flex gap-1">
               {[...Array(5)].map((_, ind) => (
                 <FaStar
+                key={ind}
                   className={`${ind < rating ? "text-yellow-400" : ""}`}
                   onClick={() => setRating(ind + 1)}
                 />
@@ -76,6 +87,7 @@ const RatingForm = ({ product }) => {
           </button>
         </div>
       </form>
+      <ToastContainer/>
     </div>
   );
 };

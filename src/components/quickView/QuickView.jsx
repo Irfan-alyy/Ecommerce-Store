@@ -27,7 +27,7 @@ const QuickView = ({ product, visible, setVisible }) => {
       (elem) => elem.variant.id === selectedVariant.id
     );
     setAddedToCart(isInCart);
-    console.log(cartItems);
+    // console.log(cartItems);
   }, [cartItems, selectedVariant.id]);
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -73,10 +73,8 @@ const QuickView = ({ product, visible, setVisible }) => {
       variant: selectedVariant,
       quantity: 1,
     };
-    console.log(item);
-
     dispatch(addToCart(item));
-    toast.info("Product Added to Cart", { position: "top-center" });
+    toast.success("Product Added to Cart", { position: "top-center" });
   };
 
   // const getVisibleImages = () => {
@@ -159,13 +157,14 @@ const QuickView = ({ product, visible, setVisible }) => {
             </div>
 
             <div className="relative w-full max-w-3xl mx-auto overflow-hidden group">
-              <div className="w-100 flex flex-row items-center gap-2 py-5 flex-wrap justify-start">
+              <h1 className="text-2xl pb-3">Product Variants</h1>
+              <div className="w-100 flex flex-row items-center gap-2 pb-5 flex-wrap justify-start">
                 {product.variants.map((elem, idx) => (
                   <img
                     key={idx}
                     src={`${BASE_URL}${elem.images[0]}`}
                     alt={`img-${idx}`}
-                    className="w-[22.5%] max-h-22  object-cover transition-all  duration-500 "
+                    className={`w-[22.5%] max-h-22  object-cover transition-all  duration-500 ${selectedVariant.id===elem.id?"border":""} rounded-xl`}
                     onClick={() => handleVariantChange(elem, idx)}
                     // onMouseOver={() => setCurrentPic(elem.images[0])}
                   />

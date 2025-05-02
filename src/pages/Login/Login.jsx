@@ -151,12 +151,9 @@ const Login = () => {
         setLoading(false)
         return;
       }
-  
-
-      // Forgot password
-      else if (email && !password) {
-         axios.post(`${BASE_URL}/forgot-password/`, null, {
-          params: { email },
+      if (loginData.password !== loginData.confirm_password) {
+        toast.error("❌ Your Password and confirm Password Should be same", {
+          position: "top-right",
         });
         clearTimeout(timeoutRef.current);
         timeoutRef.current=null;
@@ -217,10 +214,6 @@ const Login = () => {
     }
     
   };
-  const token = localStorage.getItem("token");
-console.log(token); // Check if token is correctly retrieved.
-
-  
 
   return (
     <div className=" flex flex-col items-center justify-center py-20">

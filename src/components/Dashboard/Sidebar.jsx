@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaUserCircle } from "react-icons/fa";
+import { IoLogoGithub } from "react-icons/io";
 import { IoHomeOutline } from "react-icons/io5";
 import { LuUsersRound } from "react-icons/lu";
 import { RiBillLine } from "react-icons/ri";
@@ -37,8 +37,7 @@ const[expanded , setExpanded] = useState(true);
   return (
 
 <>
-<div className='bars   block md:hidden '
-
+<div className='bars  mt-40  block '
  style={expanded ? {left: '54%'} : {left: '20%'}}
 onClick={()=> setExpanded(!expanded)}
 
