@@ -18,6 +18,8 @@ import Main from "./pages/Dashboard/Main";
 import Admin from "./pages/Admin/Admin";
 import Profile from "./pages/Profile/Profile";
 import HeroSection from "./components/Home/HeroProducts";
+import AddProduct from "./components/Dashboard/AddProduct/AddProduct";
+import ProductForm from "./components/Dashboard/AddProduct/variantForm";
 
 
 //To be used in the future, for magnifying product images
@@ -52,6 +54,10 @@ function App() {
         {
           path: "category/product/:id",
           element: <Product />,
+        },
+        {
+          path: "add",
+          element: <ProductForm />,
         },
         {
           path: "/cart",
