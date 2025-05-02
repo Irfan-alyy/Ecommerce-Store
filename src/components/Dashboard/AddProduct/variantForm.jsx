@@ -1,4 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
+import useAllProducts from "../../../customHooks/useFetchAllProducts";
 
 const VariantForm = ({ index, variant, onChange, handleImageChange, imagePreviews }) => {
   return (
@@ -39,7 +41,7 @@ const VariantForm = ({ index, variant, onChange, handleImageChange, imagePreview
         required
       />
       <input
-        type="number"
+        type="text"
         placeholder="Size"
         value={variant.sku}
         onChange={(e) => onChange(index, "size", e.target.value)}
@@ -117,6 +119,8 @@ const ProductForm = () => {
     },
   ]);
 
+  const {categories,loading,error} = useAllProducts()
+
   const handleImageChange = (index,e) => {
     const files = Array.from(e.target.files);
     setImages(files);
@@ -167,7 +171,7 @@ const ProductForm = () => {
       setImages([])
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =  async(e) => {
     e.preventDefault();
     const last = variants[variants.length - 1];
     if (!isVariantFilled(last)) {
@@ -185,12 +189,11 @@ const ProductForm = () => {
     console.log("Submitting:", product);
     console.log("Varints:", filledVariants);
 
-    console.log("variant one:", allImages[0], filledVariants[0]);
-    console.log("variant two:", allImages[1], filledVariants[1]);
+
 
     const formData = new FormData();
     allImages.forEach((variantImages, index) => {
-      variantImages.forEach((file) => formData.append(`variant_images[${index}]`, file));
+      variantImages.forEach((file) => formData.append(`variant_images`, file));
     }   );
     formData.append("product_name", product.product_name);  
 
@@ -201,7 +204,19 @@ const ProductForm = () => {
     formData.append("variants", JSON.stringify(filledVariants));
     formData.append("created_at", product.created_at);
     // formData.append("isFeatured", product.isFeatured);
-
+    try {
+        const res = await axios.post('http://127.0.0.1:8000/product/', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        console.log('Upload success:', res.data);
+        setImagePreviews([])
+      } catch (err) {
+        console.error('Upload failed:', err);
+        setImagePreviews([])
+  
+      }
 
 
 
@@ -209,6 +224,7 @@ const ProductForm = () => {
   };
 
   return (
+    <>
     <form
       onSubmit={handleSubmit}
       className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg space-y-4"
@@ -233,15 +249,15 @@ const ProductForm = () => {
         className="w-full border border-gray-300 rounded-md px-3 py-2"
         required
       />
-      <input
-        type="number"
-        name="category_id"
-        placeholder="Product category id"
-        value={product.category_id}
-        onChange={handleProductChange}
-        className="w-full border border-gray-300 rounded-md px-3 py-2"
-        required
-      />
+
+      <select name="category_id" id="category" onChange={handleProductChange} className="w-full border border-gray-300 rounded-md px-3 py-2 max-h-50 overflow-y-auto" required>
+        <option value="">Select Category</option>
+       {!loading && !error&&  categories.map((category) => (  
+        <option key={category.id} value={category.id}>
+          {category.category_name}
+        </option>
+      ))} 
+      </select>
 
       <textarea
         name="description"
@@ -286,6 +302,15 @@ const ProductForm = () => {
         Submit Product
       </button>
     </form>
+
+    <div>
+      <div>
+        <form action="">
+          <label htmlFor="category_name"></label>
+        </form>
+      </div>
+    </div>
+    </>
   );
 };
 

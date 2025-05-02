@@ -88,7 +88,7 @@ const [showProducts, setShowProducts]=useState([])
         onClick={() => navigate(`category/product/${elem.id}`)}
       >
         <img src={`${BASE_URL}${elem.variants[0].images[0]}`} alt="" loading="lazy" className="w-full hover-image1 absolute inset-0 object-cover transition transform duration-500 ease-in-out m-auto  " />
-        <img src={`${BASE_URL}${elem?.variants[1]?.images[0] ||elem.variants[0].images[0] }`} alt="" className="hover-image2 absolute inset-0 object-cover transition transform duration-500 ease-in-out m-auto " />
+        <img src={`${BASE_URL}${elem?.variants[1]?.images[0] ||elem.variants[0].images[0] }`} loading="lazy" alt="" className="hover-image2 absolute inset-0 object-cover transition transform duration-500 ease-in-out m-auto " />
         <CiShoppingCart
           title="Add Cart"
           className=" cart cursor-pointer icon  group-hover:brightness-100 group-hover:opacity-100 transition-opacity transition-brightness duration-300 z-10 absolute top-1/2 right-22 bg-[rgb(31,115,23)] text-white hover:text-black hover:bg-white rounded-4xl text-3xl "

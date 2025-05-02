@@ -84,6 +84,7 @@ const Products = ({ product }) => {
 
           <div className="flex items-center justify-center flex-col w-full inset-0 group-hover:flex z-50 ">
             <img
+            loading="lazy"
               src={`${BASE_URL}${product.variants[0]?.images[0]}`}
               alt="product 2"
               className="object-cover h-80 w-auto z-10"
