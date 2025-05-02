@@ -13,7 +13,7 @@ const Login = () => {
 
   const abortControllerRef = useRef(null);
   const timeoutRef = useRef(null);
-  const suppressRedFlag = useRef(false); // Flag to suppress red flag for abort error
+  const suppressRedFlag = useRef(false); 
 
 
   const cancelPendingRequest = () => {
@@ -25,12 +25,12 @@ const Login = () => {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
-    suppressRedFlag.current = true; // Suppress red flag for abort error
+    suppressRedFlag.current = true; 
     setLoading(false);
   };
 
   const showLoginSection = () => {
-    cancelPendingRequest(); // Cancel any pending requests before switching sections
+    cancelPendingRequest();
     setShowLogin(true);
     setShowRegister(false);
     setShowForgot(false);
@@ -152,7 +152,6 @@ const Login = () => {
         return;
       }
   
-
       // Forgot password
       else if (email && !password) {
          axios.post(`${BASE_URL}/forgot-password/`, null, {
@@ -187,7 +186,7 @@ const Login = () => {
       //     position: "top-right",
       //   });
       //   clearTimeout(timeoutRef.current);
-      //   timeoutRef.current=null;
+      //   timeoutRef.current=null; 
       //   setLoading(false)
       //   return;
       // }
@@ -218,7 +217,7 @@ const Login = () => {
     
   };
   const token = localStorage.getItem("token");
-console.log(token); // Check if token is correctly retrieved.
+console.log(token); 
 
   
 
@@ -236,7 +235,7 @@ console.log(token); // Check if token is correctly retrieved.
         <span>
           <hr className="h-5 bg-none border-x-[0.1px]" />
         </span>
-        <button
+        {/* <button
         
           onClick={showRegisterSection}
           className={`${
@@ -244,9 +243,8 @@ console.log(token); // Check if token is correctly retrieved.
           } cursor-pointer text-2xl ml-3 font-bold`}
         >
           Register
-        </button>
+        </button> */}
       </div>
-
 
       {showLogin && (
         <div className="py-10 px-4 formDiv flex justify-center items-center w-10/12 md:w-2/3 lg:w-1/2 lg:p-24 shadow-[0_0px_3px_rgba(0,0,0,0.25)]">
@@ -288,12 +286,12 @@ console.log(token); // Check if token is correctly retrieved.
                   LOGIN
                 </button>
               </span>
-              <button
+              {/* <button
                 onClick={showForgotSection}
                 className="cursor-pointer w-50 py-2 text-sm text-gray-950 hover:text-[#A749FF] transition ease-linear duration-300"
               >
                 Forget Password?
-              </button>
+              </button> */}
             </span>
           </form>
         </div>

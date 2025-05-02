@@ -11,12 +11,19 @@ import Product from "./pages/Product/Product";
 import Category from "./pages/category/Category";
 import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
+
+
 import Error404 from "./pages/Error/error404";
 import Login from "./pages/Login/Login";
 import ResetPassword from "./pages/resetPassword/resetPassword";
 import Main from "./pages/Dashboard/Main";
-import Profile from "./pages/Profile/Profile";
-// import ProductImageMagnifier from "./ui/components/magnifyImage";
+import Adminlogin from './components/Dashboard/Admin/Adminlogin'
+import Adminprofile from './components/Dashboard/Admin/Adminprofile'
+import Order from './components/Dashboard/Sidebar/Order'
+import Products from "./components/Dashboard/Sidebar/Products";
+
+import Customer from "./components/Dashboard/Sidebar/Customer";
+import Analystics from "./components/Dashboard/Sidebar/Analystics";
 
 function App() {
   const router = createBrowserRouter([
@@ -61,24 +68,12 @@ function App() {
           path: "/reset-password",
           element: <ResetPassword />,
         },
-        {
-          path: "/admin",
-          element: <Main />,
-        },
+      
         {
           path: "*",
           element: <Error404 />,
-        },
-        {
-          path: "/adminpanel",
-          element: <Main />,
-        },
-       
-        {
-          path: "/profile",
-          element: <Profile />,
-        },
-        // {
+        }
+       // {
         //   path:"/magnify",
         //   element: <ProductImageMagnifier/>
         // }
@@ -88,9 +83,37 @@ function App() {
 path :"/main",
 element:<Main/>,
 
+    },
+    {
+path:'/order',
+element:<Order/>
 
-    }
-  
+    },
+    {
+      path:'/product',
+      element:<Products/>
+      
+          },
+          {
+            path:'/customer',
+            element:<Customer/>
+            
+                },
+                {
+path :'/analyse',
+element: <Analystics/>
+
+                }
+                ,{
+                  path: '/adlogin',
+                  element: <Adminlogin/>},
+                  
+                  {
+        path: '/adminprofile',
+        element: <Adminprofile/>
+        
+        }
+              
 
   ]);
   return (

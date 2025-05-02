@@ -18,7 +18,7 @@ backgroundColor :' rgba(58, 140, 194, 0.747)'
     <>
       <div className="AppGlass pb-20  ">
 
-<div><Sidebar className='ml-0  '/></div>
+<div><Sidebar className='ml-0  bg-black '/></div>
 <div><MainDash/></div>
 <div><Right/></div>
 

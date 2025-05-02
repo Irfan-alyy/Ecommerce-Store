@@ -8,14 +8,19 @@ import { MdOutlineAnalytics } from "react-icons/md";
 import { HiOutlineBars3 } from "react-icons/hi2";
 import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
+import { path } from 'framer-motion/client';
+
 
 
 const Data = [
-  { icon: <IoHomeOutline />, heading: "D.board" },
-  { icon: <RiBillLine />, heading: "Order" },
-  { icon: <LuUsersRound />, heading: "Customer" },
-  { icon: <CiMedicalClipboard />, heading: "Products" },
-  { icon: <MdOutlineAnalytics />, heading: "Analytics" },
+  { icon: <IoHomeOutline />, heading: "D.board" ,  },
+  { icon: <RiBillLine />, heading: "Order", path : "/order" },
+  { icon: <CiMedicalClipboard />, heading: "Products",path : "/product" },
+  { icon: <LuUsersRound />, heading: "Reviews", path : "/customer" },
+  { icon: <MdOutlineAnalytics />, heading: "AddFiles", path:"/analyse" },
+  { icon: <MdOutlineAnalytics />, heading: "Revenue", path:"/revenue" },
+  
+  
 ];
 const sidebarVarients={
 true: {
@@ -38,39 +43,41 @@ const[expanded , setExpanded] = useState(true);
 onClick={()=> setExpanded(!expanded)}
 
 >
-<HiOutlineBars3 className='menu block bg-white text-black text-2xl  p-4  rounded-md    md:hidden lg:hidden ' />
+<HiOutlineBars3 className='menu block bg-white text-black text-2xl  p-4  rounded-md    md:block lg:hidden ' />
 </div>
-    <motion.div className='sidebar p-6 bg-white h-[90%] rounded-xl shadow-md'
+    <motion.div className='sidebar p-6 bg-white h-[64%] rounded-xl shadow-md'
     variants={sidebarVarients}
 animate={window.innerWidth <= 768?`${expanded}` : '' }
 
     >
 
 
-      {/* Logo Section */}
-      <div className='logo flex items-center mt-6 ml-2 cursor-pointer '>
-      <NavLink to="/adminprofile" className="flex items-center space-x-2">
+      {/* Logo Section */}  
+      <div className='logo flex items-center mt-6 ml-2 cursor-pointer'>
+      <NavLink to="/Adminprofile" className="flex items-center space-x-2">
   <i className="text-4xl text-red-500"><FaUserCircle /></i>
   <span className="font-bold text-3xl tracking-wide text-gray-800">
     Ad<span className="text-red-500">mi</span>n
   </span>
 </NavLink>
       </div>
+      <div className="menu mt-16 flex flex-col gap-4">
+  {Data.map((item, index) => (
+    <NavLink
+      key={index}
+      to={item.path} // Make sure your `Data` array includes the `path` key for each item
+      className={`menuitem px-4 py-3 rounded-lg w-full flex items-center gap-4 text-lg font-medium cursor-pointer transition-all duration-300 hover:bg-red-100 
+      ${selected === index ? 'active bg-red-200 text-red-600' : 'text-gray-700'}`}
+      onClick={() => setSelected(index)}
+    >
+      <i className="text-2xl">{item.icon}</i>
+      <span>{item.heading}</span>
+    </NavLink>
+  ))}
+</div>
 
       {/* Menu */}
-      <div className=" menu mt-16 flex flex-col gap-4">
-        {Data.map((item, index) => (
-          <div
-            key={index}
-            className={`menuitem px-4 py-3 rounded-lg w-[100%] flex items-center gap-4 text-lg font-medium cursor-pointer transition-all duration-300 hover:bg-red-100 
-            ${selected === index ? 'active bg-red-200 text-red-600' : 'text-gray-700'}`}
-            onClick={() => setSelected(index)}
-          >
-            <i className='text-2xl'>{item.icon}</i>
-            <span>{item.heading}</span>
-          </div>
-        ))}
-      </div>
+      
     </motion.div>
 </>
   );

@@ -343,6 +343,7 @@ const Home = () => {
                 className="cursor-pointer brightness-100  group-hover:brightness-70 group-hover:opacity-100 transition-opacity transition-brightness duration-300 z-10  bg-amber-50 rounded-4xl text-3xl"
               />
             </div>
+            
           </div>)} */}
       </section>
       <section className="flex items-center justify-center">

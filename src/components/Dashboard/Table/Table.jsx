@@ -60,7 +60,7 @@ export default function BasicTable() {
               <TableCell align="left">ID</TableCell>
               <TableCell align="left">Date</TableCell>
               <TableCell align="left" className='p-6'>Status</TableCell>
-              <TableCell align="left"></TableCell>
+              <TableCell align="left">Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

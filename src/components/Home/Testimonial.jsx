@@ -48,12 +48,12 @@ const Testimonial = () => {
         {testimonials.map((item, i) => (
           <div
             key={item.id}
-            className={`absolute inset-0 flex flex-col items-center justify-center text-center py-40  bg-gray-100 px-10 rounded-lg shadow-md transition-transform duration-700 ${
-              i === index
+            className={`absolute inset-0 flex flex-col items-center justify-center text-center py-40  bg-gray-100 px-10 rounded-lg shadow-md transition-transform duration-700 
+              ${i === index
                 ? "translate-x-0 opacity-100"
                 : i > index
                 ? "translate-x-full opacity-0"
-                : "-translate-x-full opacity-0"
+                : (i<index) ? "translate-x-full opacity-0": null
             }`}
           >
             <img
