@@ -1,5 +1,8 @@
 import React, { useRef, useState } from 'react';
 import axios from 'axios';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+
 
 function AddProduct() {
   const [images, setImages] = useState([]);
@@ -68,7 +71,7 @@ function AddProduct() {
     }
 
     try {
-      const res = await axios.post('http://127.0.0.1:8000/product/', formData, {
+      const res = await axios.post(`${BASE_URL}/products/`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./store/Redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import "./App.css";
+import { AuthProvider } from "./Feature/Context/AuthContext";
 //website pages and layout
 import Layout from "./layout/Layout";
 import Home from "./pages/Home/Home";
@@ -18,9 +19,11 @@ import Main from "./pages/Dashboard/Main";
 import Admin from "./pages/Admin/Admin";
 import Profile from "./pages/Profile/Profile";
 import HeroSection from "./components/Home/HeroProducts";
-import AddProduct from "./components/Dashboard/AddProduct/AddProduct";
-import ProductForm from "./components/Dashboard/AddProduct/variantForm";
-
+import ProductForm from "./components/Admin/AddProduct/variantForm";
+import UpdaetProductForm from "./components/Admin/UpdateProduct/UpdateProduct";
+import UnAuthorize from "./pages/Unauthorized/UnAuthorize";
+import AdminLayout from "./layout/AdminLayout";
+import ProtectedRoute from "./Feature/ProtectedRoutes/ProtectedRoute";
 
 //To be used in the future, for magnifying product images
 // import ProductImageMagnifier from "./ui/components/magnifyImage";
@@ -36,8 +39,8 @@ function App() {
           element: <Home />,
         },
         {
-          path:"/hero",
-          element: <HeroSection/>
+          path: "/hero",
+          element: <HeroSection />,
         },
         {
           path: "/Ecommerce-Store",
@@ -55,10 +58,7 @@ function App() {
           path: "category/product/:id",
           element: <Product />,
         },
-        {
-          path: "add",
-          element: <ProductForm />,
-        },
+
         {
           path: "/cart",
           element: <Cart />,
@@ -75,12 +75,16 @@ function App() {
           path: "/reset-password",
           element: <ResetPassword />,
         },
-       
+
         {
           path: "*",
           element: <Error404 />,
         },
-        
+        {
+          path: "/unauthorized",
+          element: <UnAuthorize />,
+        },
+
         {
           path: "/profile",
           element: <Profile />,
@@ -92,21 +96,40 @@ function App() {
       ],
     },
     //No layout for these pages
+
     {
-      path: "/admin",
-      element: <Main />,
-    },
-    {
-      path: "/admin-login",
+      path: "/adminpanel",
       element: <Admin />,
     },
+    {
+      path: "/admin",
+      element: (
+      <ProtectedRoute requiredRole="admin">
+        <AdminLayout />
+      </ProtectedRoute>),
+      children: [ 
+        {
+          index: true,
+          element: <Main />,
+        },
+        {
+          path: "addproduct",
+          element: <ProductForm />,
+        },
+        {
+          path: "updateproduct/:id",
+          element: <UpdaetProductForm />,
+        },
+      ],
+    },
   ]);
-
   return (
     <>
       <Provider store={store}>
         <PersistGate loading={<p>Loading..</p>} persistor={persistor}>
+        <AuthProvider>
           <RouterProvider router={router} />
+          </AuthProvider>
         </PersistGate>
       </Provider>
       {/* {window.location.pathname !== '/adminpanel' && <Header />} */}
