@@ -60,7 +60,7 @@ const VariantForm = ({
       <input
         type="text"
         placeholder="gender"
-        value={variant.name}
+        value={variant.gender}
         onChange={(e) => onChange(index, "gender", e.target.value)}
         className="w-full border border-gray-300 rounded-md px-3 py-2 mb-2"
         required
@@ -176,7 +176,7 @@ const UpdateProductForm = () => {
         const shownVariants = productData.variants.map((elem, ind) => {
           return {
             price: elem.price,
-            gender: elem?.gender || "",
+            gender: elem?.attributes.gender || "",
             color: elem.attributes.color,
             size: elem.attributes.size,
             stock: elem.stock,
@@ -370,10 +370,8 @@ const UpdateProductForm = () => {
     formData.append("created_at", product.created_at);
 
     console.log([...formData.entries()]);
-
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NDc0MjEyNzMsInJvbGUiOiJhZG1pbiIsInN1YiI6IjIifQ.5CzpDjZpKoLuM38mREbdkR-g9LGej88nnU9XZczBKY8";
-    try {
+    const token =localStorage.getItem("token")
+   try {
       const res = await axios.put(
         `${BASE_URL}/products/${productId}`,
         formData,
