@@ -2,11 +2,14 @@ import axios from 'axios';
 import {createContext, useContext, useState, useEffect} from 'react';
 import { useNavigate } from 'react-router';
 
+import {jwtDecode} from "jwt-decode"
+
 const AuthContext=createContext();
 
 export const AuthProvider=({children})=>{
 
     const [userRole,setUserRole]=useState("");
+    const [isExpired,setIsExpired]=useState(true)
     const [isAuthenticated,setIsAuthenticated]=useState(false);
     const [loading,setLoading]=useState(true);
     // const [user,setUser]=useState(null);
@@ -14,9 +17,14 @@ export const AuthProvider=({children})=>{
     // loacalStorage.setItem('role', "admin");
     useEffect(()=>{ 
         const token=localStorage.getItem('token');
-        const role=localStorage.getItem('role');
+        const decoded= jwtDecode(token)
+        const expired= Math.floor(Date.now()/1000)>decoded.exp;
+        setIsExpired(expired);
+        const role= decoded.role;
+        setUserRole(role)
+        
 
-        if(token){
+        if(token&& !expired){
             setIsAuthenticated(true);
             setUserRole(role);
             setLoading(false);

@@ -4,6 +4,7 @@ import useAllProducts from "../../../customHooks/useFetchAllProducts";
 import { div, form, tr } from "framer-motion/client";
 import { useParams } from "react-router";
 import { RxCross2 } from "react-icons/rx";
+import { toast, ToastContainer } from "react-toastify";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -132,7 +133,7 @@ const UpdateProductForm = () => {
   // console.log(productId);
   const [isFeatured, setIsFeatured] = useState(false);
   const [imagePreviews, setImagePreviews] = useState([[]]);
-  const [allImages, setAllImages] = useState([]);
+  const [localImages, setLocalImages] = useState([]);
   const [apiImages, setApiImages] = useState([[]]);
   const [apiPreviews, setApiPreviews] = useState([[]]);
   const [product, setProduct] = useState({
@@ -172,7 +173,6 @@ const UpdateProductForm = () => {
           brand: productData.brand,
           category_id: productData.category_id,
         });
-
         const shownVariants = productData.variants.map((elem, ind) => {
           return {
             price: elem.price,
@@ -187,7 +187,7 @@ const UpdateProductForm = () => {
         });
         setIsFeatured(productData.is_feature || false);
 
-        // console.log(shownVariants)
+        console.log(shownVariants);
 
         setVariants(shownVariants);
         if (productData.variants.length > 0) {
@@ -207,17 +207,13 @@ const UpdateProductForm = () => {
   }, [productId]);
 
   // console.log(variants)
+  // console.log(variants)
   const { categories, loading, error } = useAllProducts();
 
   const handleImageChange = (index, e) => {
     const files = Array.from(e.target.files);
     const previews = files.map((file) => URL.createObjectURL(file));
-    setAllImages(files);
-    // setAllImages((prev) => {
-    //   const updated = [...prev];
-    //   updated[index] = files; // set files for variant at index
-    //   return updated;
-    // });
+    setLocalImages((file) => [...file, ...files]);
     setImagePreviews((prev) => {
       const updatedPreviews = [...prev];
       updatedPreviews[index] = previews; // Update previews for the specific variant
@@ -242,7 +238,7 @@ const UpdateProductForm = () => {
     // console.log(apiImages);
   };
 
-  // console.log(allImages)
+  // console.log(localImages)
   const handleProductChange = (e) => {
     const { name, value } = e.target;
     setProduct((prev) => ({ ...prev, [name]: value }));
@@ -254,10 +250,10 @@ const UpdateProductForm = () => {
     setVariants(updated);
   };
 
-  const isVariantFilled = (variant) =>{
+  const isVariantFilled = (variant) => {
     if (variant === null || variant === undefined) return true;
     return Object.values(variant).every((val) => val !== "");
-  }
+  };
   const handleAddVariant = () => {
     const last = variants[variants.length - 1];
     if (!isVariantFilled(last)) {
@@ -278,7 +274,7 @@ const UpdateProductForm = () => {
       },
     ]);
 
-    setAllImages((prev) => [...prev, []]);
+    setLocalImages((prev) => [...prev, []]);
   };
 
   const handleSubmit = async (e) => {
@@ -293,14 +289,43 @@ const UpdateProductForm = () => {
     const formData = new FormData();
 
     apiImages.forEach((variantImages, index) => {
-      variantImages.forEach((file) =>
-        formData.append(`variant_images`, file)
+      variantImages.forEach((link) =>
+        formData.append(`variant_image_links`, link)
       );
+      // console.log(variantImages, "images");
+
+      // formData.append(`variant_image_link`, JSON.stringify(variantImages));
     });
 
-    allImages.forEach((file, index) => {
-        formData.append(`variant_images`, file)
+    const apiImage=[...apiImages]
+    const apiImgs = apiImage.flat();
+    console.log(apiImgs, "count");
+    const count = apiImgs.length + localImages.length;
+    console.log(count, "count");
+    const imageCount = filledVariants.reduce(
+      (acc, curr) => parseInt(curr.image_count) + acc,
+      0
+    );
+    console.log(imageCount,"after reduce");
+    if (imageCount != count) {
+      toast.error("Image Count should should be correct");
+      return;
+    }
+
+    // const imageCount=localImages.length+ apiImages.reduce(elem=>elem?.length)
+    // console.log("image count", imageCount)
+
+    localImages.forEach((file, index) => {
+      formData.append(`variant_images`, file);
+      // files.forEach((file) => {
+      //   // console.log(file,"inner")
+      //   formData.append(`variant_images`, file);
+      // });
+      // console.log(files,"outer")
     });
+
+    // formData.append("variant_images", localImages);
+
     formData.append("product_name", product.product_name);
     formData.append("brand", product.brand);
     formData.append("category_id", product.category_id);
@@ -344,22 +369,22 @@ const UpdateProductForm = () => {
     });
     formData.append("created_at", product.created_at);
 
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
-    }
+    console.log([...formData.entries()]);
+
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NDY3MjQzOTQsInJvbGUiOiJhZG1pbiIsInN1YiI6IjIifQ.6ffTqBwiDk5U-J6occ3_9OOuSP141gFN-ZqHSGDhEa8";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NDc0MjEyNzMsInJvbGUiOiJhZG1pbiIsInN1YiI6IjIifQ.5CzpDjZpKoLuM38mREbdkR-g9LGej88nnU9XZczBKY8";
     try {
-      const res = await axios.put(`${BASE_URL}/products/${productId}`,
+      const res = await axios.put(
+        `${BASE_URL}/products/${productId}`,
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
           },
         }
       );
       console.log("Upload success:", res.data);
+      toast.success("Product Updated successfully")
     } catch (err) {
       console.error("Upload failed:", err.response);
     }
@@ -367,6 +392,7 @@ const UpdateProductForm = () => {
 
   return (
     <>
+      <ToastContainer />
       <form
         onSubmit={handleSubmit}
         className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg space-y-4"

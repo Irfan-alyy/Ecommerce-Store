@@ -24,6 +24,7 @@ import UpdaetProductForm from "./components/Admin/UpdateProduct/UpdateProduct";
 import UnAuthorize from "./pages/Unauthorized/UnAuthorize";
 import AdminLayout from "./layout/AdminLayout";
 import ProtectedRoute from "./Feature/ProtectedRoutes/ProtectedRoute";
+import CheckOut from "./pages/CheckOut/checkOut";
 
 //To be used in the future, for magnifying product images
 // import ProductImageMagnifier from "./ui/components/magnifyImage";
@@ -75,7 +76,10 @@ function App() {
           path: "/reset-password",
           element: <ResetPassword />,
         },
-
+        {
+          path:"checkout",
+          element: <CheckOut />,
+        },
         {
           path: "*",
           element: <Error404 />,

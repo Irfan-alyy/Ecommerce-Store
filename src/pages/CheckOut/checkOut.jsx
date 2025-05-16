@@ -1,6 +1,6 @@
 import React from "react";
 
-function CheckOut(props) {
+function CheckOut() {
   return (
     <>
       <h1 className="px-36 text-4xl font-bold my-10">CheckOut Page</h1>
