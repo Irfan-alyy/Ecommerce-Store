@@ -11,21 +11,24 @@ import Product from "./pages/Product/Product";
 import Category from "./pages/category/Category";
 import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
-
-
 import Error404 from "./pages/Error/error404";
 import Login from "./pages/Login/Login";
 import ResetPassword from "./pages/resetPassword/resetPassword";
 import Main from "./pages/Dashboard/Main";
-import Admin from "./pages/Admin/Admin";
 import Profile from "./pages/Profile/Profile";
 import HeroSection from "./components/Home/HeroProducts";
-import AddProduct from "./components/Dashboard/AddProduct/AddProduct";
-import ProductForm from "./components/Dashboard/AddProduct/variantForm";
+import Panel from "./layout/Adminlayout/Panel";
+import Order from "./components/Dashboard/Sidebar/Order";
+import ViewProducts from "./components/Dashboard/Sidebar/ViewProducts";
+import Customer from "./components/Dashboard/Sidebar/Customer";
+import Csv from './components/Dashboard/Sidebar/Csv';
+import Adminprofile from './components/Dashboard/Admin/Adminprofile';
+import Adminlogin from './components/Dashboard/Admin/Adminlogin';
+import Users from "./components/Dashboard/Sidebar/Users";
+import Reports from "./components/Dashboard/Sidebar/Reports";
+import Logo from "./components/Dashboard/Sidebar/Logo";
+import Paymnet from "./components/Dashboard/Sidebar/Paymnet";
 
-
-//To be used in the future, for magnifying product images
-// import ProductImageMagnifier from "./ui/components/magnifyImage";
 
 function App() {
   const router = createBrowserRouter([
@@ -38,8 +41,8 @@ function App() {
           element: <Home />,
         },
         {
-          path:"/hero",
-          element: <HeroSection/>
+          path: "/hero",
+          element: <HeroSection />,
         },
         {
           path: "/Ecommerce-Store",
@@ -57,10 +60,7 @@ function App() {
           path: "category/product/:id",
           element: <Product />,
         },
-        {
-          path: "add",
-          element: <ProductForm />,
-        },
+
         {
           path: "/cart",
           element: <Cart />,
@@ -77,30 +77,76 @@ function App() {
           path: "/reset-password",
           element: <ResetPassword />,
         },
-       
+
         {
           path: "*",
           element: <Error404 />,
         },
-        
+
         {
           path: "/profile",
           element: <Profile />,
         },
-        // {
-        //   path:"/magnify",
-        //   element: <ProductImageMagnifier/>
-        // }
+        {
+path : '/adminlogin',
+element : <Adminlogin/>
+        }
       ],
     },
-    //No layout for these pages
+    
+    // Admin Panel is here
     {
       path: "/admin",
-      element: <Main />,
-    },
-    {
-      path: "/admin-login",
-      element: <Admin />,
+      element: <Panel />,
+      children: [
+        {
+          index: true,
+          element: <Main />,
+        },
+        {
+          path: "order",
+          element: <Order />,
+        },
+        {
+          path: "product",
+          element: <ViewProducts />,
+        },
+        {
+          path: "review",
+          element: <Customer />,
+        },
+        {
+path : 'csv',
+element:<Csv/>
+        },
+
+        {
+path : '/admin/profile',
+element :<Adminprofile/>
+
+        },
+        {
+path:'/admin/user',
+element:<Users/>
+
+        },
+        {
+          path:'/admin/report',
+          element:<Reports/>
+          
+                  },
+                 {
+path : '/admin/logo',
+element: <Logo/>
+                 },
+                 {
+                  path:'/admin/payment',
+                  element: <Paymnet/>
+                 }
+
+
+
+      ],
     },
   ]);
 

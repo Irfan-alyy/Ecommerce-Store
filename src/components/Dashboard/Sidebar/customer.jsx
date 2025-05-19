@@ -4,61 +4,78 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { RxCross2 } from "react-icons/rx";
 import { useNavigate } from 'react-router-dom';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 const Customer = () => {
   const [reviews, setReviews] = useState([]);
+  const[currentpage, setCurrentpage]= useState(1);
+  const itemsPerPage = 10;
   const Navigate = useNavigate();
 
   useEffect(() => {
     fetchReviews();
   }, []);
 
+  
   const fetchReviews = async () => {
     try {
-      const response = await axios.get('http://192.168.1.18:8000/reviews/');
+      const response = await axios.get(`${BASE_URL}/reviews/`);
       setReviews(response.data);
     } catch (error) {
       console.error('Error fetching reviews:', error);
     }
   };
 
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`http://192.168.1.18:8000/reviews/${id}`);
-      setReviews(reviews.filter((review) => review.id !== id));
-      toast.success('Review deleted successfully');
-    } catch (error) {
-      console.error('Error deleting review:', error);
-      toast.error('Failed to delete review');
-    }
-  };
+  const handleDelete = async (id)=>{
+const token = localStorage.getItem('token');
+
+try{
+
+  await axios.delete(`${BASE_URL}/admin/reviews/${id}`, {
+headers:{
+Authorization: `Bearer ${token}`,
+
+
+},
+  })
+
+
+  setReviews(reviews.filter((review) => review.id !== id));
+  toast.success('Review deleted successfully');
+
+
+}catch(error){
+console.log("error deleting review",error )
+toast.error("failed to delete review");
+}
+
+  }
+const startIndex = currentpage * itemsPerPage - itemsPerPage;
+  const paginatedReviews = reviews.slice(startIndex , startIndex + itemsPerPage);
+    const totalPages = Math.ceil(reviews.length / itemsPerPage);
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300 p-6">
-      <div className="w-[98%] p-2 bg-white  shadow-2xl overflow-x-auto">
+    <div className="min-h-screen w-full mt-30 bg-transparent     flex items-center justify-center flex-col px-2 md:px-6  mb-8  ">
+      <h1 className='text-3xl text-gray-500 mb-4  mr-[60%] md:mr-[80%] '>Reviews</h1>
+      <div className="w-full  p-2 bg-transparent rounded-sm  shadow-2xl overflow-x-auto">
 
-      <RxCross2  className='text-3xl font-bold my-8 rounded-full hover:bg-gray-300 cursor-pointer ml-[94%] mb-5  '  
-      
-      onClick={()=> Navigate("/main")}
-      />
-
-
-        <table className="w-full table-auto border-collapse text-sm md:text-base">
-          <thead>
-            <tr className="bg-purple-600 text-white">
-              <th className="p-4 text-left">Customer ID</th>
+        <table className="w-full table-auto border-collapse text-sm md:text-base rounded-sm ">
+          <thead> 
+            <tr className="bg-blue-100 text-gray-500      "> 
+              <th className="p-4 text-left">Customer ID</th> 
               <th className="p-4 text-left">Product ID</th>
               <th className="p-4 text-left">Review</th>
               <th className="p-4 text-left">Action</th>
             </tr>
           </thead>
           <tbody className="text-gray-700 font-medium">
-            {reviews.map((review, index) => (
+            {paginatedReviews.map((review, index) => (
               <tr
                 key={review.id}
                 className={`${
-                  index % 2 === 0 ? 'bg-gray-100' : 'bg-white'
-                } hover:bg-purple-50 transition`}
+                  index % 4 === 0 ? 'bg-gray-100' : 'bg-white'
+                } hover:bg-gray-100 transition`}
               >
                 <td className="p-4 border-b">{review.user_id}</td>
                 <td className="p-4 border-b">{review.product_id}</td>
@@ -66,7 +83,7 @@ const Customer = () => {
                 <td className="p-4 border-b">
                   <button
                     onClick={() => handleDelete(review.id)}
-                    className="bg-rgray-300 hover:bg-purple-700 text-black hover:text-white  px-5 py-2  shadow"
+                    className="bg-rgray-300 hover:bg-purple-700 cursor-pointer text-black hover:text-white  px-5 py-2  shadow"
                   >
                     Delete
                   </button>
@@ -82,7 +99,50 @@ const Customer = () => {
             )}
           </tbody>
         </table>
+
+
+
       </div>
+      <div className="flex justify-center items-center mt-6 gap-2 flex-wrap">
+  <button
+    onClick={() => setCurrentpage((prev) => Math.max(prev - 1, 1))}
+    disabled={currentpage === 1}
+    className={`px-4 py-2 rounded-md transition font-medium ${
+      currentpage === 1
+        ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+        : 'bg-purple-600 text-white hover:bg-purple-700'
+    }`}
+  >
+    Prev
+  </button>
+
+  {Array.from({ length: totalPages }, (_, i) => (
+    <button
+      key={i}
+      onClick={() => setCurrentpage(i + 1)}
+      className={`w-10 h-10 rounded-full transition font-semibold ${
+        currentpage === i + 1
+          ? 'bg-purple-700 text-white shadow-md'
+          : 'bg-gray-100 text-gray-800 hover:bg-purple-100'
+      }`}
+    >
+      {i + 1}
+    </button>
+  ))}
+
+  <button
+    onClick={() => setCurrentpage((prev) => Math.min(prev + 1, totalPages))}
+    disabled={currentpage === totalPages}
+    className={`px-4 py-2 rounded-md transition font-medium ${
+      currentpage === totalPages
+        ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+        : 'bg-purple-600 text-white hover:bg-purple-700'
+    }`}
+  >
+    Next
+  </button>
+</div>
+
       <ToastContainer />
     </div>
   );

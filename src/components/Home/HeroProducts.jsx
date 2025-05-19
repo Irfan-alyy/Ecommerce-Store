@@ -9,6 +9,7 @@ import product3 from "../../assets/watch.png"
 import product2 from "../../assets/slide1.png";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+
 const HeroSection = () => {
   const [visibleContainer, setVisibleContainer] = useState({
     one: true,

@@ -14,7 +14,7 @@
   width: 97%;
   height: 97%;
   padding-bottom: 10px;
-  background-color: rgba(15, 78, 119, 0.747);
+  background-color:rgba(128, 128, 128, 0.767);
   border-radius: 10px;
   display: grid;
   grid-template-columns: 12rem auto 20rem;
@@ -186,6 +186,7 @@
 
   .Maindash {
     align-items: center;
+    color: rgba(255, 94, 0, 0.76);
   }
   .Cards {
     width: 90%;
@@ -195,6 +196,8 @@
     top: 8rem;
     height: 50%;
     left: 15px;
+  
+  color: #7fd3fad7;
   }
   .Table {
     display: flex;
@@ -247,4 +250,9 @@
 
 .imagee:hover {
   background-size: 120%; /* Scale the background image to 110% on hover */
+
+  color: rgb(53, 197, 53);
+
 }
+
+

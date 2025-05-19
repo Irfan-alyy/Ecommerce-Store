@@ -4,11 +4,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
-const BASE_URL = "http://192.168.1.18:8000";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Adminlogin = () => {
   const [loginData, setLoginData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track successful login
   const abortControllerRef = useRef(null);
   const timeoutRef = useRef(null);
   const navigate = useNavigate();
@@ -21,20 +22,17 @@ const Adminlogin = () => {
   };
 
   useEffect(() => {
+    // Only redirect if the user is already logged in
     const token = localStorage.getItem("token");
-  
-    // ✅ Only redirect if token is valid (matches your hardcoded admin token)
-    const validToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NDYwMzY5MzIsInN1YiI6IjIifQ.6knn4H59TDmV8V2Lw0a-ay-desn9imhiEeYxZJUx7IE";
-    if (token === validToken) {
-      navigate("/main");
+    if (token && isLoggedIn) {
+      navigate("/admin");
     }
-  }, [navigate]);
-  
+  }, [navigate, isLoggedIn]);
 
   const showError = (error) => {
     let message = "An error occurred.";
     if (error.name === "AbortError" || error.code === "ERR_CANCELED") {
-      message = "Request timed out.";
+      message = "Try again.";
     } else if (error.response?.data?.detail) {
       message = error.response.data.detail;
     } else if (error.message) {
@@ -63,7 +61,7 @@ const Adminlogin = () => {
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
       }
-    }, 5000);
+    }, 10000);
 
     axios
       .post(
@@ -74,14 +72,12 @@ const Adminlogin = () => {
       .then((res) => {
         toast.success("🟢 Login successful!", { position: "top-right" });
 
-        // ✅ Save the token
+        // ✅ Save the token from API
         localStorage.setItem("token", res.data.access_token);
-
+        
+        setIsLoggedIn(true); // Set the login state to true after successful login
         setLoading(false);
         clearTimeout(timeoutRef.current);
-
-        // ✅ Redirect to main page
-        navigate("/main");
       })
       .catch((error) => {
         showError(error);

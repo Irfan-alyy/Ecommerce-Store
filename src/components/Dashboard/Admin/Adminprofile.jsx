@@ -10,6 +10,7 @@ import {
   FaMoneyBillWave
 } from 'react-icons/fa';
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const Adminprofile = () => {
   const [adminData, setAdminData] = useState(null);
 
@@ -23,7 +24,7 @@ const Adminprofile = () => {
       }
 
       try {
-        const response = await axios.get('http://192.168.1.18:8000/admin/admin-profile', {
+        const response = await axios.get(`${BASE_URL}/admin/admin-profile`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -39,7 +40,7 @@ const Adminprofile = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-200 to-indigo-300">
+    <div className="h-auto  mt-40  flex items-center justify-center bg-gradient-to-br ">
       <div className="bg-white shadow-2xl rounded-2xl p-10 w-[500px] space-y-6">
         <h2 className="text-4xl font-bold text-purple-700 text-center flex items-center justify-center gap-2">
           <FaUserShield /> Admin Profile

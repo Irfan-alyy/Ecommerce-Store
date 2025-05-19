@@ -97,8 +97,7 @@ const Login = () => {
     if (user && password && !name) {
       console.log("login",loginData);
       axios
-        .post(
-          `${BASE_URL}/login/`,
+        .post(  `${BASE_URL}/login/`,
           { username: loginData.user, password: loginData.password },
           { signal }
           
