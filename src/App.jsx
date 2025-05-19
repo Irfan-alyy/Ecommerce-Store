@@ -37,6 +37,10 @@ import UpdateProductForm from "./components/Admin/UpdateProduct/UpdateProduct";
 import UnAuthorize from "./pages/Unauthorized/UnAuthorize";
 import AdminLayout from "./layout/AdminLayout";
 import ProtectedRoute from "./Feature/ProtectedRoutes/ProtectedRoute";
+import CheckOut from "./pages/CheckOut/checkOut";
+
+//To be used in the future, for magnifying product images
+// import ProductImageMagnifier from "./ui/components/magnifyImage";
 
 function App() {
   const router = createBrowserRouter([
@@ -44,20 +48,68 @@ function App() {
       path: "",
       element: <Layout />,
       children: [
-        { path: "/", element: <Home /> },
-        { path: "hero", element: <HeroSection /> },
-        { path: "Ecommerce-Store", element: <Home /> },
-        { path: "login", element: <Login /> },
-        { path: "category", element: <Category /> },
-        { path: "category/product/:id", element: <Product /> },
-        { path: "cart", element: <Cart /> },
-        { path: "about", element: <About /> },
-        { path: "contact", element: <Contact /> },
-        { path: "reset-password", element: <ResetPassword /> },
-        { path: "*", element: <Error404 /> },
-        { path: "unauthorized", element: <UnAuthorize /> },
-        { path: "profile", element: <Profile /> },
-        { path: "adminlogin", element: <Adminlogin /> },
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          path: "/hero",
+          element: <HeroSection />,
+        },
+        {
+          path: "/Ecommerce-Store",
+          element: <Home />,
+        },
+        {
+          path: "/login",
+          element: <Login />,
+        },
+        {
+          path: "/category",
+          element: <Category />,
+        },
+        {
+          path: "category/product/:id",
+          element: <Product />,
+        },
+
+        {
+          path: "/cart",
+          element: <Cart />,
+        },
+        {
+          path: "/about",
+          element: <About />,
+        },
+        {
+          path: "/contact",
+          element: <Contact />,
+        },
+        {
+          path: "/reset-password",
+          element: <ResetPassword />,
+        },
+        {
+          path:"checkout",
+          element: <CheckOut />,
+        },
+        {
+          path: "*",
+          element: <Error404 />,
+        },
+        {
+          path: "/unauthorized",
+          element: <UnAuthorize />,
+        },
+
+        {
+          path: "/profile",
+          element: <Profile />,
+        },
+        // {
+        //   path:"/magnify",
+        //   element: <ProductImageMagnifier/>
+        // }
       ],
     },
 

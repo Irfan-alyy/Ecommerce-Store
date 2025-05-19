@@ -14,9 +14,9 @@ function UnAuthorize() {
           </p>
 
 <div className="w-fit border-b-4 border-[#A749FF] my-3">
-          <NavLink to="/">
+          <NavLink to="/login">
             <button className="mt-10 mb-2 py-3 px-2 text-medium bg-[#A749FF] text-white hover:bg-black hover:text-white transition ease-linear duration-300">
-              Back to home page
+              Go to Login page
             </button>
           </NavLink>
           </div>

@@ -26,6 +26,7 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const Product = () => {
   const { id } = useParams();
   const { product,category, loading, error, productReviews } = useProduct({ id });
+  console.log(productReviews)
   const [currentPic, setCurrentPic] = useState("");
   const [selectedVariant, setSelectedVariant] = useState([]);
 const [addedToCart,setAddedToCart]=useState(false)
@@ -90,10 +91,12 @@ const [addedToCart,setAddedToCart]=useState(false)
       </div>
     );
   }
+  console.log(error)
   if (error) {
     return (
       <div className="flex justify-center items-center h-[70vh]">
-        <h1 className="text-2xl font-bold">{error}</h1>
+        {error.status===404? <h1 className="text-2xl font-bold">Product Not Found</h1>:
+        <h1 className="text-2xl font-bold">{error.message}</h1>}
       </div>
     );
   }
@@ -227,7 +230,7 @@ const [addedToCart,setAddedToCart]=useState(false)
             }`}
             onClick={() => setDescriptionVisble(false)}
           >
-            Reviews({productReviews?.length})
+            Reviews({productReviews?.length? productReviews?.length:"0"})
           </button>
         </div>
       </div>
@@ -254,12 +257,12 @@ const [addedToCart,setAddedToCart]=useState(false)
             >
               <div className="flex w-full flex-col lg:flex-row gap-5">
                 <div className="flex-1/2 flex-col col-span-6">
-              {productReviews && productReviews.length>0 && productReviews.map((elem,ind)=>(
+              {productReviews && productReviews?.length>0 && productReviews.map((elem,ind)=>(
                 <>
-                <ProductReviews review={elem} key={ind}/>
+                <ProductReviews review={elem} key={elem.id}/>
                 </>
               ))}
-              {!productReviews && !productReviews.length>0 && (
+              {!productReviews && !productReviews?.length>0 && (
                 <div className="flex items-center justify-center h-full">
                   <h1 className="text-2xl">No Review for this product</h1>
                 </div>

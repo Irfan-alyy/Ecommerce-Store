@@ -8,14 +8,15 @@ import logo from "../assets/logo.png";
 import { useRef } from "react";
 import Badge from "@mui/material/Badge";
 import { useSelector } from "react-redux";
+import useWebsiteData from "../customHooks/useWebsiteData";
 const Header = () => {
+    const {logo, name,loading,error}=useWebsiteData();
   const [isSearchBoxVisible, setSearchBoxVisible] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
 
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isTop,setIsTop]=useState(true)
-
 
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
@@ -90,6 +91,14 @@ const handleSearch=(e) => {
   };
 
   const cartItemsLength=useSelector((state) => state.reducer.items.length);
+
+  // if(loading) return <div className="w-full h-30 flex justify-center items-center">
+  //   <h1>Loading...</h1>
+  // </div>
+  // if(error) return <div className="w-full h-screen flex justify-center items-center">
+  // <h1 className="text-2xl text-red-500">Error: {error}</h1>
+  // </div>
+
   return (
     
     <div className={`Header bg-[rgb(218,237,255)] fixed top-0 left-0 w-full z-50 transition-transform duration-300 ${showHeader?"translate-y-0": "-translate-y-full"}`}>
@@ -98,7 +107,7 @@ const handleSearch=(e) => {
           <p className="text-lg">Call Us 3965410</p>
         </div>
         <NavLink to="/" onClick={() => setMenuVisible(false)} >
-          <img src={logo} alt="Logo" />
+          <img src={logo} alt="Logo"  className="w-15 h-15 rounded"/>
         </NavLink>
 
         {/* This is humburger button visible only in small screenn */}

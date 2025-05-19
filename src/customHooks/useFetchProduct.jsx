@@ -9,14 +9,19 @@ const useProduct = ({id}) => {
     const [productReviews,setProductReviews]=useState()
     const [error,setError]=useState(null);
     const [loading,setLoading]=useState(true)
-
     useEffect(()=>{
-
+      
+      if(isNaN(id)){
+              setError({message:"Invalid product Id"})
+              setLoading(false)
+              return 
+            }
+      
       //Fetch product by product id
         axios
         .get(`${BASE_URL}/products/${id}`)
         .then((res) => {setProduct(res.data)})
-        .catch(err=>{setError(err.message);setLoading(false)})
+        .catch(err=>{setError(err);setLoading(false)})
         .finally(res=>setLoading(false));
 
         //Fetch product reviews based on product id
