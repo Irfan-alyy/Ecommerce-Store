@@ -33,7 +33,7 @@ import Logo from "./components/Dashboard/Sidebar/Logo";
 import Paymnet from "./components/Dashboard/Sidebar/Paymnet";
 
 import ProductForm from "./components/Admin/AddProduct/variantForm";
-import UpdateProductForm from "./components/Admin/UpdateProduct/UpdateProduct"; 
+import UpdateProduct from "./components/Admin/UpdateProduct/UpdateProduct"; 
 import UnAuthorize from "./pages/Unauthorized/UnAuthorize";
 import AdminLayout from "./layout/AdminLayout";
 import ProtectedRoute from "./Feature/ProtectedRoutes/ProtectedRoute";
@@ -117,7 +117,7 @@ function App() {
       path: "/admin",
       element: (
         <ProtectedRoute requiredRole="admin">
-          <AdminLayout />
+       <Panel/>
         </ProtectedRoute>
       ),
       children: [
@@ -132,7 +132,7 @@ function App() {
         { path: "logo", element: <Logo /> },
         { path: "payment", element: <Paymnet /> },
         { path: "addproduct", element: <ProductForm /> },
-        { path: "updateproduct/:id", element: <UpdateProductForm /> },
+        { path: "updateproduct/:id", element: <UpdateProduct /> },
       ],
     },
   ]);

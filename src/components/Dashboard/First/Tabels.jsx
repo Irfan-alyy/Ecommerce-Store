@@ -14,6 +14,9 @@ const Tabels = () => {
   const [orderChartData, setOrderChartData] = useState([]);
   const itemsPerPage = 10;
 
+
+
+
   const fetchData = async () => {
     const token = localStorage.getItem('token');
     try {
@@ -66,6 +69,8 @@ const Tabels = () => {
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
   };
+
+  
 
   const displayItems = data.slice(
     currentPage * itemsPerPage,

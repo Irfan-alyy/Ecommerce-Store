@@ -10,8 +10,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import Admin from '../../assets/admin2.png';
-import { TbPageBreak } from "react-icons/tb";
-
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -21,6 +19,7 @@ const Header = () => {
     logo_path: Admin,
     name: 'Flone',
   });
+  const [pagesOpen, setPagesOpen] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -28,7 +27,6 @@ const Header = () => {
 
   const fetchData = async () => {
     const token = localStorage.getItem('token');
-
     try {
       const response = await axios.get(`${BASE_URL}/admin/pages/website_logo`, {
         headers: {
@@ -38,13 +36,13 @@ const Header = () => {
       setLogo(response.data);
     } catch (error) {
       console.error("Error while fetching the logo", error);
-      // toast.error('Failed to show the logo');
     }
   };
 
   return (
     <div className="h-auto w-full flex flex-col bg-gray-200 overflow-x-hidden px-[5%]">
       <header className="fixed h-[100px] left-0 w-full bg-white text-gray-600 shadow-md z-50">
+        {/* Top Bar */}
         <div className="h-[50px] w-full bg-white border-b-2 border-b-gray-300 flex justify-between items-center px-4">
           <NavLink to="/admin/logo">
             <div className="flex flex-row items-center justify-center">
@@ -81,81 +79,59 @@ const Header = () => {
 
         {/* Desktop Nav */}
         <div className="flex justify-start ml-10 items-center px-4 py-3 md:px-10">
-          <nav className="hidden md:flex md:flex-row md:gap-8  items-center relative lg:gap-12  ">
-
-      
+          <nav className="hidden md:flex md:flex-row md:gap-8 items-center relative lg:gap-12">
             <NavLink to="/admin" className="group">
               <div className="flex items-center gap-2 text-xl text-gray-500 group-hover:text-blue-300 border-b-2 border-transparent group-hover:border-blue-300 pb-1">
                 <MdOutlineHome /> Home
               </div>
             </NavLink>
-            
-            
-               <NavLink  to="/admin/csv" className="flex items-center gap-2 text-xl text-gray-500 group-hover:text-blue-300 border-b-2 border-transparent group-hover:border-blue-300 pb-1"
-  ><FaFileCsv /> Add-Bulk</NavLink>
 
-<NavLink to="/admin/payment" className="group">
+            <NavLink to="/admin/csv" className="group">
               <div className="flex items-center gap-2 text-xl text-gray-500 group-hover:text-blue-300 border-b-2 border-transparent group-hover:border-blue-300 pb-1">
-               <MdPayments />Paymnet
+                <FaFileCsv /> Add-Bulk
               </div>
             </NavLink>
-            
 
+            <NavLink to="/admin/payment" className="group">
+              <div className="flex items-center gap-2 text-xl text-gray-500 group-hover:text-blue-300 border-b-2 border-transparent group-hover:border-blue-300 pb-1">
+                <MdPayments /> Payment
+              </div>
+            </NavLink>
 
-
-            <div className="relative group cursor-pointer">
-              <div className="flex items-center   gap-2 text-xl text-gray-500 group-hover:text-blue-300 border-b-2 border-transparent group-hover:border-blue-300 pb-1">
-                   <TbPageBreak  />
-                <span className="group-hover:text-blue-300" >  Page</span>
+            {/* Page Dropdown Toggle */}
+            <div className="relative">
+              <div
+                onClick={() => setPagesOpen(!pagesOpen)}
+                className="cursor-pointer flex items-center gap-2 text-xl text-gray-500 hover:text-blue-300 border-b-2 border-transparent hover:border-blue-300 pb-1"
+              >
+                <MdPayments /> Pages
               </div>
 
-             
-             <div className="absolute top-full left-0 bg-white shadow-md rounded-md mt-1 w-48 opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto flex justify-center items-center flex-col text-xl  py-4  gap-4 transition-opacity duration-200 z-50 border border-gray-200">
-  <NavLink
-    to="/admin/order"
-    className="flex items-center gap-2 px-4 py-2 text-gray-500 hover:text-blue-300 hover:border-b-2 hover:border-b-blue-300"
-  >
-    <RiBillLine /> Orders
-  </NavLink>
-  <NavLink
-    to="/admin/product"
-   className="flex items-center gap-2 px-4 py-2 text-gray-500 hover:text-blue-300 hover:border-b-2 hover:border-b-blue-300"
-  >
-    <FaInbox /> Products
-  </NavLink>
-  <NavLink
-    to="/admin/review"
-    className="flex items-center gap-2 px-4 py-2 text-gray-500 hover:text-blue-300 hover:border-b-2 hover:border-b-blue-300"
-  >
-    <LuUsersRound /> Reviews
-  </NavLink>
-
-  <NavLink
-    to="/admin/user"
-    className="flex items-center gap-2 px-4 py-2 text-gray-500 hover:text-blue-300 hover:border-b-2 hover:border-b-blue-300"
-  >
-    <FaRegUser /> Users
-  </NavLink>
-  <NavLink
-    to="/admin/report"
-    className="flex items-center gap-2 px-4 py-2 text-gray-500 hover:text-blue-300 hover:border-b-2 hover:border-b-blue-300"
-  >
-    <MdOutlineReport /> Reports
-  </NavLink>
-</div>
-
-
+              {pagesOpen && (
+                <div className="absolute top-full left-20  mt-0 bg-white w-[200px] flex flex-col justify-center items-start shadow-lg border border-gray-200 rounded-md z-10">
+                  
+                  <NavLink to="/admin/order" className="w-full px-4 py-2 flex items-center gap-2 text-gray-500 hover:text-blue-300  ">
+                    <RiBillLine /> Orders
+                  </NavLink>
+                  <NavLink to="/admin/product" className="w-full px-4 py-2 flex items-center gap-2 text-gray-500 hover:text-blue-300  ">
+                    <FaInbox /> Products
+                  </NavLink>
+                  <NavLink to="/admin/review" className="w-full px-4 py-2 flex items-center gap-2 text-gray-500 hover:text-blue-300  ">
+                    <LuUsersRound /> Reviews
+                  </NavLink>
+                  <NavLink to="/admin/user" className="w-full px-4 py-2 flex items-center gap-2 text-gray-500 hover:text-blue-300 ">
+                    <FaRegUser /> Users
+                  </NavLink>
+                  <NavLink to="/admin/report" className="w-full px-4 py-2 flex items-center gap-2 text-gray-500 hover:text-blue-300  ">
+                    <MdOutlineReport /> Reports
+                  </NavLink>
+                </div>
+              )}
             </div>
-
-
-
           </nav>
 
           {/* Mobile Menu Icon */}
-          <button
-            className="md:hidden text-black ml-auto"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
+          <button className="md:hidden text-black ml-auto" onClick={() => setMenuOpen(!menuOpen)}>
             <CiMenuBurger size={24} />
           </button>
         </div>
@@ -200,7 +176,7 @@ const Header = () => {
             </NavLink>
             <NavLink to="/admin/payment" className="group">
               <div className="flex items-center gap-2 text-xl text-gray-500 group-hover:text-blue-300 border-b-2 border-transparent group-hover:border-blue-300 pb-1">
-               <MdPayments />Paymnet
+                <MdPayments /> Payment
               </div>
             </NavLink>
           </nav>

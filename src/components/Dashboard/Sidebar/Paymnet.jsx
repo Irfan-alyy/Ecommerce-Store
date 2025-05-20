@@ -112,7 +112,7 @@ const Paymnet = () => {
                   <button
                     onClick={() => toggleMethod(method)}
                     disabled={loading}
-                    className={`px-4 py-1 rounded cursor-pointer text-white ${isEnabled ? 'bg-red-500' : 'bg-green-500'}`}
+                    className={`px-4 py-1 rounded cursor-pointer border-[1px] border-purple-800 text-white ${isEnabled ? 'bg-purple-600' : 'bg-gray-300 text-black  '}`}
                   >
                     {isEnabled ? 'Disable' : 'Enable'}
                   </button>
@@ -125,7 +125,7 @@ const Paymnet = () => {
 
       <div className='flex justify-around mx-8 items-center mt-8'>
         <p className='sm:text-lg lg:text-[20px]'>
-          Click the button to seed the Payment Method
+          Click the button to Proceed the Payment Method
         </p>
         <button
           onClick={seedPaymentMethods}

@@ -12,7 +12,7 @@ const VariantForm = ({
   imagePreviews,
 }) => {
   return (
-    <div className="border border-gray-300 p-4 rounded-lg mb-4 shadow-sm">
+    <div className="  border border-gray-300 p-4 rounded-lg mb-4 shadow-sm">
       <h4 className="font-semibold text-lg mb-2">Variant #{index + 1}</h4>
 
       <input
@@ -266,7 +266,7 @@ const ProductForm = () => {
     <>
       <form
         onSubmit={handleSubmit}
-        className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg space-y-4"
+        className="mt-40   max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg space-y-4"
       >
         <h2 className="text-2xl font-bold text-gray-800">Add Product</h2>
 
