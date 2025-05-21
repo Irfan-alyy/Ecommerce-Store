@@ -214,7 +214,7 @@ useEffect(() => {
 
         
       if (!paymentData.payment_method) {
-        toast.error("Please select your payment method");
+        // toast.error("Please select your payment method");
       }
       console.log("Payment data:", paymentData);
 
@@ -245,11 +245,11 @@ useEffect(() => {
 
       
       
-      toast.success("Order placed successfully!");
+      // toast.success("Order placed successfully!");
     } catch (error) {
       setLoading(false);
       console.error("Error during full checkout process:", error);
-      toast.error("Error during checkout process. Please try again.");
+      // toast.error("Error during checkout process. Please try again.");
     }
   };
 
@@ -266,7 +266,7 @@ useEffect(() => {
         console.log("Payment methods:", paymentMethods);
       } catch (error) {
         console.error("Error fetching payment methods:", error);
-        toast.error("Error fetching payment methods. Please try again.");
+        // toast.error("Error fetching payment methods. Please try again.");
       }
     };
     payment();
