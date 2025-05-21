@@ -81,6 +81,7 @@ const ResetPassword = () => {
             placeholder="Confirm password"
             className="mb-7 w-full leading-10 px-3 border border-[#bdbdbd] focus:outline-none"
           />
+          
           <span className="w-full">
             <button
               type="submit"

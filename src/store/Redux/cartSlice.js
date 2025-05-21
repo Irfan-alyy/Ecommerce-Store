@@ -57,3 +57,4 @@ export const { addToCart, removeItem, handleIncrement, handleDecrement, clearCar
   counterSlice.actions;
 
 export default counterSlice.reducer;
+

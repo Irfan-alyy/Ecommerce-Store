@@ -27,18 +27,41 @@ function CheckOut() {
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const orderId = queryParams.get("token");
-    const sessionId = queryParams.get("session_id");
-    const id = orderId || sessionId;
-    setSessionUrl(id);
-    console.log(id);
-  }, []);
+  // useEffect(() => {
+  //   const queryParams = new URLSearchParams(location.search);
+  //   const orderId = queryParams.get("token");
+  //   const sessionId = queryParams.get("session_id");
+  //   const id = orderId || sessionId;
+  //   setSessionUrl(id);
+  //   console.log(id);
+  // }, []);
 
-  // const [searchParams] = useSearchParams();
-  // const sessionId = searchParams.get("session_id")
-  // const orderId = searchParams.get("order_id")
+useEffect(() => {
+  const queryParams = new URLSearchParams(location.search);
+  const orderId = queryParams.get("token");
+  const sessionId = queryParams.get("session_id");
+  const id = orderId || sessionId;
+  setSessionUrl(id);
+
+  const session = sessionStorage.getItem("payement");
+
+  console.log("URL Session ID:", id); // Check URL token or session
+  console.log("SessionStorage payement:", session); // Check if data exists
+
+  if (id && session) {
+    console.log("✅ SUCCESS detected via Stripe/session");
+    setLoading(false);
+    setShowSuccessDialog(true);
+    dispatch(clearCart());
+    sessionStorage.removeItem("payement");
+  } else {
+    console.log("Either session ID or sessionStorage missing");
+  }
+}, []);
+
+
+
+
 
   const paymentName = {
     credit_card: "Credit Card",
@@ -57,7 +80,6 @@ function CheckOut() {
 
   const handlePayment = (e) => {
     const value = e.target.value;
- 
     setSelectedPayment(value);
   };
   console.log("Selected Payment Method:", selectedPayment);
@@ -231,17 +253,7 @@ function CheckOut() {
     }
   };
 
-  const session = sessionStorage.getItem("payement");
-  if (sessionUrl && session) {
-    setLoading(false);
-    setShowSuccessDialog(true);
-    dispatch(clearCart());
-    sessionStorage.removeItem("payement"); // Will remove everything, including payment
-  }
 
-  
-   
-  
   useEffect(() => {
     const payment = async () => {
       try {
@@ -361,9 +373,9 @@ function CheckOut() {
         CheckOut Page
       </h1>
 
-      <div className="px-10  xl:px-36  w-12/12 flex  lg:flex-row flex-wrap-reverse ">
+      <div className="px-10  xl:px-36  w-12/12 flex  lg:flex-row flex-wrap-reverse  ">
         {items.length > 0 && (
-          <div className="builing-info-wrap w-7/12 pr-3 ali ">
+          <div className="builing-info-wrap w-full md:w-1/2 m-5   ">
             <h3 className="text-xl mb-5 font-semibold">Biling Details</h3>
             <form action="#" onSubmit={handleSubmit} ref={form}>
               <div className="name mb-5 flex flex-col lg:flex-row flex-wrap ">
@@ -520,7 +532,7 @@ function CheckOut() {
               <button
                 type="submit"
                 onClick={handleSubmit}
-                className="bg-purple-600 mb-5 text-xl font-medium text-white p-4 w-full rounded-full mt-8 hover:bg-gray-900 transition duration-300 "
+                className="bg-purple-600 mb-5 text-lg md:text-xl  font-medium text-white p-4 w-[150px] md:w-full rounded-3xl md:rounded-full mt-8 hover:bg-gray-900 transition duration-300 "
               >
                 Place Order
               </button>
@@ -529,14 +541,16 @@ function CheckOut() {
         )}
 
         <div className="your-order-area flex flex-col md:flex-row w-full pl-3 mb-5">
-          <div className="det p-2  md:p-11 w-full h-fit bg-gray-100">
-            <h3 className="text-xl mb-5 font-semibold">Your order</h3>
+          <div className="det p-2  md:p-11 w-full h-fit bg-[rgb(246,246,248)]">
+            <h3 className="text-xl mb-5 text-center font-semibold">Your order</h3>
+                    {/* <hr className="border-[#bdbdbd] p-2"></hr> */}
+
             <ul className="flex justify-between">
-              <li className="font-semibold">Product</li>
+              <li className="font-semibold ">Product</li>
               {/* <li className="font-semibold pr-10 ">Price</li> */}
             </ul>
             {items.length > 0 ? (
-              <ul className="flex flex-wrap gap-2 justify-between my-5 py-5 border-t border-b border-[#bdbdbd]">
+              <ul className="flex flex-wrap gap-2 justify-between my-5 py-5 border-t  border-[#bdbdbd]">
                 {items.map((item) => (
                   <li
                     key={item.id}
@@ -566,27 +580,36 @@ function CheckOut() {
                         <p className="text-sm font-medium text-[black]">
                           Size: {item.variant.attributes.size}
                         </p>{" "}
+                        
                         &nbsp;
                       </div>
+
                     </div>
+                    <hr className="border-[#bdbdbd] p-2"></hr>
                   </li>
                 ))}
               </ul>
+              
             ) : (
               <h3 className=" border-t border-b border-[#bdbdbd] text-center text-lg font-semibold my-10 text-red-600 py-3 ">
                 No products in the cart
               </h3>
             )}
-
+            {items.length> 0 ?(
+              <div>
             <h3>Total Price: $ {totalPrice}</h3>
+              </div>
+            ): null}
           </div>
 
-          <div className="flex items-center flex-col w-full mt-5 mb-5">
-            <div className="flex flex-col gap-2 mt-5 mb-5 bg-gray-100 p-5">
-              <h3 className="text-xl  font-semibold">PAYMENTS</h3>
+          <div className="flex items-center flex-col w-full  mb-5">
+            <div className="flex flex-col w-full md:ml-20 gap-2 mt-10 md:mt-0   mb-5 bg-[rgb(246,246,248)] p-2 md:p-5">
+              <h3 className="text-xl mb-2 text-center  font-semibold">PAYMENTS</h3>
+                    <hr className="border-[#bdbdbd] p-2"></hr>
+
 
               {paymentMethods.map((method, index) => (
-                <div className="payment-methods mb-5" key={index}>
+                <div className="payment-methods mb-5 p-3 lg:pl-10" key={index}>
                   <input
                     type="radio"
                     name="payment"
@@ -596,7 +619,7 @@ function CheckOut() {
                     checked={selectedPayment === method}
                     onChange={handlePayment}
                   />
-                  <label htmlFor={method.id} className="text-lg font-bold">
+                  <label htmlFor={method.id} className=" text-md md:text-lg font-bold">
                     {paymentIcon[method]}
                     {paymentName[method]}
                   </label>

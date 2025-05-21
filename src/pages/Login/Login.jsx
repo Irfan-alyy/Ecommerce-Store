@@ -11,9 +11,10 @@ const Login = () => {
   const [loading,setLoading]=useState(false)
   
 
+  
   const abortControllerRef = useRef(null);
-  const timeoutRef = useRef(null);
-  const suppressRedFlag = useRef(false); // Flag to suppress red flag for abort error
+  const timeoutRef = useRef(null); 
+  const suppressRedFlag = useRef(false); // Flag to suppress red fnlag for abort error
 
 
   const cancelPendingRequest = () => {
@@ -63,7 +64,7 @@ const Login = () => {
 
   const showError = (error) => {
     let message = "An error occurred.";
-
+    // console.log(error)
     if ((error.name === "AbortError" || error.code === "ERR_CANCELED") && suppressRedFlag.current) {
       return;
     }
@@ -351,7 +352,7 @@ const Login = () => {
               >
                 REGISTER
               </button>
-            </span>
+            </span> ``
           </form>
         </div>
       )}

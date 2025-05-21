@@ -88,7 +88,7 @@ const handleSearch=(e) => {
     setMenuVisible(!menuVisible);
     // menuVisible? null: menuBtn.current.classList.add("hidden");menuBtn.current.classList.add("flex")
   };
-
+ 
   const cartItemsLength=useSelector((state) => state.reducer.items.length);
   return (
     
