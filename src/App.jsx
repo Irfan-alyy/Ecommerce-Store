@@ -10,7 +10,7 @@ import Layout from "./layout/Layout";
 import Home from "./pages/Home/Home";
 import Cart from "./pages/Cart/Cart";
 import Product from "./pages/Product/Product";
-import Category from "./pages/category/Category";
+import Category from "./pages/Category/Category";
 import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
 import Error404 from "./pages/Error/error404";

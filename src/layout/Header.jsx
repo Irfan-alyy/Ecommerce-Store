@@ -37,9 +37,11 @@ const handleSearch=(e) => {
   const menuBtn = useRef();
   const menuBurgerBtn = useRef();
   useEffect(() => {
+    let prevScrollY = window.scrollY;
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      if (currentScrollY <= 0) {
+      if (Math.abs(currentScrollY - prevScrollY) < 10) return;
+      if (currentScrollY  <= 0) {
         setShowHeader(true);
       } else if (currentScrollY > lastScrollY) {
         setShowHeader(false);
@@ -78,7 +80,7 @@ const handleSearch=(e) => {
       document.removeEventListener("click", handleOutsideClick);
     }
 
-    return () => document.removeEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("click", handleOutsideClick);
   }, [isSearchBoxVisible]);
 
   const handleSearchClick = () => {

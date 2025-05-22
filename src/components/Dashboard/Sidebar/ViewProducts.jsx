@@ -115,7 +115,7 @@ rounded-sm  mb-4 cursor-pointer mr-0 ml-[84%] py-2 px-5
                  
                 </td>
               <td>
-                  <NavLink to="/admin/updateproduct/:id" className="group">
+                  <NavLink to={`/admin/updateproduct/${product.id}`} className="group">
             <button className='px-5 py-2  bg-purple-600 rounded-sm  text-white cursor-pointer hover:bg-gray-200 hover:text-black border-2 border-purple-900'>
               Up-Date
             </button>
