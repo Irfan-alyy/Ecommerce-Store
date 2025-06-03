@@ -137,9 +137,9 @@ const handleRemove = (item) => {
       </FadeInFromBottom>
       ))}
       <div className="flex justify-between items-center flex-col-reverse sm:flex-row gap-2 my-10 font-medium">
-       <NavLink to="/">
+       <NavLink to="/checkout">
        <button className='py-2 px-7 text-sm bg-gray-100 hover:bg-purple-800 hover:text-white cursor-pointer transition ease-linear duration-300" rounded-full leading-10 text-[#363f4d] w-64'>
-          CONTINUE SHOPPING
+          Go To Checkout
         </button>
        </NavLink>
         <button 

@@ -117,31 +117,37 @@ const Category = () => {
     filteredProducts.length
   );
 
+  let isScrolling=useRef(false)
+  const scrollTop=()=>{
+    if(isScrolling.current) return
+    isScrolling.current=true;
   const smoothScrollToTop = () => {
     const c = document.documentElement.scrollTop || document.body.scrollTop;
-    if (c > 0) {
-      window.requestAnimationFrame(smoothScrollToTop);
+    if (c > 40) {
       window.scrollTo(0, c - c / 5);
+      window.requestAnimationFrame(smoothScrollToTop);
+    }else{
+      isScrolling.current=false
     }
   };
+  smoothScrollToTop()
+  }
   
-
   const handlePageChange = useCallback(
     (page) => {
       if (page >= 1 && page <= totalPages) {
         setCurrentPage(page);
-        smoothScrollToTop();
+        scrollTop();
       }
     },
     [totalPages]
   );
   
  
-
   const handleCategoryChange = useCallback((category) => {
     setSelectedCategory(category);
     setCurrentPage(1);
-    smoothScrollToTop();
+    scrollTop();
   }, []);
 
   if(productsCopy.length===0 && loading){

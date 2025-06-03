@@ -98,8 +98,7 @@ const Login = () => {
     if (user && password && !name) {
       console.log("login",loginData);
       axios
-        .post(
-          `${BASE_URL}/login/`,
+        .post(  `${BASE_URL}/login/`,
           { username: loginData.user, password: loginData.password },
           { signal }
           
@@ -240,6 +239,7 @@ const Login = () => {
           Register
         </button>
       </div>
+
 
       {showLogin && (
         <div className="py-10 px-4 formDiv flex justify-center items-center w-10/12 md:w-2/3 lg:w-1/2 lg:p-24 shadow-[0_0px_3px_rgba(0,0,0,0.25)]">

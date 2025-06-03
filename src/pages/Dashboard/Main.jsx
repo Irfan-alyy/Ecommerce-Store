@@ -1,37 +1,30 @@
-import React from 'react'
-import Sidebar from '../../components/Dashboard/Sidebar';
-import Right from '../../components/Dashboard/Right/Right';
-import MainDash from '../../components/Dashboard/Center/MainDash';
+import React, { useState } from 'react';
+import Cards from '../../components/Dashboard/First/Cards';
+import Tabels from '../../components/Dashboard/First/Tabels';
+import Charts from '../../components/Dashboard/First/charts';
 
 
 
 
-const Main = () => {
+const Home = () => {
   return (
-    <div className='flex justify-center items-center h-[120vh] w-[100%]  '
-    style={{
-backgroundColor :'rgba(128, 0, 128, 0.945)'
-
-    }}
-    
-    > 
-    <>
-      <div className="AppGlass pb-20  ">
-
-<div><Sidebar className='ml-0 '/></div>
-<div><MainDash/></div>
-<div><Right/></div>
-
-
-      </div>
-      
-  {/* <div className='h-[600px] w-[100%]  bg-red-900 '>
-
-  </div> */}
+    <div className='h-auto w-[100%] mb-20 border-b-2 pb-4 flex flex-col justify-start items-center  bg-gray-200 overflow-x-hidden px-[5%]   '   >
   
-    </>
-    </div>
-  )
-}
 
-export default Main
+<div className=' h-auto w-full  mt-40 '> 
+<h1 className='text-3xl text-gray-600  font-semibold  mb-10 ml-4  ' >Dashboard</h1>
+<Cards/>
+</div>
+
+<div className='w-[100%] h-auto flex justify-center text-center  gap-4 flex-col  mt-2   sm:flex-col lg:flex-row  md:mt-0     ' >
+<Tabels/>
+<Charts/>
+
+</div>
+
+
+    </div>
+  );
+};
+
+export default Home;

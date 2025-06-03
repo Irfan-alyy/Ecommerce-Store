@@ -296,7 +296,7 @@ useEffect(() => {
       });
     }
   }, [showFailureDialog]);
-
+function CheckOut() {
   return (
     <>
       {loading && (
