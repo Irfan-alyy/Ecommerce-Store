@@ -2,7 +2,10 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import { Provider } from "react-redux";
 import { store, persistor } from "./store/Redux/store";
 import { PersistGate } from "redux-persist/integration/react";
+import { ToastContainer} from "react-toastify";
 import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
+
 import { AuthProvider } from "./Feature/Context/AuthContext";
 
 // website pages and layout
@@ -41,6 +44,9 @@ import CheckOut from "./pages/CheckOut/checkOut";
 
 //To be used in the future, for magnifying product images
 // import ProductImageMagnifier from "./ui/components/magnifyImage";
+
+
+
 
 function App() {
   const router = createBrowserRouter([
@@ -90,9 +96,10 @@ function App() {
           element: <ResetPassword />,
         },
         {
-          path:"checkout",
+          path: "/checkout",
           element: <CheckOut />,
         },
+      
         {
           path: "*",
           element: <Error404 />,
@@ -139,6 +146,7 @@ function App() {
 
   return (
     <>
+    <ToastContainer position="top-right" autoClose={3000}  />
       <Provider store={store}>
         <PersistGate loading={<p>Loading..</p>} persistor={persistor}>
           <AuthProvider>
@@ -151,3 +159,4 @@ function App() {
 }
 
 export default App;
+ 

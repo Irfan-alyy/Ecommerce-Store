@@ -91,7 +91,7 @@ const handleSearch=(e) => {
     setMenuVisible(!menuVisible);
     // menuVisible? null: menuBtn.current.classList.add("hidden");menuBtn.current.classList.add("flex")
   };
-
+ 
   const cartItemsLength=useSelector((state) => state.reducer.items.length);
 
   // if(loading) return <div className="w-full h-30 flex justify-center items-center">

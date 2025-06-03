@@ -61,9 +61,11 @@ const Contact = () => {
 .83543450937!2d144.9559263155048!3d-37.8172097420141!2m3!1f0!2f0!3f0!3m2
 !1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0x5045675218ce6e0
 !2sMelbourne%2C%20Australia!5e0!3m2!1sen!2sus!4v1615297715745!5m2!1sen!2sus"
+// src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d13899.683462552064!2d71.6792006!3d29.431109199999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1746038029201!5m2!1sen!2s"
           frameborder="0"
           className="h-[600px] w-[90%] "
         ></iframe>
+   
       </section>
 
       <div className=" flex h-[600px] mt-10 justify-center items-center flex-col gap-2 sm:flex sm:flex-col md:mt-5 md:px-6 md:flex md:flex-row  md:h-[600px]  ">
