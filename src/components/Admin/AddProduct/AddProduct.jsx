@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react';
 import axios from 'axios';
+import { RxCross2 } from "react-icons/rx";
+
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 
@@ -88,7 +90,17 @@ function AddProduct() {
   };
 
   return (
-    <form onSubmit={handleSubmit} ref={formRef} className="max-w-xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-4">
+    
+    <div>
+
+<div >
+  <a href="">
+    <RxCross2 />
+  </a>
+</div>
+
+
+    <form onSubmit={handleSubmit} ref={formRef} className="max-w-xl mx-auto p-6 bg-red-500 rounded-xl shadow-md space-y-4">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Add Product</h2>
 
       <input
@@ -134,7 +146,7 @@ function AddProduct() {
         onChange={handleChange}
         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300"
         required
-      />
+        />
 
       <textarea
         name="description"
@@ -142,7 +154,7 @@ function AddProduct() {
         onChange={handleChange}
         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300"
         required
-      />
+        />
 
       <label className="inline-flex items-center">
         <input
@@ -172,7 +184,7 @@ function AddProduct() {
           onChange={handleChange}
           className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300"
           required
-        />
+          />
         <input
           type="text"
           name="size"
@@ -188,7 +200,7 @@ function AddProduct() {
           onChange={handleChange}
           className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300"
           required
-        />
+          />
         <input
           type="number"
           name="discount"
@@ -212,7 +224,7 @@ function AddProduct() {
           onChange={handleChange}
           className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300"
           required
-        />
+          />
         <input
           type="number"
           name="shipping_time"
@@ -230,6 +242,8 @@ function AddProduct() {
         Submit Product
       </button>
     </form>
+  
+          </div>
   );
 }
 

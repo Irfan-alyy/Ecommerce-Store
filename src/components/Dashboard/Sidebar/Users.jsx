@@ -35,12 +35,12 @@ const UserperPage = 10;
 
  const handleblockunblock = async (userId, isActive) => {
   const token = localStorage.getItem('token');
-  const newIsActive = !isActive;  // toggle active status
+  const newIsActive = !isActive; 
 
   try {
     const response = await axios.put(
       `${BASE_URL}/admin/user/${userId}`,
-      { is_active: newIsActive },  // send boolean here
+      { is_active: newIsActive },  
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -79,6 +79,8 @@ setPage(num);
               <th className="py-3 px-4 border-b">User ID</th>
               <th className="py-3 px-4 border-b">Status</th>
               <th className="py-3 px-4 border-b">Action</th>
+               {/* <th className="py-3 px-4 border-b">Access</th> */}
+              
             </tr>
           </thead>
           <tbody>
@@ -149,6 +151,8 @@ page === totalPages ? 'bg-gray-300 text-black cursor-not-allowed  ' : 'bg-purple
 >
   Next
 </button>
+
+
 
 
 </div>

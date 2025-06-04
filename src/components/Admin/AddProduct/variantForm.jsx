@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import useAllProducts from "../../../customHooks/useFetchAllProducts";
 import { form, tr } from "framer-motion/client";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { RxCross2 } from "react-icons/rx";
+import { useNavigate } from "react-router";
+
 
 const VariantForm = ({
   index,
@@ -106,6 +109,15 @@ const ProductForm = () => {
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([[]]);
   const [allImages, setAllImages] = useState([[]]);
+
+const navigate= useNavigate()
+
+const handleclick = () => {
+  navigate("/admin/product");   
+};
+
+
+
   const [product, setProduct] = useState({
     product_name: "",
     description: "",
@@ -264,9 +276,17 @@ const ProductForm = () => {
 
   return (
     <>
+
+<div className="mt-40 ml-[90%]  text-3xl text-black   ">
+  <a href="">
+    <RxCross2 onClick={handleclick} />
+
+  </a>
+</div>
+
       <form
         onSubmit={handleSubmit}
-        className="mt-40   max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg space-y-4"
+        className="mt-10    max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg space-y-4"
       >
         <h2 className="text-2xl font-bold text-gray-800">Add Product</h2>
 

@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import Chart2 from './Chart2';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+
 
 const DONUT_COLORS = ['rgb(53, 197, 53)', 'rgb(6, 153, 6)', 'rgb(34, 139, 34)', 'rgb(46, 204, 113)'];
 const PIE_COLORS = ['#1e3a8a', '#3b82f6', '#93c5fd', 'lightblue', '#2563eb', '#60a5fa'];
@@ -13,7 +16,7 @@ const Charts = () => {
     const fetchSummary = async () => {
       try {
         const token = localStorage.getItem('token'); // 🔐 get token
-        const res = await axios.get('http://192.168.1.59:8000/admin/orders/payment-summary', {
+        const res = await axios.get(`${BASE_URL}/admin/orders/payment-summary`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

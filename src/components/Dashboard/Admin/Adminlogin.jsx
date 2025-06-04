@@ -1,18 +1,21 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import "react-toastify/dist/ReactToastify.css";
+import {loginSuccess} from "../../../store/Redux/adminAuthSlice"; // Adjust the import path as necessary
+
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Adminlogin = () => {
   const [loginData, setLoginData] = useState({});
   const [loading, setLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track successful login
   const abortControllerRef = useRef(null);
   const timeoutRef = useRef(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const formDataHandle = (e) => {
     setLoginData((prev) => ({
@@ -20,14 +23,6 @@ const Adminlogin = () => {
       [e.target.name]: e.target.value,
     }));
   };
-
-  useEffect(() => {
-    // Only redirect if the user is already logged in
-    const token = localStorage.getItem("token");
-    if (token && isLoggedIn) {
-      navigate("/admin");
-    }
-  }, [navigate, isLoggedIn]);
 
   const showError = (error) => {
     let message = "An error occurred.";
@@ -47,7 +42,6 @@ const Adminlogin = () => {
     setLoading(true);
 
     const { username, password } = loginData;
-
     if (!username || !password) {
       toast.error("❌ Please enter both username and password.");
       setLoading(false);
@@ -64,20 +58,19 @@ const Adminlogin = () => {
     }, 10000);
 
     axios
-      .post(
-        `${BASE_URL}/login/`,
-        { username, password },
-        { signal }
-      )
+      .post(`${BASE_URL}/login/`, { username, password }, { signal })
       .then((res) => {
         toast.success("🟢 Login successful!", { position: "top-right" });
 
-        // ✅ Save the token from API
-        localStorage.setItem("token", res.data.access_token);
-        
-        setIsLoggedIn(true); // Set the login state to true after successful login
+        const token = res.data.access_token;
+        localStorage.setItem("token", token);
+
+        // ✅ Update Redux state
+        dispatch(loginSuccess(token));
+
         setLoading(false);
         clearTimeout(timeoutRef.current);
+        navigate("/admin");
       })
       .catch((error) => {
         showError(error);
@@ -91,7 +84,6 @@ const Adminlogin = () => {
       <div className="loginBox flex justify-center items-center mb-10">
         <h2 className="text-[rgb(167,73,255)] text-2xl font-bold">Admin Login</h2>
       </div>
-
       <div className="py-10 px-4 formDiv flex justify-center items-center w-10/12 md:w-2/3 lg:w-1/2 lg:p-24 shadow-[0_0px_3px_rgba(0,0,0,0.25)]">
         <form onSubmit={handleSubmit} className="w-full">
           <input

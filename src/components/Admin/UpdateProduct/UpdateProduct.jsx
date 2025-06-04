@@ -2,9 +2,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import useAllProducts from "../../../customHooks/useFetchAllProducts";
 import { div, form, tr } from "framer-motion/client";
-import { useParams } from "react-router";
+import { Navigate, useNavigate, useParams } from "react-router";
 import { RxCross2 } from "react-icons/rx";
 import { toast, ToastContainer } from "react-toastify";
+
+
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -136,6 +138,12 @@ const UpdateProductForm = () => {
   const [localImages, setLocalImages] = useState([]);
   const [apiImages, setApiImages] = useState([[]]);
   const [apiPreviews, setApiPreviews] = useState([[]]);
+  const navigate = useNavigate();
+
+const handleclick =()=>{
+  navigate('/admin/product')
+}
+
   const [product, setProduct] = useState({
     product_name: "",
     description: "",
@@ -390,10 +398,22 @@ const UpdateProductForm = () => {
 
   return (
     <>
+
+
+
+
+
       <ToastContainer />
+    
+<div className="  mt-40  w-auto h-auto ml-[90%]       ">
+  <a href="" className=" bg-gray-400 text-black text-3xl  ">
+    <RxCross2 onClick={handleclick} />
+  </a>
+</div>
+
       <form
         onSubmit={handleSubmit}
-        className=" mt-40   max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg space-y-4"
+        className=" mt-10 bg-white   max-w-xl mx-auto p-6  shadow-md rounded-lg space-y-4"
       >
         <h2 className="text-2xl font-bold text-gray-800">Update Product</h2>
 

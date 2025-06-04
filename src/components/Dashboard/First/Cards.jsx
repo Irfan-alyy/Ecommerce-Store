@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaUsers, FaBox, FaClipboardList, FaHourglassHalf, FaListAlt, FaShoppingCart } from 'react-icons/fa';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Cards = () => {
   const [dashboardData, setDashboardData] = useState([]);
@@ -10,7 +11,7 @@ const Cards = () => {
       try {
         const token = localStorage.getItem("token");
 
-        const response = await axios.get('http://192.168.1.59:8000/admin/dashboard-summary', {
+        const response = await axios.get(`${BASE_URL}/adm in/dashboard-summary`, {
           headers: {
             Authorization: `Bearer ${token}`,
           }

@@ -72,59 +72,75 @@ const [showProducts, setShowProducts]=useState([])
     return (<>
     <ToastContainer/>
      <div className="flex items-center flex-wrap gap-10 justify-center">
-  {
-    showProducts.map((elem,ind)=>{
-      return(
-      <div key={ind} className="poduct-card mb-[35px]  flex flex-col w-[-260px] relative cart-flex transform transition-all ease-in">
+ {showProducts.map((elem, ind) => {
+  const variant = elem.variants?.[0];
+  if (!variant) return null; // skip rendering if no variant
+
+  return (
+    <div key={ind} className="poduct-card ...">
       <span className="z-10 text-pink-400 text-s font-semibold absolute top-5 right-5">
-        -{elem.variants[0].discount}%
+        -{variant.discount}%
       </span>
       <span className="z-10 absolute top-12 right-6 text-xs text-violet-500 font-semibold">
         {isNew(elem.created_at) && "New"}
       </span>
 
       <div
-        className=" bg-[rgb(246,246,246)] relative flex flex-col items-center justify-center overflow-hidden group product-one w-[260px] h-[345px]"
+        className="... product-one ..."
         onClick={() => navigate(`category/product/${elem.id}`)}
       >
-        <img src={`${BASE_URL}${elem.variants[0].images[0]}`} alt="" loading="lazy" className="w-full hover-image1 absolute inset-0 object-cover transition transform duration-500 ease-in-out m-auto  " />
-        <img src={`${BASE_URL}${elem?.variants[1]?.images[0] ||elem.variants[0].images[0] }`} loading="lazy" alt="" className="hover-image2 absolute inset-0 object-cover transition transform duration-500 ease-in-out m-auto " />
+        <img
+          src={`${BASE_URL}${variant.images?.[0] || ""}`}
+          alt=""
+          loading="lazy"
+          className="hover-image1 ..."
+        />
+        <img
+          src={`${BASE_URL}${elem?.variants?.[1]?.images?.[0] || variant.images?.[0] || ""}`}
+          alt=""
+          loading="lazy"
+          className="hover-image2 ..."
+        />
         <CiShoppingCart
           title="Add Cart"
-          className=" cart cursor-pointer icon  group-hover:brightness-100 group-hover:opacity-100 transition-opacity transition-brightness duration-300 z-10 absolute top-1/2 right-22 bg-[rgb(31,115,23)] text-white hover:text-black hover:bg-white rounded-4xl text-3xl "
+          className="cart ..."
           onClick={(e) => {
             e.stopPropagation();
-            handleAddCart(showProducts[ind])
+            handleAddCart(elem);
           }}
         />
         <FaEye
           title="Quick View"
-          className="eye cursor-pointer icon  group-hover:brightness-100  group-hover:opacity-100 transition-opacity transition-brightness duration-500  absolute top-1/2 left-22  bg-[rgb(31,115,23)] text-white hover:text-black hover:bg-white rounded-4xl   text-3xl z-10 "
-          onClick={(e)=>{
-            e.stopPropagation()
-            quickView(showProducts[ind])
+          className="eye ..."
+          onClick={(e) => {
+            e.stopPropagation();
+            quickView(elem);
           }}
         />
       </div>
+
       <div className="flex justify-between mt-[20px] gap-1">
         <div>
           <h1 className="hover:text-gray-600 cursor-pointer ">
             {elem.product_name}
           </h1>
           <p>
-            <span>$ {elem.variants[0].price}</span> -
-            <strike className="text-[rgb(127,127,127)]">{(elem.variants[0].price/(1-elem.variants[0].discount/100)).toFixed(2)}</strike>
+            <span>$ {variant.price}</span> -
+            <strike className="text-[rgb(127,127,127)]">
+              {(variant.price / (1 - variant.discount / 100)).toFixed(2)}
+            </strike>
           </p>
         </div>
         <CiShoppingCart
-        onClick={()=>{handleAddCart(showProducts[ind])}}
+          onClick={() => handleAddCart(elem)}
           title="Add Cart"
-          className="cursor-pointer brightness-100 hover:brightness-70  hover:opacity-100 transition-opacity transition-brightness duration-300 z-10  bg-amber-50 rounded-4xl text-3xl"
+          className="cursor-pointer ..."
         />
       </div>
     </div>
-    )})
-  }
+  );
+})}
+
   {/* <QuickView /> */}
 </div>
     </>  );

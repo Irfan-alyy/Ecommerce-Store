@@ -20,6 +20,10 @@ const Order = () => {
 
   const fetchOrders = async () => {
     const token = localStorage.getItem('token');
+    if (!token) {
+      toast.error('User not authenticated');
+      return;
+    }
     try {
       const response = await axios.get(`${BASE_URL}/orders/`, {
         headers: {
@@ -28,7 +32,7 @@ const Order = () => {
       });
       setOrders(response.data);
     } catch (error) {
-      console.error('Error fetching orders:', error);
+      console.error('Error fetching orders:', error.response || error.message || error);
       toast.error('Failed to fetch orders');
     }
   };
@@ -37,25 +41,42 @@ const Order = () => {
     const confirmDelete = window.confirm('Are you sure you want to delete this order?');
     if (!confirmDelete) return;
 
+    const token = localStorage.getItem('token');
+    if (!token) {
+      toast.error('User not authenticated');
+      return;
+    }
+
     try {
-      const token = localStorage.getItem('token');
-      await axios.delete(`${BASE_URL}/orders/${id}`, {
+      const response = await axios.delete(`${BASE_URL}/orders/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
         },
       });
-      setOrders((prev) => prev.filter((order) => order.id !== id));
-      toast.success('Order deleted successfully');
+      console.log('Delete response:', response);
+
+      if (response.status === 200 || response.status === 204) {
+        setOrders((prev) => prev.filter((order) => order.id !== id));
+        toast.success('Order deleted successfully');
+      } else {
+        toast.error('Failed to delete order');
+      }
     } catch (error) {
-      console.error('Error deleting order:', error);
+      console.error('Error deleting order:', error.response || error.message || error);
       toast.error('Failed to delete order');
     }
   };
 
   const handleStatusChange = async (orderId, newStatus) => {
     const token = localStorage.getItem('token');
+    if (!token) {
+      toast.error('User not authenticated');
+      return;
+    }
     try {
-      await axios.put(`${BASE_URL}/orders/${orderId}/status?status=${newStatus}`,
+      await axios.put(
+        `${BASE_URL}/orders/${orderId}/status?status=${newStatus}`,
         {},
         {
           headers: {
@@ -70,7 +91,7 @@ const Order = () => {
       );
       toast.success(`Order status updated to "${newStatus}"`);
     } catch (error) {
-      console.error('Error updating order status:', error);
+      console.error('Error updating order status:', error.response || error.message || error);
       toast.error('Failed to update order status');
     }
   };
@@ -94,37 +115,38 @@ const Order = () => {
               </tr>
             </thead>
             <tbody>
-              {paginatedOrders.map((order, index) => (
-                <tr key={index} className="hover:bg-purple-50 transition">
-                  <td className="px-5 py-4 border-b">{order.user?.name}</td>
-                  <td className="px-5 py-4 border-b">{order.user?.email}</td>
-                  <td className="px-5 py-4 border-b">{order.id}</td>
-                  <td className="px-5 py-4 border-b">{new Date(order.order_date).toLocaleDateString()}</td>
-                  <td className="px-5 py-4 border-b">Rs. {order.final_amount}</td>
-                  <td className="px-5 py-4 border-b">
-                    <select
-                      value={order.order_status}
-                      onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                      className="bg-gray-100 px-2 py-1 rounded border text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    >
-                      <option value="pending">Pending</option>
-                      <option value="confirmed">Confirmed</option>
-                      <option value="shipped">Shipped</option>
-                      <option value="delivered">Delivered</option>
-                      <option value="cancelled">Cancelled</option>
-                    </select>
-                  </td>
-                  <td className="px-5 py-4 border-b">
-                    <button
-                      onClick={() => handleDeleteOrder(order.id)}
-                      className="bg-gray-300 hover:bg-purple-600 text-black hover:text-white px-4 py-2 rounded shadow cursor-pointer"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-              {orders.length === 0 && (
+              {paginatedOrders.length > 0 ? (
+                paginatedOrders.map((order, index) => (
+                  <tr key={order.id || index} className="hover:bg-purple-50 transition">
+                    <td className="px-5 py-4 border-b">{order.user?.name || 'N/A'}</td>
+                    <td className="px-5 py-4 border-b">{order.user?.email || 'N/A'}</td>
+                    <td className="px-5 py-4 border-b">{order.id}</td>
+                    <td className="px-5 py-4 border-b">{new Date(order.order_date).toLocaleDateString()}</td>
+                    <td className="px-5 py-4 border-b">Rs. {order.final_amount}</td>
+                    <td className="px-5 py-4 border-b">
+                      <select
+                        value={order.order_status}
+                        onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                        className="bg-gray-100 px-2 py-1 rounded border text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      >
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="cancelled">Cancelled</option>
+                      </select>
+                    </td>
+                    <td className="px-5 py-4 border-b">
+                      <button
+                        onClick={() => handleDeleteOrder(order.id)}
+                        className="bg-gray-300 hover:bg-purple-600 text-black hover:text-white px-4 py-2 rounded shadow cursor-pointer"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
                 <tr>
                   <td colSpan="7" className="text-center py-4">No orders found.</td>
                 </tr>
