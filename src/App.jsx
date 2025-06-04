@@ -40,7 +40,11 @@ import UpdateProduct from "./components/Admin/UpdateProduct/UpdateProduct";
 import UnAuthorize from "./pages/Unauthorized/UnAuthorize";
 import AdminLayout from "./layout/AdminLayout";
 import ProtectedRoute from "./Feature/ProtectedRoutes/ProtectedRoute";
+<<<<<<< Updated upstream
 import CheckOut from "./pages/CheckOut/checkOut";
+=======
+import OrderDetails from "./pages/Profile/orderDetails";
+>>>>>>> Stashed changes
 
 //To be used in the future, for magnifying product images
 // import ProductImageMagnifier from "./ui/components/magnifyImage";
@@ -112,6 +116,10 @@ function App() {
         {
           path: "/profile",
           element: <Profile />,
+        },
+        {
+          path: "orderdetails/:id",
+          element: <OrderDetails />,
         },
         // {
         //   path:"/magnify",
