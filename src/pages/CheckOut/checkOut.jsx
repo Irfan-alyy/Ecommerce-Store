@@ -10,9 +10,7 @@ import { BsCashCoin } from "react-icons/bs";
 import { Navigate, useLocation } from "react-router";
 import { FaSmileBeam } from "react-icons/fa";
 import { ImSad2 } from "react-icons/im";
-import gsap from "gsap";
 import { useNavigate } from "react-router";
-import LoadingOverlay from "react-loading";
 // import { set } from "react-hook-form";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -275,28 +273,6 @@ useEffect(() => {
   const smile = useRef(null);
   const sad = useRef(null);
 
-  useEffect(() => {
-    if (showSuccessDialog) {
-      gsap.to(".smile-rotate", {
-        rotation: 360,
-        repeat: -1,
-        duration: 3,
-        ease: "none",
-      });
-    }
-  }, [showSuccessDialog]);
-
-  useEffect(() => {
-    if (showFailureDialog) {
-      gsap.to(".sad-rotate", {
-        rotation: 360,
-        repeat: -1,
-        duration: 3,
-        ease: "none",
-      });
-    }
-  }, [showFailureDialog]);
-function CheckOut() {
   return (
     <>
       {loading && (
